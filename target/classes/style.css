@@ -35,7 +35,15 @@
 
 
 .gray-background {
-    -fx-background-color: #cccccc; /* jasnoszare tło */
+    -fx-background-color: #d3d3d3; /* jasnoszary, ale nie za jasny */
 }
+
+.dark-panel {
+    -fx-background-color: #1e1e1e; /* ciemny grafit, nieco jaśniejszy niż #121212 */
+    -fx-padding: 10px;
+    -fx-border-color: #333333;     /* delikatna ramka, dla lepszego kontrastu */
+    -fx-border-width: 1px;
+}
+
 
 

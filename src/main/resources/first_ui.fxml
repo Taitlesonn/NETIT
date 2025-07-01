@@ -26,7 +26,7 @@
     </bottom>
 
     <left>
-        <VBox fx:id="VBox_left">
+        <VBox fx:id="VBox_left" styleClass="dark-panel">
             <Button fx:id="linux_b" styleClass="image-button"/>
             <Button fx:id="windows_b" styleClass="image-button"/>
             <Button fx:id="switch_b" styleClass="image-button"/>
@@ -37,13 +37,13 @@
     </left>
 
     <right>
-        <VBox fx:id="VBox_right">
+        <VBox fx:id="VBox_right" styleClass="dark-panel">
             <Label fx:id="right_inf" styleClass="right-info-label"/>
         </VBox>
     </right>
 
     <center>
-        <Pane fx:id="workspace" styleClass="grid-background"/>
+        <Pane fx:id="workspace" styleClass="gray-background"/>
     </center>
 
 </BorderPane>

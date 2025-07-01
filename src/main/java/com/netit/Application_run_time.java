@@ -14,6 +14,7 @@ import java.io.FileInputStream;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
+import java.util.List;
 
 
 public class Application_run_time {
@@ -31,6 +32,13 @@ public class Application_run_time {
     private final String switch_t = "Switch - a network device that connects multiple devices within a local area network (LAN).";
     private final String windows_server_t = "Windows Server - a Windows version designed for server use.";
     private final String linux_server_t = "Linux Server - a server operating system based on the Linux kernel, popular in IT environments.";
+
+    private ImageView ruter_img;
+    private ImageView switch_img;
+    private ImageView linux_img;
+    private ImageView windows_img;
+    private ImageView windows_server_img;
+    private ImageView linux_server_img;
 
 
 
@@ -150,32 +158,89 @@ public class Application_run_time {
     }
 
     @FXML
+    private void add_router(){
+        List<Integer> l = Topology.findFreeCoordinates();
+        assert l != null;
+        Topology.addsystem(l.get(0), l.get(1), 0);
+    }
+    @FXML
+    private void add_switch(){
+        List<Integer> l = Topology.findFreeCoordinates();
+        assert l != null;
+        Topology.addsystem(l.get(0), l.get(1), 1);
+    }
+    @FXML
+    private void add_linux(){
+        List<Integer> l = Topology.findFreeCoordinates();
+        assert l != null;
+        Topology.addsystem(l.get(0), l.get(1), 2);
+    }
+    @FXML
+    private void add_windows(){
+        List<Integer> l = Topology.findFreeCoordinates();
+        assert l != null;
+        Topology.addsystem(l.get(0), l.get(1), 3);
+    }
+    @FXML
+    private void add_linux_server(){
+        List<Integer> l = Topology.findFreeCoordinates();
+        assert l != null;
+        Topology.addsystem(l.get(0), l.get(1), 4);
+    }
+    @FXML
+    private void add_windows_server(){
+        List<Integer> l = Topology.findFreeCoordinates();
+        assert l != null;
+        Topology.addsystem(l.get(0), l.get(1), 5);
+
+    }
+
+    public ImageView getRuter_img(){
+        return this.ruter_img;
+    }
+    public ImageView getLinux_img(){
+        return this.linux_img;
+    }
+    public ImageView getSwitch_img(){
+        return this.switch_img;
+    }
+    public ImageView getWindows_img(){
+        return this.windows_img;
+    }
+    public ImageView getWindows_server_img(){
+        return this.windows_server_img;
+    }
+    public ImageView getLinux_server_img(){
+        return this.linux_server_img;
+    }
+
+    @FXML
     private void initialize() throws IOException {
         heder_inf.setText(this.hed_text + this.get_os());
         footer_inf.setText(this.getAutor() + this.getFull_name());
 
 
         try {
-            ImageView ruter_img = new ImageView(new Image(new FileInputStream("out/files/Ruter.png")));
-            ImageView switch_img = new ImageView(new Image(new FileInputStream("out/files/switch.png")));
-            ImageView linux_img =  new ImageView(new Image(new FileInputStream("out/files/Linux.png")));
-            ImageView windows_img =  new ImageView(new Image(new FileInputStream("out/files/Windows.png")));
-            ImageView windows_server_img =  new ImageView(new Image(new FileInputStream("out/files/Windows-Server.png")));
-            ImageView linux_server_img =  new ImageView(new Image(new FileInputStream("out/files/Linux-Server.png")));
+            this.ruter_img= new ImageView(new Image(new FileInputStream("out/files/Ruter.png")));
+            this.switch_img = new ImageView(new Image(new FileInputStream("out/files/switch.png")));
+            this.linux_img =  new ImageView(new Image(new FileInputStream("out/files/Linux.png")));
+            this.windows_img =  new ImageView(new Image(new FileInputStream("out/files/Windows.png")));
+            this.windows_server_img =  new ImageView(new Image(new FileInputStream("out/files/Windows-Server.png")));
+            this.linux_server_img =  new ImageView(new Image(new FileInputStream("out/files/Linux-Server.png")));
 
-            ImageView[] images = {ruter_img, switch_img, linux_img, windows_img, windows_server_img, linux_server_img};
+            ImageView[] images = {this.ruter_img, this.switch_img, this.linux_img, this.windows_img, this.windows_server_img, this.linux_server_img};
             for (ImageView imgView : images) {
                 imgView.setFitWidth(100);
                 imgView.setFitHeight(100);
                 imgView.setPreserveRatio(true);
             }
 
-            this.ruter_b.setGraphic(ruter_img);
-            this.windows_b.setGraphic(windows_img);
-            this.linux_b.setGraphic(linux_img);
-            this.switch_b.setGraphic(switch_img);
-            this.linux_server_b.setGraphic(linux_server_img);
-            this.windows_server_b.setGraphic(windows_server_img);
+            this.ruter_b.setGraphic(this.ruter_img);
+            this.windows_b.setGraphic(this.windows_img);
+            this.linux_b.setGraphic(this.linux_img);
+            this.switch_b.setGraphic(this.switch_img);
+            this.linux_server_b.setGraphic(this.linux_server_img);
+            this.windows_server_b.setGraphic(this.windows_server_img);
 
 
             setTooltipRight(this.linux_b, this.linux_t);
@@ -199,5 +264,6 @@ public class Application_run_time {
         right_inf.setText("Running as user: " + currentUser +
                 "\nlibvirt running: " + (libvirtRunning ? "YES" : "NO"));
 
+        Topology.setPanelToTopology(this.workspace);
     }
 }
