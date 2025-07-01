@@ -27,12 +27,12 @@
 
     <left>
         <VBox fx:id="VBox_left" styleClass="dark-panel">
-            <Button fx:id="linux_b" styleClass="image-button"/>
-            <Button fx:id="windows_b" styleClass="image-button"/>
-            <Button fx:id="switch_b" styleClass="image-button"/>
-            <Button fx:id="ruter_b" styleClass="image-button"/>
-            <Button fx:id="linux_server_b" styleClass="image-button"/>
-            <Button fx:id="windows_server_b" styleClass="image-button"/>
+            <Button fx:id="linux_b" styleClass="image-button" onAction="#add_linux"/>
+            <Button fx:id="windows_b" styleClass="image-button" onAction="#add_windows"/>
+            <Button fx:id="switch_b" styleClass="image-button" onAction="#add_switch"/>
+            <Button fx:id="ruter_b" styleClass="image-button" onAction="#add_router"/>
+            <Button fx:id="linux_server_b" styleClass="image-button" onAction="#add_linux_server"/>
+            <Button fx:id="windows_server_b" styleClass="image-button" onAction="#add_windows_server"/>
         </VBox>
     </left>
 

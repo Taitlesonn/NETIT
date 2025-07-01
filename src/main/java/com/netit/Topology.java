@@ -1,19 +1,41 @@
 package com.netit;
 
+import javafx.scene.control.Button;
+import javafx.scene.image.ImageView;
 import javafx.scene.layout.Pane;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
 
 public class Topology {
     private static Pane workPanel;
     private static List<Point> points = new ArrayList<>();
+    private static List<Button> sys = new ArrayList<>();
+
+    public static final Integer ruter_t = 0;
+    public static final Integer switch_t = 1;
+    public static final Integer linux_t = 2;
+    public static final Integer windows_t = 3;
+    public static final Integer linux_server_t = 4;
+    public static final Integer windos_server_t = 5;
+
+
+
 
     public static void setPanelToTopology(Pane workPanel){
         Topology.workPanel = workPanel;
     }
 
-    public static void addsystem(int x, int y, int type){
-        points.add(new Point(x, y, type));
+    public static void addsystem(int x, int y, int type, ImageView img){
+        Topology.points.add(new Point(x, y, type));
+        Button button = new Button();
+
+        button.setLayoutX(x);
+        button.setLayoutY(y);
+        button.setGraphic(img);
+
+        Topology.workPanel.getChildren().add(button);
+        Topology.sys.add(button);
     }
 
     public static Point getPoint(int index){
@@ -38,12 +60,17 @@ public class Topology {
         return points.size();
     }
 
+    private static final Random RNG = new Random();
+
     public static List<Integer> findFreeCoordinates() {
         final int SYSTEM_SIZE = 200; // rozmiar kwadratu w pikselach
-        final int STEP = 25; // co ile pikseli próbujemy — można ustawić na 1 dla dokładności
+        final int STEP        = 25;  // co ile pikseli próbujemy — ustawia dokładność
 
-        double panelWidth = workPanel.getWidth();
+        double panelWidth  = workPanel.getWidth();
         double panelHeight = workPanel.getHeight();
+
+        // lista wszystkich możliwych, wolnych pozycji
+        List<List<Integer>> freeSpots = new ArrayList<>();
 
         for (int y = 0; y <= panelHeight - SYSTEM_SIZE; y += STEP) {
             for (int x = 0; x <= panelWidth - SYSTEM_SIZE; x += STEP) {
@@ -52,7 +79,6 @@ public class Topology {
                     int px = p.getX();
                     int py = p.getY();
 
-                    // Sprawdź czy nowy kwadrat koliduje z istniejącym
                     if (x < px + SYSTEM_SIZE && x + SYSTEM_SIZE > px &&
                             y < py + SYSTEM_SIZE && y + SYSTEM_SIZE > py) {
                         overlaps = true;
@@ -61,16 +87,18 @@ public class Topology {
                 }
 
                 if (!overlaps) {
-                    List<Integer> coords = new ArrayList<>();
-                    coords.add(x);
-                    coords.add(y);
-                    return coords;
+                    // dodajemy do listy wolnych
+                    freeSpots.add(List.of(x, y));
                 }
             }
         }
 
-        // Brak miejsca
-        return null;
+        if (freeSpots.isEmpty()) {
+            return null;  // brak miejsca
+        }
+
+        // wybieramy losowo jeden z dostępnych
+        return freeSpots.get(RNG.nextInt(freeSpots.size()));
     }
 
 }

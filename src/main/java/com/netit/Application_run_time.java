@@ -161,37 +161,61 @@ public class Application_run_time {
     private void add_router(){
         List<Integer> l = Topology.findFreeCoordinates();
         assert l != null;
-        Topology.addsystem(l.get(0), l.get(1), 0);
+        ImageView copy = new ImageView(this.ruter_img.getImage());
+        copy.setFitWidth(200);
+        copy.setFitHeight(200);
+        copy.setPreserveRatio(true);
+        Topology.addsystem(l.get(0), l.get(1), Topology.ruter_t, copy);
     }
     @FXML
     private void add_switch(){
         List<Integer> l = Topology.findFreeCoordinates();
         assert l != null;
-        Topology.addsystem(l.get(0), l.get(1), 1);
+        ImageView copy = new ImageView(this.switch_img.getImage());
+        copy.setFitWidth(200);
+        copy.setFitHeight(200);
+        copy.setPreserveRatio(true);
+        Topology.addsystem(l.get(0), l.get(1), Topology.switch_t, copy);
     }
     @FXML
     private void add_linux(){
         List<Integer> l = Topology.findFreeCoordinates();
         assert l != null;
-        Topology.addsystem(l.get(0), l.get(1), 2);
+        ImageView copy = new ImageView(this.linux_img.getImage());
+        copy.setFitWidth(200);
+        copy.setFitHeight(200);
+        copy.setPreserveRatio(true);
+        Topology.addsystem(l.get(0), l.get(1), Topology.linux_t, copy);
     }
     @FXML
     private void add_windows(){
         List<Integer> l = Topology.findFreeCoordinates();
         assert l != null;
-        Topology.addsystem(l.get(0), l.get(1), 3);
+        ImageView copy = new ImageView(this.windows_img.getImage());
+        copy.setFitWidth(200);
+        copy.setFitHeight(200);
+        copy.setPreserveRatio(true);
+        Topology.addsystem(l.get(0), l.get(1), Topology.windows_t, copy);
     }
     @FXML
     private void add_linux_server(){
         List<Integer> l = Topology.findFreeCoordinates();
         assert l != null;
-        Topology.addsystem(l.get(0), l.get(1), 4);
+        ImageView copy = new ImageView(this.linux_server_img.getImage());
+        copy.setFitWidth(200);
+        copy.setFitHeight(200);
+        copy.setPreserveRatio(true);
+        Topology.addsystem(l.get(0), l.get(1), Topology.linux_server_t, copy);
     }
     @FXML
     private void add_windows_server(){
         List<Integer> l = Topology.findFreeCoordinates();
         assert l != null;
-        Topology.addsystem(l.get(0), l.get(1), 5);
+        ImageView copy = new ImageView(this.windows_server_img.getImage());
+        copy.setFitWidth(200);
+        copy.setFitHeight(200);
+        copy.setPreserveRatio(true);
+        Topology.addsystem(l.get(0), l.get(1), Topology.windos_server_t, copy);
 
     }
 
