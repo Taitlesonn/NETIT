@@ -1,0 +1,41 @@
+.less-important-text {
+    -fx-font-size: 10px;
+    -fx-text-fill: #777; /* szary kolor, by podkreślić mniejsze znaczenie */
+}
+
+.image-button {
+    -fx-background-color: transparent;         /* brak tła przycisku */
+    -fx-padding: 0;                            /* usunięcie wewnętrznego marginesu */
+    -fx-border-color: transparent;            /* brak ramki */
+    -fx-background-radius: 0;                 /* brak zaokrągleń */
+    -fx-border-radius: 0;
+}
+
+.image-button > .graphic {
+    -fx-fit-to-width: true;
+    -fx-fit-to-height: true;
+    -fx-max-width: 200px;                     /* maksymalny rozmiar */
+    -fx-max-height: 200px;
+}
+
+
+/* plik: styles.css */
+.right-info-label {
+    -fx-font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+    -fx-font-size: 14px;
+    -fx-text-fill: #333333;        /* ciemny szary kolor tekstu */
+    -fx-background-color: #f0f0f0; /* jasne, delikatne tło */
+    -fx-padding: 10px;              /* odstęp wewnętrzny */
+    -fx-border-color: #cccccc;      /* cienka ramka */
+    -fx-border-radius: 5px;
+    -fx-background-radius: 5px;
+    -fx-effect: dropshadow( gaussian , rgba(0,0,0,0.1), 3, 0.5, 0, 1 );
+    -fx-wrap-text: true;            /* zawijanie tekstu */
+}
+
+
+.gray-background {
+    -fx-background-color: #cccccc; /* jasnoszare tło */
+}
+
+

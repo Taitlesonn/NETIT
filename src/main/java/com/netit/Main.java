@@ -7,15 +7,24 @@ import javafx.scene.Scene;
 import javafx.stage.Stage;
 
 
+
 public class Main  extends Application{
 
     @Override
     public void start(Stage primaryStage) throws Exception {
+        //Init
+        Application_run_time user = new Application_run_time();
+
+
         // Załaduj plik FXML z folderu resources
         Parent root = FXMLLoader.load(getClass().getResource("/first_ui.fxml"));
-        
+
+        Scene scene = new Scene(root, user.getY_run(), user.getX_run());
+        scene.getStylesheets().add(getClass().getResource("/style.css").toExternalForm());
+
+
         primaryStage.setTitle("NETIT");
-        primaryStage.setScene(new Scene(root, 400, 300));
+        primaryStage.setScene(scene);
         primaryStage.show();
     }
 
