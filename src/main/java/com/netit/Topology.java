@@ -1,5 +1,7 @@
 package com.netit;
 
+import javafx.animation.PauseTransition;
+import javafx.event.EventHandler;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
@@ -7,9 +9,9 @@ import javafx.scene.control.Button;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.Pane;
-import javafx.scene.paint.Color;
 import javafx.scene.shape.Line;
 import javafx.stage.Stage;
+import javafx.util.Duration;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -22,272 +24,193 @@ public class Topology {
     private static final List<Connection> connections = new ArrayList<>();
     private static final Random RNG = new Random();
 
-    public static final Integer ruter_t = 0;
-    public static final Integer swithe_t = 1;
-    public static final Integer linux_t = 2;
-    public static final Integer windows_t = 3;
-    public static final Integer linux_server_t = 4;
-    public static final Integer windos_server_t = 5;
+    public static final int ruter_t = 0;
+    public static final int swithe_t = 1;
+    public static final int linux_t = 2;
+    public static final int windows_t = 3;
+    public static final int linux_server_t = 4;
+    public static final int windos_server_t = 5;
     private static Integer app_stet = -1;
     private static Integer index_b = -1;
 
-    public static void setApp_stet(Integer x){ Topology.app_stet = x;}
-    public static boolean App_new_window_q(){return Topology.app_stet == -1;};
-    public static Integer App_state_get(){ return Topology.app_stet; }
-    public static void setPanelToTopology(Pane workPanel){
-        Topology.workPanel = workPanel;
-    }
-    public static int getSystemCount() {
-        return points.size();
-    }
-    public static int getindex_b(){ return  Topology.index_b; }
+    public static void setApp_stet(Integer x) { app_stet = x; }
+    public static Integer App_state_get() { return app_stet; }
+    public static boolean App_new_window_q() { return app_stet == -1; }
+    public static void setPanelToTopology(Pane panel) { workPanel = panel; }
+    public static int getSystemCount() { return points.size(); }
+    public static int getindex_b() { return index_b; }
 
-    public static void addsystem(int x, int y, int type, ImageView img){
-        Topology.points.add(new Point(x, y, type));
+    public static void addsystem(int x, int y, int type, ImageView img) {
+        points.add(new Point(x, y, type));
         Button button = new Button();
-
         button.setLayoutX(x);
         button.setLayoutY(y);
         button.setGraphic(img);
 
-        button.setOnAction(e -> {
-            if (Topology.App_new_window_q()){
-                Topology.setApp_stet(type);
-                Topology.index_b = Topology.getSystemCount();
+        // Otwarcie okna na klik
+        button.setOnMouseClicked(event -> {
+            if (event.isStillSincePress() && App_new_window_q()) {
+                setApp_stet(type);
+                index_b = getSystemCount() - 1;
                 try {
                     FXMLLoader loader = new FXMLLoader(Topology.class.getResource("/secendary_ui.fxml"));
-                    SecendaryUi secendaryUi = new SecendaryUi();
-                    loader.setController(secendaryUi);
-                    secendaryUi.point_to_button(button);
+                    SecendaryUi ctrl = new SecendaryUi();
+                    loader.setController(ctrl);
+                    ctrl.point_to_button(button);
                     Parent root = loader.load();
 
-
                     Stage stage = new Stage();
-                    switch(type){
-                        case 0 -> { stage.setTitle("Ruter"); }
-                        case 1 -> { stage.setTitle("swithe"); }
-                        case 2 -> { stage.setTitle("linux"); }
-                        case 3 -> { stage.setTitle("windows"); }
-                        case 4 -> { stage.setTitle("linux server"); }
-                        case 5 -> { stage.setTitle("windows server");}
-                        default -> { stage.setTitle("Error type init"); }
+                    switch (type) {
+                        case ruter_t -> stage.setTitle("Ruter");
+                        case swithe_t -> stage.setTitle("Swithe");
+                        case linux_t -> stage.setTitle("Linux");
+                        case windows_t -> stage.setTitle("Windows");
+                        case linux_server_t -> stage.setTitle("Linux Server");
+                        case windos_server_t -> stage.setTitle("Windows Server");
+                        default -> stage.setTitle("Unknown");
                     }
-
                     Scene scene = new Scene(root);
                     scene.getStylesheets().add(Topology.class.getResource("/style.css").toExternalForm());
-                    scene.setRoot(root);
-                    stage.setResizable(true);
                     stage.setScene(scene);
-                    stage.setOnCloseRequest(event -> {
-                        Topology.setApp_stet(-1);
-                    });
+                    stage.setResizable(true);
+                    stage.setOnCloseRequest(e -> setApp_stet(-1));
                     stage.show();
                     stage.setWidth(500);
                     stage.setHeight(500);
-                } catch (Exception ex) {
-                    throw new RuntimeException(ex);
-                }
+                } catch (Exception ex) { throw new RuntimeException(ex); }
             }
-        }
-        );
+        });
 
-
-        // Dodajemy obsługę przeciągania
-        final double[] dragOffsetX = new double[1];
-        final double[] dragOffsetY = new double[1];
+        // Drag & drop
+        final double[] offsetX = new double[1];
+        final double[] offsetY = new double[1];
         final boolean[] dragged = {false};
 
-        button.setOnMousePressed(event -> {
-            dragOffsetX[0] = event.getSceneX() - button.getLayoutX();
-            dragOffsetY[0] = event.getSceneY() - button.getLayoutY();
+        button.addEventHandler(MouseEvent.MOUSE_PRESSED, e -> {
+            if (!App_new_window_q()) return;
+            offsetX[0] = e.getSceneX() - button.getLayoutX();
+            offsetY[0] = e.getSceneY() - button.getLayoutY();
             dragged[0] = false;
+            // Don't consume, allow click detection
         });
 
-        button.setOnMouseDragged(event -> {
-            double newX = event.getSceneX() - dragOffsetX[0];
-            double newY = event.getSceneY() - dragOffsetY[0];
-
-            button.setLayoutX(newX);
-            button.setLayoutY(newY);
+        button.addEventHandler(MouseEvent.MOUSE_DRAGGED, e -> {
+            if (!App_new_window_q()) return;
+            button.setLayoutX(e.getSceneX() - offsetX[0]);
+            button.setLayoutY(e.getSceneY() - offsetY[0]);
             dragged[0] = true;
+            // update connections live via bindings
         });
 
-        button.setOnMouseReleased(event -> {
-            if (!dragged[0]) {
-                button.fire(); // tylko klik, bez przeciągania
-            } else {
-                // jeśli przeciągnięto, zaktualizuj pozycję logiczną (Point)
-                int index = Topology.sys.indexOf(button);
-                if (index != -1) {
-                    Topology.setSystem((int) button.getLayoutX(), (int) button.getLayoutY(), index);
+        button.addEventHandler(MouseEvent.MOUSE_RELEASED, e -> {
+            if (!App_new_window_q()) return;
+            if (dragged[0]) {
+                int idx = sys.indexOf(button);
+                if (idx >= 0) {
+                    points.get(idx).setX((int) button.getLayoutX());
+                    points.get(idx).setY((int) button.getLayoutY());
                 }
             }
+            // allow click event if not dragged
         });
-        Topology.workPanel.getChildren().add(button);
-        Topology.sys.add(button);
+
+        workPanel.getChildren().add(button);
+        sys.add(button);
     }
 
-    public static void del_system(Button b){
-        Topology.sys.remove(b);
-        Topology.workPanel.layout();
-    }
-    public static Point getPoint(int index){
-        if (index >= 0 && index < points.size()){
-            return points.get(index);
-        } else {
-            return null;
-        }
+    public static void del_system(Button b) {
+        sys.remove(b);
+        workPanel.getChildren().remove(b);
     }
 
-    public static boolean setSystem(int x, int y, int index){
-        if (index >= 0 && index < points.size()){
-            points.get(index).setX(x);
-            points.get(index).setY(y);
-            return true;
-        } else {
-            return false;
-        }
+    public static Point getPoint(int i) { return (i>=0 && i<points.size())?points.get(i):null; }
+    public static boolean setSystem(int x, int y, int i) {
+        if (i>=0 && i<points.size()) { points.get(i).setX(x); points.get(i).setY(y); return true;} return false;
     }
-
 
     public static List<Integer> findFreeCoordinates() {
-        final int SYSTEM_SIZE = 150; // rozmiar kwadratu w pikselach
-        final int STEP        = 25;  // co ile pikseli próbujemy — ustawia dokładność
-
-        double panelWidth  = workPanel.getWidth();
-        double panelHeight = workPanel.getHeight();
-
-        // lista wszystkich możliwych, wolnych pozycji
-        List<List<Integer>> freeSpots = new ArrayList<>();
-
-        for (int y = 0; y <= panelHeight - SYSTEM_SIZE; y += STEP) {
-            for (int x = 0; x <= panelWidth - SYSTEM_SIZE; x += STEP) {
-                boolean overlaps = false;
-                for (Point p : points) {
-                    int px = p.getX();
-                    int py = p.getY();
-
-                    if (x < px + SYSTEM_SIZE && x + SYSTEM_SIZE > px &&
-                            y < py + SYSTEM_SIZE && y + SYSTEM_SIZE > py) {
-                        overlaps = true;
-                        break;
-                    }
-                }
-
-                if (!overlaps) {
-                    // dodajemy do listy wolnych
-                    freeSpots.add(List.of(x, y));
-                }
-            }
+        final int SIZE=150, STEP=25;
+        double w=workPanel.getWidth(), h=workPanel.getHeight();
+        List<List<Integer>> free=new ArrayList<>();
+        for(int yy=0; yy<= h-SIZE ; yy+=STEP) for(int xx=0; xx <= w-SIZE; xx+=STEP){
+            boolean over=false;
+            for(Point p:points) if(xx <p.getX()+SIZE&&xx+SIZE > p.getX()&&yy < p.getY()+SIZE&&yy+SIZE > p.getY()){ over=true; break; }
+            if(!over) free.add(List.of(xx,yy));
         }
-
-        if (freeSpots.isEmpty()) {
-            return null;  // brak miejsca
-        }
-
-        // wybieramy losowo jeden z dostępnych
-        return freeSpots.get(RNG.nextInt(freeSpots.size()));
+        return free.isEmpty()?null:free.get(RNG.nextInt(free.size()));
     }
 
-
-
-
-    // lista wszystkich połączeń
     private static class Connection {
         Button b1, b2;
         Line link;
-        Connection(Button b1, Button b2, Line link) {
-            this.b1 = b1; this.b2 = b2; this.link = link;
-        }
+        Connection(Button b1, Button b2, Line link) { this.b1 = b1; this.b2 = b2; this.link = link; }
     }
-
 
     public static void connectTwoButtons() {
         setApp_stet(999);
-        List<Button> selection = new ArrayList<>();
-
-        javafx.event.EventHandler<MouseEvent> pickHandler = new javafx.event.EventHandler<>() {
+        List<Button> sel = new ArrayList<>();
+        EventHandler<MouseEvent> handler = new EventHandler<>() {
             @Override
-            public void handle(MouseEvent event) {
-                Button btn = (Button) event.getSource();
-                if (!selection.contains(btn)) {
-                    selection.add(btn);
-                    btn.setStyle("-fx-border-color: blue; -fx-border-width: 2px;");
+            public void handle(MouseEvent e) {
+                Button b = (Button) e.getSource();
+                if (!sel.contains(b)) {
+                    sel.add(b);
+                    b.setStyle("-fx-border-color: blue; -fx-border-width: 2px;");
                 }
-                if (selection.size() == 2) {
-                    Button b1 = selection.get(0), b2 = selection.get(1);
-                    Line link = new Line();
-                    link.startXProperty().bind(b1.layoutXProperty().add(b1.widthProperty().divide(2)));
-                    link.startYProperty().bind(b1.layoutYProperty().add(b1.heightProperty().divide(2)));
-                    link.endXProperty().bind(b2.layoutXProperty().add(b2.widthProperty().divide(2)));
-                    link.endYProperty().bind(b2.layoutYProperty().add(b2.heightProperty().divide(2)));
-                    workPanel.getChildren().add(0, link);
-                    connections.add(new Connection(b1, b2, link));
-
-                    cleanup();
+                if (sel.size() == 2) {
+                    Button b1 = sel.get(0);
+                    Button b2 = sel.get(1);
+                    Line l = new Line();
+                    l.startXProperty().bind(b1.layoutXProperty().add(b1.widthProperty().divide(2)));
+                    l.startYProperty().bind(b1.layoutYProperty().add(b1.heightProperty().divide(2)));
+                    l.endXProperty().bind(b2.layoutXProperty().add(b2.widthProperty().divide(2)));
+                    l.endYProperty().bind(b2.layoutYProperty().add(b2.heightProperty().divide(2)));
+                    workPanel.getChildren().add(0, l);
+                    connections.add(new Connection(b1, b2, l));
+                    // Delay reset
+                    PauseTransition pause = new PauseTransition(Duration.seconds(0.5));
+                    pause.setOnFinished(ev -> setApp_stet(-1));
+                    pause.play();
+                    // Cleanup styles and handlers
+                    sel.forEach(btn -> btn.removeEventHandler(MouseEvent.MOUSE_PRESSED, this));
+                    sys.forEach(btn -> btn.setStyle(""));
                 }
-            }
-            private void cleanup() {
-                for (Button b : sys) {
-                    b.removeEventHandler(MouseEvent.MOUSE_PRESSED, this);
-                    b.setStyle("");
-                }
-                setApp_stet(-1);
             }
         };
-
-        for (Button b : sys) {
-            b.addEventHandler(MouseEvent.MOUSE_PRESSED, pickHandler);
-        }
+        sys.forEach(b -> b.addEventHandler(MouseEvent.MOUSE_PRESSED, handler));
     }
-
 
     public static void removeConnectionBetweenButtons() {
         setApp_stet(998);
-        List<Button> selection = new ArrayList<>();
-
-        javafx.event.EventHandler<MouseEvent> pickHandler = new javafx.event.EventHandler<>() {
+        List<Button> sel = new ArrayList<>();
+        EventHandler<MouseEvent> handler = new EventHandler<>() {
             @Override
-            public void handle(MouseEvent event) {
-                Button btn = (Button) event.getSource();
-                if (!selection.contains(btn)) {
-                    selection.add(btn);
-                    btn.setStyle("-fx-border-color: red; -fx-border-width: 2px;");
+            public void handle(MouseEvent e) {
+                Button b = (Button) e.getSource();
+                if (!sel.contains(b)) {
+                    sel.add(b);
+                    b.setStyle("-fx-border-color: red; -fx-border-width: 2px;");
                 }
-                if (selection.size() == 2) {
-                    Button b1 = selection.get(0), b2 = selection.get(1);
-
-                    // znajdź połączenie (kolejność nieistotna)
-                    Connection toRemove = null;
-                    for (Connection c : connections) {
-                        if ((c.b1 == b1 && c.b2 == b2) || (c.b1 == b2 && c.b2 == b1)) {
-                            toRemove = c;
-                            break;
-                        }
+                if (sel.size() == 2) {
+                    Button b1 = sel.get(0);
+                    Button b2 = sel.get(1);
+                    Connection toRem = connections.stream()
+                            .filter(c -> (c.b1 == b1 && c.b2 == b2) || (c.b1 == b2 && c.b2 == b1))
+                            .findFirst().orElse(null);
+                    if (toRem != null) {
+                        workPanel.getChildren().remove(toRem.link);
+                        connections.remove(toRem);
                     }
-
-                    if (toRemove != null) {
-                        workPanel.getChildren().remove(toRemove.link);
-                        connections.remove(toRemove);
-                    }
-
-                    cleanup();
+                    // Delay reset
+                    PauseTransition pause = new PauseTransition(Duration.seconds(0.5));
+                    pause.setOnFinished(ev -> setApp_stet(-1));
+                    pause.play();
+                    // Cleanup styles and handlers
+                    sel.forEach(btn -> btn.removeEventHandler(MouseEvent.MOUSE_PRESSED, this));
+                    sys.forEach(btn -> btn.setStyle(""));
                 }
-            }
-            private void cleanup() {
-                for (Button b : sys) {
-                    b.removeEventHandler(MouseEvent.MOUSE_PRESSED, this);
-                    b.setStyle("");
-                }
-                setApp_stet(-1);
             }
         };
-
-        for (Button b : sys) {
-            b.addEventHandler(MouseEvent.MOUSE_PRESSED, pickHandler);
-        }
+        sys.forEach(b -> b.addEventHandler(MouseEvent.MOUSE_PRESSED, handler));
     }
-
-
-
 }
