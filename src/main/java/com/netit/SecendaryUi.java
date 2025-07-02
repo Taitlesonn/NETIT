@@ -1,41 +1,70 @@
 package com.netit;
 
 import javafx.fxml.FXML;
+import javafx.scene.control.Button;
+import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.scene.web.WebView;
 
+import java.io.Console;
 import java.io.File;
+import java.util.ArrayList;
+import java.util.List;
 
 public class SecendaryUi {
-    private String text;
-    private Integer foder_id;
+    private String baseDir;
+    private List<String> files = new ArrayList<>();
 
     @FXML
     private WebView idex_info;
 
     @FXML
-    private VBox button_list;
+    private HBox button_list;
 
     @FXML
     private void initialize() {
+        this.baseDir = System.getProperty("user.dir");
         String path = switch (Topology.App_state_get()) {
-            case 0 -> "out/files/sys-cfg/0/index.html";
-            case 1 -> "out/files/sys-cfg/1/index.html";
-            case 2 -> "out/files/sys-cfg/2/index.html";
-            case 3 -> "out/files/sys-cfg/3/index.html";
-            case 4 -> "out/files/sys-cfg/4/index.html";
-            case 5 -> "out/files/sys-cfg/5/index.html";
+            case 0 -> "out/files/sys-cfg/0/";
+            case 1 -> "out/files/sys-cfg/1/";
+            case 2 -> "out/files/sys-cfg/2/";
+            case 3 -> "out/files/sys-cfg/3/";
+            case 4 -> "out/files/sys-cfg/4/";
+            case 5 -> "out/files/sys-cfg/5/";
             default -> null;
         };
 
         if (path != null) {
-            showHtmlFromPath(path, 0);
+            showHtmlFromPath(path + "index.html");
+            Button defult = new Button();
+
+            defult.setText("info");
+            defult.setOnAction(e -> {
+                showHtmlFromPath(path + "index.html");
+            });
+            this.button_list.getChildren().add(defult);
+
+            this.files.clear();
+            getFilesExcludingIndexHtml(this.baseDir + "/" + path);
+            for (String file : this.files){
+                String buttonName = file;
+                if (buttonName.endsWith(".html")) {
+                    buttonName = buttonName.substring(0, buttonName.length() - 5);
+                }
+                Button button = new Button();
+                button.setText(buttonName);
+                button.setOnAction(e -> {
+                    showHtmlFromPath(path + file);
+                });
+                this.button_list.getChildren().add(button);
+            }
+
         }
+
     }
 
-    public void showHtmlFromPath(String relativePath, int element) {
-        String baseDir = System.getProperty("user.dir");
-        File f = new File(baseDir, relativePath); // Połączenie ścieżek
+    public void showHtmlFromPath(String relativePath) {
+        File f = new File(this.baseDir, relativePath); // Połączenie ścieżek
 
         if (!f.exists() || !f.isFile()) {
             String errorHtml = """
@@ -50,8 +79,31 @@ public class SecendaryUi {
             return;
         }
 
-        if (element == 0) {
-            idex_info.getEngine().load(f.toURI().toString());
+
+        idex_info.getEngine().load(f.toURI().toString());
+
+
+    }
+
+
+    public void getFilesExcludingIndexHtml(String folderPath) {
+        File folder = new File(folderPath);
+
+
+        if (folder.isDirectory()) {
+            File[] files = folder.listFiles();
+            if (files != null) {
+                for (File f : files) {
+                    // pomiń jeśli to folder
+                    if (f.isFile()) {
+                        // pomiń plik index.html
+                        if (!f.getName().equals("index.html")) {
+                            this.files.add(f.getName());
+                        }
+                    }
+                }
+            }
         }
+
     }
 }

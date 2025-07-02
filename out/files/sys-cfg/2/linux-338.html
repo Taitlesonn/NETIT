@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="" xml:lang="">
+<head>
+<title>Page 338</title>
+
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+<style type="text/css">
+<!--
+	p {margin: 0; padding: 0;}	.ft00{font-size:36px;font-family:IScriptSTD;color:#000000;}
+	.ft01{font-size:18px;font-family:UniversLTStd;color:#000000;}
+	.ft02{font-size:14px;font-family:UniversLTStd;color:#000000;}
+	.ft03{font-size:14px;font-family:WileyCodeSTD;color:#000000;}
+	.ft04{font-size:14px;font-family:UniversLTStd-Cn;color:#000000;}
+	.ft05{font-size:14px;font-family:CheltenhamStd-Book;color:#000000;}
+	.ft06{font-size:14px;font-family:CheltenhamStd-BookItalic;color:#000000;}
+	.ft07{font-size:14px;line-height:16px;font-family:CheltenhamStd-Book;color:#000000;}
+-->
+</style>
+</head>
+<body bgcolor="#A0A0A0" vlink="blue" link="blue">
+<div id="page338-div" style="position:relative;width:796px;height:999px;">
+<img width="796" height="999" src="linux338.png" alt="background image"/>
+<p style="position:absolute;top:72px;left:710px;white-space:nowrap" class="ft00">325</p>
+<p style="position:absolute;top:84px;left:420px;white-space:nowrap" class="ft01"><b>&#160;Chapter 17: Working without the GUI</b></p>
+<p style="position:absolute;top:140px;left:200px;white-space:nowrap" class="ft02"><i><b>Component</b></i></p>
+<p style="position:absolute;top:140px;left:302px;white-space:nowrap" class="ft02"><i><b>Result</b></i></p>
+<p style="position:absolute;top:166px;left:200px;white-space:nowrap" class="ft03">\t</p>
+<p style="position:absolute;top:164px;left:302px;white-space:nowrap" class="ft04">Prints the time in 24-hour format.</p>
+<p style="position:absolute;top:188px;left:200px;white-space:nowrap" class="ft03">\u</p>
+<p style="position:absolute;top:186px;left:302px;white-space:nowrap" class="ft04">Prints your username.</p>
+<p style="position:absolute;top:211px;left:200px;white-space:nowrap" class="ft03">\w</p>
+<p style="position:absolute;top:209px;left:302px;white-space:nowrap" class="ft04">Prints the lowest current directory level.</p>
+<p style="position:absolute;top:234px;left:200px;white-space:nowrap" class="ft03">\W</p>
+<p style="position:absolute;top:232px;left:302px;white-space:nowrap" class="ft04">Prints the entire current directory.</p>
+<p style="position:absolute;top:286px;left:184px;white-space:nowrap" class="ft07">Okay, on with the example: To change your shell prompt to something more&#160;<br/>amusing, enter the following line:</p>
+<p style="position:absolute;top:335px;left:194px;white-space:nowrap" class="ft03">PS1=‘Hello \u, what can I do for you? =&gt; ‘</p>
+<p style="position:absolute;top:367px;left:184px;white-space:nowrap" class="ft05">Note the single quotes (</p>
+<p style="position:absolute;top:368px;left:339px;white-space:nowrap" class="ft03">‘</p>
+<p style="position:absolute;top:367px;left:348px;white-space:nowrap" class="ft05">). Immediately after pressing the Enter key, you see&#160;</p>
+<p style="position:absolute;top:383px;left:184px;white-space:nowrap" class="ft07">that your prompt has changed into something more inviting. Don’t worry if&#160;<br/>you’d rather have the original prompt; you can either reassign the original&#160;<br/>prompt’s value (which is stored in&#160;</p>
+<p style="position:absolute;top:418px;left:411px;white-space:nowrap" class="ft03">PS1</p>
+<p style="position:absolute;top:416px;left:437px;white-space:nowrap" class="ft05">) or close the terminal window and&#160;</p>
+<p style="position:absolute;top:433px;left:184px;white-space:nowrap" class="ft05">open a new one. Either way, you’re back to familiar territory.</p>
+<p style="position:absolute;top:466px;left:95px;white-space:nowrap" class="ft05">&#160;</p>
+<p style="position:absolute;top:466px;left:185px;white-space:nowrap" class="ft07">Are you wondering which other variables your system has in store for you?&#160;<br/>You can view all environment variables at one time by typing&#160;</p>
+<p style="position:absolute;top:484px;left:584px;white-space:nowrap" class="ft03">env</p>
+<p style="position:absolute;top:482px;left:610px;white-space:nowrap" class="ft05">. Note that&#160;</p>
+<p style="position:absolute;top:499px;left:185px;white-space:nowrap" class="ft07">you may not have any reason to access variables on the command line during&#160;<br/>casual Linux use. After you get more proficient, however, you may want to&#160;<br/>journey into the shell-programming capabilities of&#160;</p>
+<p style="position:absolute;top:533px;left:513px;white-space:nowrap" class="ft03">bash</p>
+<p style="position:absolute;top:532px;left:547px;white-space:nowrap" class="ft05">&#160;— in which variable&#160;</p>
+<p style="position:absolute;top:548px;left:185px;white-space:nowrap" class="ft07">storage comes in handy, just as it does in any computer-programming&#160;<br/>language.</p>
+<p style="position:absolute;top:598px;left:185px;white-space:nowrap" class="ft07">What’s with those single quotes? You have to be careful of some details&#160;<br/>when changing environment variables. If you’re just assigning something to&#160;<br/>a number, you could just use, for example,&#160;</p>
+<p style="position:absolute;top:632px;left:458px;white-space:nowrap" class="ft03">HISTSIZE=250</p>
+<p style="position:absolute;top:631px;left:559px;white-space:nowrap" class="ft05">. However, if you&#160;</p>
+<p style="position:absolute;top:647px;left:185px;white-space:nowrap" class="ft07">want to use something with spaces in it, you have to use quotes. Which kind of&#160;<br/>quotes you use — single or double — depends on what else you want to do.</p>
+<p style="position:absolute;top:697px;left:185px;white-space:nowrap" class="ft05">If you want to display&#160;</p>
+<p style="position:absolute;top:697px;left:328px;white-space:nowrap" class="ft06"><i>exactly&#160;</i></p>
+<p style="position:absolute;top:697px;left:376px;white-space:nowrap" class="ft05">what you have specified, use single quotes to&#160;</p>
+<p style="position:absolute;top:713px;left:185px;white-space:nowrap" class="ft05">create a&#160;</p>
+<p style="position:absolute;top:713px;left:240px;white-space:nowrap" class="ft06"><i>literal text string.</i></p>
+<p style="position:absolute;top:713px;left:346px;white-space:nowrap" class="ft05">&#160;For example, type the following line at a command&#160;</p>
+<p style="position:absolute;top:730px;left:185px;white-space:nowrap" class="ft05">prompt:</p>
+<p style="position:absolute;top:763px;left:194px;white-space:nowrap" class="ft03">echo ‘Hello, my name is $USER’</p>
+<p style="position:absolute;top:795px;left:185px;white-space:nowrap" class="ft05">The output gives you this:</p>
+<p style="position:absolute;top:827px;left:194px;white-space:nowrap" class="ft03">Hello, my name is $USER</p>
+<p style="position:absolute;top:859px;left:185px;white-space:nowrap" class="ft05">Kinda goofy, huh?</p>
+</div>
+</body>
+</html>

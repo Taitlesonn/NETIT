@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="" xml:lang="">
+<head>
+<title>Page 336</title>
+
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+<style type="text/css">
+<!--
+	p {margin: 0; padding: 0;}	.ft00{font-size:36px;font-family:IScriptSTD;color:#000000;}
+	.ft01{font-size:18px;font-family:UniversLTStd;color:#000000;}
+	.ft02{font-size:14px;font-family:CheltenhamStd-Book;color:#000000;}
+	.ft03{font-size:14px;font-family:WileyCodeSTD;color:#000000;}
+	.ft04{font-size:30px;font-family:IScriptSTD;color:#000000;}
+	.ft05{font-size:14px;font-family:UniversLTStd;color:#000000;}
+	.ft06{font-size:14px;font-family:UniversLTStd-Cn;color:#000000;}
+	.ft07{font-size:14px;line-height:16px;font-family:CheltenhamStd-Book;color:#000000;}
+	.ft08{font-size:14px;line-height:16px;font-family:UniversLTStd;color:#000000;}
+	.ft09{font-size:14px;line-height:16px;font-family:UniversLTStd-Cn;color:#000000;}
+-->
+</style>
+</head>
+<body bgcolor="#A0A0A0" vlink="blue" link="blue">
+<div id="page336-div" style="position:relative;width:796px;height:999px;">
+<img width="796" height="999" src="linux336.png" alt="background image"/>
+<p style="position:absolute;top:72px;left:710px;white-space:nowrap" class="ft00">323</p>
+<p style="position:absolute;top:84px;left:420px;white-space:nowrap" class="ft01"><b>&#160;Chapter 17: Working without the GUI</b></p>
+<p style="position:absolute;top:138px;left:95px;white-space:nowrap" class="ft02">&#160;</p>
+<p style="position:absolute;top:138px;left:185px;white-space:nowrap" class="ft07">You can usually tell at a glance the difference between a variable and an envi-<br/>ronment variable in&#160;</p>
+<p style="position:absolute;top:155px;left:314px;white-space:nowrap" class="ft03">bash</p>
+<p style="position:absolute;top:154px;left:348px;white-space:nowrap" class="ft02">. The normal convention is to name local variables in&#160;</p>
+<p style="position:absolute;top:171px;left:185px;white-space:nowrap" class="ft02">all lowercase characters,&#160;</p>
+<p style="position:absolute;top:172px;left:348px;white-space:nowrap" class="ft03">like this</p>
+<p style="position:absolute;top:171px;left:425px;white-space:nowrap" class="ft02">, or in mixed-case characters,&#160;</p>
+<p style="position:absolute;top:172px;left:616px;white-space:nowrap" class="ft03">Like&#160;</p>
+<p style="position:absolute;top:188px;left:185px;white-space:nowrap" class="ft03">This</p>
+<p style="position:absolute;top:187px;left:219px;white-space:nowrap" class="ft02">. An environment variable, however, is usually always in all uppercase&#160;</p>
+<p style="position:absolute;top:204px;left:185px;white-space:nowrap" class="ft02">letters,&#160;</p>
+<p style="position:absolute;top:205px;left:233px;white-space:nowrap" class="ft03">LIKE THIS</p>
+<p style="position:absolute;top:204px;left:310px;white-space:nowrap" class="ft02">.</p>
+<p style="position:absolute;top:255px;left:185px;white-space:nowrap" class="ft04">Checking out commonly used&#160;</p>
+<p style="position:absolute;top:285px;left:185px;white-space:nowrap" class="ft04">environment variables</p>
+<p style="position:absolute;top:329px;left:185px;white-space:nowrap" class="ft07">The bash shell has many environment variables. You may be amazed at the&#160;<br/>range of items these variables store. The handy thing is that you can change&#160;<br/>anything that’s stored in a variable to suit your needs. Table 17-1 lists the&#160;<br/>environment variables you’re most likely to want to work with.</p>
+<p style="position:absolute;top:436px;left:203px;white-space:nowrap" class="ft01"><b>Table 17-1&#160;</b></p>
+<p style="position:absolute;top:436px;left:323px;white-space:nowrap" class="ft01"><b>Commonly Used bash Environment Variables</b></p>
+<p style="position:absolute;top:464px;left:200px;white-space:nowrap" class="ft08"><i><b>Environment&#160;<br/>Variable</b></i></p>
+<p style="position:absolute;top:464px;left:314px;white-space:nowrap" class="ft05"><i><b>Purpose</b></i></p>
+<p style="position:absolute;top:464px;left:560px;white-space:nowrap" class="ft05"><i><b>Value</b></i></p>
+<p style="position:absolute;top:505px;left:200px;white-space:nowrap" class="ft03">HISTSIZE</p>
+<p style="position:absolute;top:503px;left:314px;white-space:nowrap" class="ft09">Determines the number of previously&#160;<br/>typed commands that are stored.</p>
+<p style="position:absolute;top:503px;left:560px;white-space:nowrap" class="ft09">Number of&#160;<br/>commands</p>
+<p style="position:absolute;top:544px;left:200px;white-space:nowrap" class="ft03">HOME</p>
+<p style="position:absolute;top:542px;left:314px;white-space:nowrap" class="ft09">Sets the location of your home&#160;<br/>directory.</p>
+<p style="position:absolute;top:542px;left:560px;white-space:nowrap" class="ft09">The path to your&#160;<br/>home directory</p>
+<p style="position:absolute;top:583px;left:200px;white-space:nowrap" class="ft03">MAILCHECK</p>
+<p style="position:absolute;top:581px;left:314px;white-space:nowrap" class="ft06">Sets how often the&#160;</p>
+<p style="position:absolute;top:583px;left:423px;white-space:nowrap" class="ft03">bash</p>
+<p style="position:absolute;top:581px;left:457px;white-space:nowrap" class="ft06">&#160;shell&#160;</p>
+<p style="position:absolute;top:598px;left:314px;white-space:nowrap" class="ft09">checks for new mail in your mailbox.&#160;<br/>If mail has arrived, you see a message&#160;<br/>similar to&#160;</p>
+<p style="position:absolute;top:632px;left:369px;white-space:nowrap" class="ft03">You have new mail</p>
+<p style="position:absolute;top:631px;left:514px;white-space:nowrap" class="ft06">&#160;</p>
+<p style="position:absolute;top:647px;left:314px;white-space:nowrap" class="ft09">the next time you do something at the&#160;<br/>command prompt.</p>
+<p style="position:absolute;top:581px;left:560px;white-space:nowrap" class="ft09">Number of seconds&#160;<br/>to wait between&#160;<br/>checks</p>
+<p style="position:absolute;top:688px;left:200px;white-space:nowrap" class="ft03">PATH</p>
+<p style="position:absolute;top:686px;left:314px;white-space:nowrap" class="ft06">Sets the directories that&#160;</p>
+<p style="position:absolute;top:688px;left:452px;white-space:nowrap" class="ft03">bash</p>
+<p style="position:absolute;top:686px;left:486px;white-space:nowrap" class="ft06">&#160;looks&#160;</p>
+<p style="position:absolute;top:703px;left:314px;white-space:nowrap" class="ft09">in, and set the order to look in them to&#160;<br/>find a program name you type at the&#160;<br/>command prompt.</p>
+<p style="position:absolute;top:686px;left:560px;white-space:nowrap" class="ft09">Colon-separated&#160;<br/>directories</p>
+<p style="position:absolute;top:760px;left:200px;white-space:nowrap" class="ft03">PS1</p>
+<p style="position:absolute;top:758px;left:314px;white-space:nowrap" class="ft06">Sets your command prompt.</p>
+<p style="position:absolute;top:758px;left:560px;white-space:nowrap" class="ft09">Command and&#160;<br/>formatting charac-<br/>ters used to form&#160;<br/>the prompt</p>
+<p style="position:absolute;top:861px;left:185px;white-space:nowrap" class="ft07">Most environment variables are established for you by the system&#160;<br/>Administrator or perhaps by the shell itself. These variables are mostly read&#160;<br/>by programs to gather information. You don’t need to change their values —&#160;</p>
+</div>
+</body>
+</html>

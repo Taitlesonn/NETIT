@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="" xml:lang="">
+<head>
+<title>Page 370</title>
+
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+<style type="text/css">
+<!--
+	p {margin: 0; padding: 0;}	.ft00{font-size:36px;font-family:IScriptSTD;color:#000000;}
+	.ft01{font-size:18px;font-family:UniversLTStd;color:#000000;}
+	.ft02{font-size:14px;font-family:UniversalStd-NewswithCommPi;color:#000000;}
+	.ft03{font-size:14px;font-family:CheltenhamStd;color:#000000;}
+	.ft04{font-size:14px;font-family:CheltenhamStd-Book;color:#000000;}
+	.ft05{font-size:30px;font-family:IScriptSTD;color:#000000;}
+	.ft06{font-size:14px;line-height:16px;font-family:CheltenhamStd-Book;color:#000000;}
+-->
+</style>
+</head>
+<body bgcolor="#A0A0A0" vlink="blue" link="blue">
+<div id="page370-div" style="position:relative;width:796px;height:999px;">
+<img width="796" height="999" src="linux370.png" alt="background image"/>
+<p style="position:absolute;top:72px;left:710px;white-space:nowrap" class="ft00">357</p>
+<p style="position:absolute;top:84px;left:300px;white-space:nowrap" class="ft01"><b>&#160;Chapter 19: A Secure Linux Box Is a Happy Linux Box</b></p>
+<p style="position:absolute;top:132px;left:95px;white-space:nowrap" class="ft02">&#160;✓&#160;</p>
+<p style="position:absolute;top:136px;left:216px;white-space:nowrap" class="ft03"><b>iptables:</b></p>
+<p style="position:absolute;top:136px;left:273px;white-space:nowrap" class="ft04">&#160;This service is your firewall (more on the firewall in the section&#160;</p>
+<p style="position:absolute;top:152px;left:216px;white-space:nowrap" class="ft06">“Controlling and adjusting your firewall,” later in this chapter). If you&#160;<br/>need to shut down the firewall briefly, you can do so using the Service&#160;<br/>Control dialog box.</p>
+<p style="position:absolute;top:207px;left:95px;white-space:nowrap" class="ft02">&#160;✓&#160;</p>
+<p style="position:absolute;top:210px;left:216px;white-space:nowrap" class="ft03"><b>ip6tables:</b></p>
+<p style="position:absolute;top:210px;left:281px;white-space:nowrap" class="ft04">&#160;This service is for the new, improved IP version 6 protocol,&#160;</p>
+<p style="position:absolute;top:226px;left:216px;white-space:nowrap" class="ft06">which isn’t being used in most of the world yet. You can most likely turn&#160;<br/>this off without breaking anything.</p>
+<p style="position:absolute;top:264px;left:95px;white-space:nowrap" class="ft02">&#160;✓&#160;</p>
+<p style="position:absolute;top:268px;left:216px;white-space:nowrap" class="ft03"><b>mdmonitor:</b></p>
+<p style="position:absolute;top:268px;left:295px;white-space:nowrap" class="ft04">&#160;Shut this service off unless you implemented software RAID&#160;</p>
+<p style="position:absolute;top:284px;left:216px;white-space:nowrap" class="ft06">during your installation. (You had to go out of your way to do so, so if&#160;<br/>you don’t know, you probably didn’t!) If you change this service to on or&#160;<br/>off, make sure that mdmpd is also on or off (matching) as well.</p>
+<p style="position:absolute;top:339px;left:95px;white-space:nowrap" class="ft02">&#160;✓&#160;</p>
+<p style="position:absolute;top:342px;left:216px;white-space:nowrap" class="ft03"><b>pcscd:</b></p>
+<p style="position:absolute;top:342px;left:258px;white-space:nowrap" class="ft04">&#160;This is the PC/SC smart card reader program. If you’re not using a&#160;</p>
+<p style="position:absolute;top:358px;left:216px;white-space:nowrap" class="ft04">smart card to log in to your Fedora computer, you can turn this off.</p>
+<p style="position:absolute;top:380px;left:95px;white-space:nowrap" class="ft02">&#160;✓&#160;</p>
+<p style="position:absolute;top:383px;left:216px;white-space:nowrap" class="ft03"><b>sendmail:</b></p>
+<p style="position:absolute;top:383px;left:281px;white-space:nowrap" class="ft04">&#160;Even though you’re probably not in need of a full-fledged&#160;</p>
+<p style="position:absolute;top:400px;left:216px;white-space:nowrap" class="ft06">mail server, shutting this service off can have unintended consequences&#160;<br/>because it’s used to handle internal mail on your system. Leave it on.</p>
+<p style="position:absolute;top:438px;left:95px;white-space:nowrap" class="ft02">&#160;✓&#160;</p>
+<p style="position:absolute;top:441px;left:216px;white-space:nowrap" class="ft03"><b>smartd:</b></p>
+<p style="position:absolute;top:441px;left:266px;white-space:nowrap" class="ft04">&#160;If you’re getting error messages for this one at boot time, shut it&#160;</p>
+<p style="position:absolute;top:457px;left:216px;white-space:nowrap" class="ft06">off. It only works with certain IDE hard drives, so if you’re not using that&#160;<br/>type of drive, it kicks out a (harmless) error message.</p>
+<p style="position:absolute;top:495px;left:95px;white-space:nowrap" class="ft02">&#160;✓&#160;</p>
+<p style="position:absolute;top:499px;left:216px;white-space:nowrap" class="ft03"><b>spamassassin:</b></p>
+<p style="position:absolute;top:499px;left:309px;white-space:nowrap" class="ft04">&#160;If you want to use this program in conjunction with your&#160;</p>
+<p style="position:absolute;top:515px;left:216px;white-space:nowrap" class="ft06">mail program, go for it! This program is used by default with Evolution&#160;<br/>in Fedora (see Chapter 10), so if you’re using this combination of tools,&#160;<br/>leave this service on.</p>
+<p style="position:absolute;top:570px;left:95px;white-space:nowrap" class="ft02">&#160;✓&#160;</p>
+<p style="position:absolute;top:573px;left:216px;white-space:nowrap" class="ft03"><b>yum:</b></p>
+<p style="position:absolute;top:573px;left:249px;white-space:nowrap" class="ft04">&#160;On Fedora, this program lets you run a nightly automatic update if&#160;</p>
+<p style="position:absolute;top:589px;left:216px;white-space:nowrap" class="ft04">your machine is connected to the Internet overnight.</p>
+<p style="position:absolute;top:622px;left:95px;white-space:nowrap" class="ft04">&#160;</p>
+<p style="position:absolute;top:622px;left:185px;white-space:nowrap" class="ft06">In Fedora, when you select or deselect a service, make sure that it does what&#160;<br/>you intended — either does or doesn’t turn on when you reboot. Use the Start&#160;<br/>and Stop icons in the toolbar to start or stop a service immediately; you can&#160;<br/>use the bottom-right part of the dialog box to see whether the service is run-<br/>ning right now.</p>
+<p style="position:absolute;top:740px;left:185px;white-space:nowrap" class="ft05">Controlling and adjusting your firewall</p>
+<p style="position:absolute;top:784px;left:185px;white-space:nowrap" class="ft06">Even better than (but just as essential as) turning off unnecessary services&#160;<br/>is to make sure that you have a firewall in place. Using a firewall is like put-<br/>ting a big bunker around your house, with openings that only fit the visitors&#160;<br/>who want to do certain kinds of tasks. Friends could fit in through one door,&#160;<br/>family through another, and package deliveries through another.</p>
+</div>
+</body>
+</html>

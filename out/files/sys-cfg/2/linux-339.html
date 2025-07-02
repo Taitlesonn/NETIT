@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="" xml:lang="">
+<head>
+<title>Page 339</title>
+
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+<style type="text/css">
+<!--
+	p {margin: 0; padding: 0;}	.ft00{font-size:36px;font-family:IScriptSTD;color:#000000;}
+	.ft01{font-size:18px;font-family:UniversLTStd;color:#000000;}
+	.ft02{font-size:14px;font-family:CheltenhamStd-Book;color:#000000;}
+	.ft03{font-size:14px;font-family:CheltenhamStd-BookItalic;color:#000000;}
+	.ft04{font-size:14px;font-family:WileyCodeSTD;color:#000000;}
+	.ft05{font-size:14px;line-height:16px;font-family:CheltenhamStd-Book;color:#000000;}
+	.ft06{font-size:14px;line-height:15px;font-family:WileyCodeSTD;color:#000000;}
+-->
+</style>
+</head>
+<body bgcolor="#A0A0A0" vlink="blue" link="blue">
+<div id="page339-div" style="position:relative;width:796px;height:999px;">
+<img width="796" height="999" src="linux339.png" alt="background image"/>
+<p style="position:absolute;top:72px;left:27px;white-space:nowrap" class="ft00">326</p>
+<p style="position:absolute;top:82px;left:108px;white-space:nowrap" class="ft01"><b>Part IV: Junior Administrator Boot Camp&#160;</b></p>
+<p style="position:absolute;top:135px;left:185px;white-space:nowrap" class="ft02">Take a look at a different kind of string that the shell interprets differently: an&#160;</p>
+<p style="position:absolute;top:151px;left:185px;white-space:nowrap" class="ft03"><i>interpolated string.&#160;</i></p>
+<p style="position:absolute;top:151px;left:306px;white-space:nowrap" class="ft02">An&#160;</p>
+<p style="position:absolute;top:151px;left:328px;white-space:nowrap" class="ft03"><i>interpolated</i></p>
+<p style="position:absolute;top:151px;left:403px;white-space:nowrap" class="ft02">&#160;value is one in which the shell interprets&#160;</p>
+<p style="position:absolute;top:168px;left:185px;white-space:nowrap" class="ft05">special characters before processing the value. Rather than using single&#160;<br/>quotes, this time you use the same example with double quotes:</p>
+<p style="position:absolute;top:217px;left:194px;white-space:nowrap" class="ft04">echo “Hello, my name is $USER”</p>
+<p style="position:absolute;top:249px;left:185px;white-space:nowrap" class="ft02">Notice what the output is this time:</p>
+<p style="position:absolute;top:282px;left:194px;white-space:nowrap" class="ft04">Hello, my name is rich</p>
+<p style="position:absolute;top:314px;left:185px;white-space:nowrap" class="ft05">Instead of displaying the exact text you provided, the shell replaces the vari-<br/>able name, designated with a dollar sign, with the actual value stored in that&#160;<br/>variable.</p>
+<p style="position:absolute;top:380px;left:94px;white-space:nowrap" class="ft02">&#160;</p>
+<p style="position:absolute;top:380px;left:184px;white-space:nowrap" class="ft02">Why did you use single quotes in the first example but double quotes with the</p>
+<p style="position:absolute;top:381px;left:680px;white-space:nowrap" class="ft04">&#160;</p>
+<p style="position:absolute;top:396px;left:185px;white-space:nowrap" class="ft02">second one? The items with the backslashes (</p>
+<p style="position:absolute;top:397px;left:476px;white-space:nowrap" class="ft04">\</p>
+<p style="position:absolute;top:396px;left:484px;white-space:nowrap" class="ft02">) are&#160;</p>
+<p style="position:absolute;top:396px;left:517px;white-space:nowrap" class="ft03"><i>interpreted&#160;</i></p>
+<p style="position:absolute;top:396px;left:588px;white-space:nowrap" class="ft02">one way or&#160;</p>
+<p style="position:absolute;top:413px;left:185px;white-space:nowrap" class="ft05">another. However, if you use double quotes, they’re interpreted only once, so&#160;<br/>the item that lists what directory you’re in changes only the first time. If you&#160;<br/>use single quotes, the variables are interpreted every time you do something.</p>
+<p style="position:absolute;top:479px;left:185px;white-space:nowrap" class="ft05">If you’re going to play around with environment variables, start by using&#160;<br/>the methods we discuss in this section. After you’re comfortable with any&#160;<br/>changes you have made, you can make your changes permanent by opening&#160;<br/>the&#160;</p>
+<p style="position:absolute;top:529px;left:209px;white-space:nowrap" class="ft04">~/.bashrc</p>
+<p style="position:absolute;top:528px;left:286px;white-space:nowrap" class="ft02">&#160;file and adding the same text there. The next time you log in,&#160;</p>
+<p style="position:absolute;top:545px;left:185px;white-space:nowrap" class="ft05">the changes go into effect. You can make changes for all your users’ profiles&#160;<br/>in&#160;</p>
+<p style="position:absolute;top:562px;left:200px;white-space:nowrap" class="ft04">/etc/profile</p>
+<p style="position:absolute;top:561px;left:303px;white-space:nowrap" class="ft02">&#160;as well.</p>
+<p style="position:absolute;top:594px;left:95px;white-space:nowrap" class="ft02">&#160;</p>
+<p style="position:absolute;top:594px;left:185px;white-space:nowrap" class="ft05">If you experiment heavily with these files, create a separate user account so&#160;<br/>that you can do whatever you want without messing up your own login. This&#160;<br/>advice especially goes for&#160;</p>
+<p style="position:absolute;top:628px;left:353px;white-space:nowrap" class="ft04">/etc/profile</p>
+<p style="position:absolute;top:627px;left:455px;white-space:nowrap" class="ft02">. You can damage everyone’s logins&#160;</p>
+<p style="position:absolute;top:644px;left:185px;white-space:nowrap" class="ft02">with this one! To create a separate&#160;</p>
+<p style="position:absolute;top:645px;left:409px;white-space:nowrap" class="ft04">/etc/profile</p>
+<p style="position:absolute;top:644px;left:512px;white-space:nowrap" class="ft02">, you can make a backup&#160;</p>
+<p style="position:absolute;top:660px;left:185px;white-space:nowrap" class="ft02">by typing&#160;</p>
+<p style="position:absolute;top:661px;left:248px;white-space:nowrap" class="ft04">cp /etc/profile /etc/profile.original</p>
+<p style="position:absolute;top:660px;left:565px;white-space:nowrap" class="ft02">. Then edit&#160;</p>
+<p style="position:absolute;top:661px;left:637px;white-space:nowrap" class="ft04">/etc/</p>
+<p style="position:absolute;top:678px;left:185px;white-space:nowrap" class="ft04">profile</p>
+<p style="position:absolute;top:677px;left:244px;white-space:nowrap" class="ft02">&#160;all you like, knowing that you can always delete it with the&#160;</p>
+<p style="position:absolute;top:678px;left:624px;white-space:nowrap" class="ft04">rm</p>
+<p style="position:absolute;top:677px;left:641px;white-space:nowrap" class="ft02">&#160;com-</p>
+<p style="position:absolute;top:693px;left:185px;white-space:nowrap" class="ft02">mand and use the&#160;</p>
+<p style="position:absolute;top:694px;left:302px;white-space:nowrap" class="ft04">mv</p>
+<p style="position:absolute;top:693px;left:319px;white-space:nowrap" class="ft02">&#160;command to rename&#160;</p>
+<p style="position:absolute;top:694px;left:459px;white-space:nowrap" class="ft04">/etc/profile.original</p>
+<p style="position:absolute;top:693px;left:639px;white-space:nowrap" class="ft02">&#160;to&#160;</p>
+<p style="position:absolute;top:711px;left:185px;white-space:nowrap" class="ft04">/etc/profile</p>
+<p style="position:absolute;top:710px;left:287px;white-space:nowrap" class="ft02">.</p>
+<p style="position:absolute;top:743px;left:185px;white-space:nowrap" class="ft05">To create an environment variable from scratch, you typically name it with&#160;<br/>all capital letters and then you have to export it — like this, for example:</p>
+<p style="position:absolute;top:792px;left:194px;white-space:nowrap" class="ft06">CUSTOMVAR=”new variable”<br/>export CUSTOMVAR</p>
+<p style="position:absolute;top:839px;left:185px;white-space:nowrap" class="ft05">Don’t be too discouraged if you don’t understand all this variable stuff right&#160;<br/>now. As you become more proficient with Linux, you should explore&#160;</p>
+<p style="position:absolute;top:855px;left:631px;white-space:nowrap" class="ft03"><i>shell&#160;</i></p>
+<p style="position:absolute;top:872px;left:185px;white-space:nowrap" class="ft03"><i>scripting.</i></p>
+<p style="position:absolute;top:872px;left:241px;white-space:nowrap" class="ft02">&#160;Shell scripting is the art of creating computer programs with just&#160;</p>
+<p style="position:absolute;top:888px;left:185px;white-space:nowrap" class="ft05">the shell. Most Linux and UNIX administrators speak shell-script language as&#160;<br/>easily as you and I speak our native tongues.</p>
+</div>
+</body>
+</html>

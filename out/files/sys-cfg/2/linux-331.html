@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="" xml:lang="">
+<head>
+<title>Page 331</title>
+
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+<style type="text/css">
+<!--
+	p {margin: 0; padding: 0;}	.ft00{font-size:36px;font-family:IScriptSTD;color:#000000;}
+	.ft01{font-size:18px;font-family:UniversLTStd;color:#000000;}
+	.ft02{font-size:14px;font-family:CheltenhamStd-Book;color:#000000;}
+	.ft03{font-size:14px;font-family:WileyCodeSTD;color:#000000;}
+	.ft04{font-size:14px;font-family:CheltenhamStd-BookItalic;color:#000000;}
+	.ft05{font-size:14px;line-height:16px;font-family:CheltenhamStd-Book;color:#000000;}
+	.ft06{font-size:14px;line-height:15px;font-family:WileyCodeSTD;color:#000000;}
+-->
+</style>
+</head>
+<body bgcolor="#A0A0A0" vlink="blue" link="blue">
+<div id="page331-div" style="position:relative;width:796px;height:999px;">
+<img width="796" height="999" src="linux331.png" alt="background image"/>
+<p style="position:absolute;top:72px;left:27px;white-space:nowrap" class="ft00">318</p>
+<p style="position:absolute;top:82px;left:108px;white-space:nowrap" class="ft01"><b>Part IV: Junior Administrator Boot Camp&#160;</b></p>
+<p style="position:absolute;top:135px;left:185px;white-space:nowrap" class="ft02">Consider this example. Start with a simple command. The&#160;</p>
+<p style="position:absolute;top:136px;left:562px;white-space:nowrap" class="ft03">du</p>
+<p style="position:absolute;top:135px;left:579px;white-space:nowrap" class="ft02">&#160;command lists&#160;</p>
+<p style="position:absolute;top:151px;left:185px;white-space:nowrap" class="ft05">the contents of the directory you’re now in, along with its subdirectories and&#160;<br/>how much hard-drive space it takes up, with a total at the end. Try typing&#160;<br/>just the&#160;</p>
+<p style="position:absolute;top:186px;left:237px;white-space:nowrap" class="ft03">du</p>
+<p style="position:absolute;top:184px;left:254px;white-space:nowrap" class="ft02">&#160;command by itself. You see a long listing of files that looks some-</p>
+<p style="position:absolute;top:201px;left:185px;white-space:nowrap" class="ft02">thing like this:</p>
+<p style="position:absolute;top:234px;left:194px;white-space:nowrap" class="ft06">rich@testbox:~$ du<br/>4 &#160; &#160; &#160;./.local/share/totem<br/>8 &#160; &#160; &#160;./.local/share<br/>12 &#160; &#160; &#160;./.local<br/>4 &#160; &#160; &#160;./.config/gnome-session/saved-session<br/>8 &#160; &#160; &#160;./.config/gnome-session<br/>8 &#160; &#160; &#160;./.config/gtk-2.0<br/>8 &#160; &#160; &#160;./.config/totem<br/>40 &#160; &#160; &#160;./.config<br/>44 &#160; &#160; &#160;./.pulse</p>
+<p style="position:absolute;top:401px;left:185px;white-space:nowrap" class="ft05">That’s neat, but it probably raises more questions than it answers. The&#160;<br/>output gives you a long listing of data, but of what? Do those numbers repre-<br/>sent bytes, kilobytes, or messages from outer space? To clarify, try adding a&#160;<br/>simple option to your command:</p>
+<p style="position:absolute;top:483px;left:194px;white-space:nowrap" class="ft06">rich@testbox:~$ du -h<br/>4.0K &#160; &#160; &#160;./.local/share/totem<br/>8.0K &#160; &#160; &#160;./.local/share<br/>12K &#160; &#160; &#160;./.local<br/>4.0K &#160; &#160; &#160;./.config/gnome-session/saved-session<br/>8.0K &#160; &#160; &#160;./.config/gnome-session<br/>8.0K &#160; &#160; &#160;./.config/gtk-2.0<br/>8.0K &#160; &#160; &#160;./.config/totem<br/>40K &#160; &#160; &#160;./.config<br/>44K &#160; &#160; &#160;./.pulse</p>
+<p style="position:absolute;top:650px;left:185px;white-space:nowrap" class="ft05">You’re still issuing the same command, but now you’re providing an addi-<br/>tional instruction about what you want displayed. The&#160;</p>
+<p style="position:absolute;top:668px;left:540px;white-space:nowrap" class="ft03">-h</p>
+<p style="position:absolute;top:666px;left:557px;white-space:nowrap" class="ft02">&#160;option tells&#160;</p>
+<p style="position:absolute;top:668px;left:638px;white-space:nowrap" class="ft03">du</p>
+<p style="position:absolute;top:666px;left:655px;white-space:nowrap" class="ft02">&#160;to&#160;</p>
+<p style="position:absolute;top:683px;left:185px;white-space:nowrap" class="ft02">show you the information in terms that humans can read more easily. Now&#160;</p>
+<p style="position:absolute;top:699px;left:185px;white-space:nowrap" class="ft04"><i>M</i></p>
+<p style="position:absolute;top:699px;left:196px;white-space:nowrap" class="ft02">s,&#160;</p>
+<p style="position:absolute;top:699px;left:210px;white-space:nowrap" class="ft04"><i>K</i></p>
+<p style="position:absolute;top:699px;left:219px;white-space:nowrap" class="ft02">s, and&#160;</p>
+<p style="position:absolute;top:699px;left:261px;white-space:nowrap" class="ft04"><i>G</i></p>
+<p style="position:absolute;top:699px;left:271px;white-space:nowrap" class="ft02">s appear next to the numbers so you can see how big these&#160;</p>
+<p style="position:absolute;top:716px;left:185px;white-space:nowrap" class="ft05">numbers actually are. But wait — there’s more. What if you just want to know&#160;<br/>the total amount of disk space this directory and its subdirectories are taking&#160;<br/>up? That calls for the&#160;</p>
+<p style="position:absolute;top:750px;left:326px;white-space:nowrap" class="ft03">-s</p>
+<p style="position:absolute;top:749px;left:343px;white-space:nowrap" class="ft02">&#160;flag:</p>
+<p style="position:absolute;top:782px;left:194px;white-space:nowrap" class="ft06">rich@testbox:~$ du -s<br/>24064 &#160; &#160; &#160;.<br/>rich@testbox:~$</p>
+<p style="position:absolute;top:843px;left:185px;white-space:nowrap" class="ft05">What if you want the total for a different directory? Or just for one of your&#160;<br/>subdirectories? The following command shows, in a human-readable way,&#160;<br/>how much hard drive space the Music directory takes up:</p>
+<p style="position:absolute;top:909px;left:194px;white-space:nowrap" class="ft03">du -sh ~/Music</p>
+</div>
+</body>
+</html>

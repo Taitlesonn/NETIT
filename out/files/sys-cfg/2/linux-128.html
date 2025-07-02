@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="" xml:lang="">
+<head>
+<title>Page 128</title>
+
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+<style type="text/css">
+<!--
+	p {margin: 0; padding: 0;}	.ft00{font-size:36px;font-family:IScriptSTD;color:#000000;}
+	.ft01{font-size:18px;font-family:UniversLTStd;color:#000000;}
+	.ft02{font-size:14px;font-family:UniversalStd-NewswithCommPi;color:#000000;}
+	.ft03{font-size:14px;font-family:CheltenhamStd-Book;color:#000000;}
+	.ft04{font-size:14px;font-family:WileyCodeSTD;color:#000000;}
+	.ft05{font-size:30px;font-family:IScriptSTD;color:#000000;}
+	.ft06{font-size:14px;font-family:CheltenhamStd-BookItalic;color:#000000;}
+	.ft07{font-size:18px;font-family:IScriptSTD;color:#000000;}
+	.ft08{font-size:14px;line-height:16px;font-family:CheltenhamStd-Book;color:#000000;}
+	.ft09{font-size:14px;line-height:15px;font-family:WileyCodeSTD;color:#000000;}
+-->
+</style>
+</head>
+<body bgcolor="#A0A0A0" vlink="blue" link="blue">
+<div id="page128-div" style="position:relative;width:796px;height:999px;">
+<img width="796" height="999" src="linux128.png" alt="background image"/>
+<p style="position:absolute;top:72px;left:710px;white-space:nowrap" class="ft00">115</p>
+<p style="position:absolute;top:84px;left:339px;white-space:nowrap" class="ft01"><b>&#160;Chapter 6: Getting to Know the Linux Filesystem</b></p>
+<p style="position:absolute;top:132px;left:95px;white-space:nowrap" class="ft02">&#160;✓&#160;</p>
+<p style="position:absolute;top:136px;left:216px;white-space:nowrap" class="ft08">The fifth item is the file’s size in bytes. All directories show up as&#160;<br/>4,096 bytes. Everything else has its own size. You can tell an empty file&#160;<br/>because its size will be 0 bytes.</p>
+<p style="position:absolute;top:190px;left:95px;white-space:nowrap" class="ft02">&#160;✓&#160;</p>
+<p style="position:absolute;top:193px;left:216px;white-space:nowrap" class="ft08">The sixth and seventh entries are all related to the date and time the&#160;<br/>file was last changed: the date in YYYY-MM-DD format, and the time in&#160;<br/>24-hour format (</p>
+<p style="position:absolute;top:228px;left:322px;white-space:nowrap" class="ft04">17:22</p>
+<p style="position:absolute;top:226px;left:365px;white-space:nowrap" class="ft03">).</p>
+<p style="position:absolute;top:248px;left:95px;white-space:nowrap" class="ft02">&#160;✓&#160;</p>
+<p style="position:absolute;top:251px;left:216px;white-space:nowrap" class="ft03">The ninth item is the filename (for example,&#160;</p>
+<p style="position:absolute;top:252px;left:503px;white-space:nowrap" class="ft04">bash history</p>
+<p style="position:absolute;top:251px;left:606px;white-space:nowrap" class="ft03">, in the&#160;</p>
+<p style="position:absolute;top:268px;left:216px;white-space:nowrap" class="ft03">third row).</p>
+<p style="position:absolute;top:301px;left:95px;white-space:nowrap" class="ft03">&#160;</p>
+<p style="position:absolute;top:301px;left:185px;white-space:nowrap" class="ft03">Linux uses two special files that you see in your file listings. The single dot (</p>
+<p style="position:absolute;top:302px;left:670px;white-space:nowrap" class="ft04">.</p>
+<p style="position:absolute;top:301px;left:678px;white-space:nowrap" class="ft03">)&#160;</p>
+<p style="position:absolute;top:317px;left:185px;white-space:nowrap" class="ft03">file represents the current directory, while the double-dot (</p>
+<p style="position:absolute;top:318px;left:564px;white-space:nowrap" class="ft04">..</p>
+<p style="position:absolute;top:317px;left:581px;white-space:nowrap" class="ft03">) file represents&#160;</p>
+<p style="position:absolute;top:334px;left:185px;white-space:nowrap" class="ft08">the parent directory. You can use these directory aliases when maneuvering&#160;<br/>around the system from the command line.</p>
+<p style="position:absolute;top:401px;left:185px;white-space:nowrap" class="ft05">A permissions primer</p>
+<p style="position:absolute;top:445px;left:185px;white-space:nowrap" class="ft08">If you find yourself scratching your head when looking at parts of that long-<br/>format file listing, don’t worry. The group of nine after the first letter is the&#160;<br/>set of&#160;</p>
+<p style="position:absolute;top:478px;left:224px;white-space:nowrap" class="ft06"><i>permissions</i></p>
+<p style="position:absolute;top:478px;left:299px;white-space:nowrap" class="ft03">&#160;(also called a&#160;</p>
+<p style="position:absolute;top:478px;left:392px;white-space:nowrap" class="ft06"><i>permission set</i></p>
+<p style="position:absolute;top:478px;left:482px;white-space:nowrap" class="ft03">) for the file or directory. Linux,&#160;</p>
+<p style="position:absolute;top:495px;left:185px;white-space:nowrap" class="ft08">UNIX, and even Mac OS X use permissions as a way of providing file and&#160;<br/>directory security by giving you the means to specify exactly who can look at&#160;<br/>your files, who can change them, and even who can run your programs. You&#160;<br/>need this capability when you have a bunch of different users on the same&#160;<br/>machine, networked to the world.</p>
+<p style="position:absolute;top:596px;left:185px;white-space:nowrap" class="ft07">Checking out the triplets</p>
+<p style="position:absolute;top:621px;left:185px;white-space:nowrap" class="ft08">Each permission set consists of three triplets. Each of the triplets has the&#160;<br/>same basic structure but controls a different aspect of who can use what.&#160;<br/>Consider the long-format listing for&#160;</p>
+<p style="position:absolute;top:655px;left:416px;white-space:nowrap" class="ft04">/home/dee</p>
+<p style="position:absolute;top:654px;left:493px;white-space:nowrap" class="ft03">&#160;in the following code:</p>
+<p style="position:absolute;top:687px;left:194px;white-space:nowrap" class="ft09">rich@testbox:~$ ls -al<br/>total 2480<br/>drwxr-xr-x 30 rich rich 4096 2009-05-16 13:58 .<br/>drwxr-xr-x &#160;3 root root 4096 2009-05-16 09:04 ..<br/>-rw-r--r-- &#160;1 rich rich &#160;220 2009-05-16 09:04 .bash_logout<br/>-rw-r--r-- &#160;1 rich rich 3115 2009-05-16 09:04 .bashrc<br/>drwxr-xr-x &#160;2 rich rich 4096 2009-05-16 09:20 .cache<br/>drwxr-xr-x &#160;4 rich rich 4096 2009-05-16 09:23 .config<br/>drwx------ &#160;3 rich rich 4096 2009-05-16 09:20 .dbus<br/>drwxr-xr-x &#160;2 rich rich 4096 2009-05-16 09:20 Desktop</p>
+</div>
+</body>
+</html>

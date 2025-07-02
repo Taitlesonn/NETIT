@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="" xml:lang="">
+<head>
+<title>Page 130</title>
+
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+<style type="text/css">
+<!--
+	p {margin: 0; padding: 0;}	.ft00{font-size:36px;font-family:IScriptSTD;color:#000000;}
+	.ft01{font-size:18px;font-family:UniversLTStd;color:#000000;}
+	.ft02{font-size:14px;font-family:UniversalStd-NewswithCommPi;color:#000000;}
+	.ft03{font-size:14px;font-family:CheltenhamStd;color:#000000;}
+	.ft04{font-size:14px;font-family:WileyCodeSTD;color:#000000;}
+	.ft05{font-size:14px;font-family:CheltenhamStd-Book;color:#000000;}
+	.ft06{font-size:14px;font-family:CheltenhamStd-BookItalic;color:#000000;}
+	.ft07{font-size:18px;font-family:IScriptSTD;color:#000000;}
+	.ft08{font-size:14px;line-height:16px;font-family:CheltenhamStd-Book;color:#000000;}
+	.ft09{font-size:14px;line-height:15px;font-family:WileyCodeSTD;color:#000000;}
+-->
+</style>
+</head>
+<body bgcolor="#A0A0A0" vlink="blue" link="blue">
+<div id="page130-div" style="position:relative;width:796px;height:999px;">
+<img width="796" height="999" src="linux130.png" alt="background image"/>
+<p style="position:absolute;top:72px;left:710px;white-space:nowrap" class="ft00">117</p>
+<p style="position:absolute;top:84px;left:339px;white-space:nowrap" class="ft01"><b>&#160;Chapter 6: Getting to Know the Linux Filesystem</b></p>
+<p style="position:absolute;top:132px;left:95px;white-space:nowrap" class="ft02">&#160;✓&#160;</p>
+<p style="position:absolute;top:136px;left:216px;white-space:nowrap" class="ft03"><b>The third character is either an&#160;</b></p>
+<p style="position:absolute;top:137px;left:420px;white-space:nowrap" class="ft04">x</p>
+<p style="position:absolute;top:136px;left:428px;white-space:nowrap" class="ft05">&#160;</p>
+<p style="position:absolute;top:136px;left:432px;white-space:nowrap" class="ft03"><b>or a dash.</b></p>
+<p style="position:absolute;top:136px;left:495px;white-space:nowrap" class="ft05">&#160;The&#160;</p>
+<p style="position:absolute;top:137px;left:526px;white-space:nowrap" class="ft04">x</p>
+<p style="position:absolute;top:136px;left:534px;white-space:nowrap" class="ft05">&#160;stands for&#160;</p>
+<p style="position:absolute;top:136px;left:603px;white-space:nowrap" class="ft06"><i>execute</i></p>
+<p style="position:absolute;top:136px;left:649px;white-space:nowrap" class="ft05">&#160;per-</p>
+<p style="position:absolute;top:152px;left:216px;white-space:nowrap" class="ft05">mission. If&#160;</p>
+<p style="position:absolute;top:153px;left:282px;white-space:nowrap" class="ft04">x</p>
+<p style="position:absolute;top:152px;left:291px;white-space:nowrap" class="ft05">&#160;is set, the triplet allows the entity it stands for to access the&#160;</p>
+<p style="position:absolute;top:169px;left:216px;white-space:nowrap" class="ft05">files contained in this directory or to run the particular program in this file.</p>
+<p style="position:absolute;top:202px;left:95px;white-space:nowrap" class="ft05">&#160;</p>
+<p style="position:absolute;top:202px;left:185px;white-space:nowrap" class="ft05">In all cases, if the dash sits in place of&#160;</p>
+<p style="position:absolute;top:203px;left:428px;white-space:nowrap" class="ft04">r</p>
+<p style="position:absolute;top:202px;left:437px;white-space:nowrap" class="ft05">,&#160;</p>
+<p style="position:absolute;top:203px;left:444px;white-space:nowrap" class="ft04">w</p>
+<p style="position:absolute;top:202px;left:453px;white-space:nowrap" class="ft05">, or&#160;</p>
+<p style="position:absolute;top:203px;left:477px;white-space:nowrap" class="ft04">x</p>
+<p style="position:absolute;top:202px;left:486px;white-space:nowrap" class="ft05">, the triplet doesn’t allow the&#160;</p>
+<p style="position:absolute;top:218px;left:185px;white-space:nowrap" class="ft05">entity the read, write, or execute permission.</p>
+<p style="position:absolute;top:251px;left:185px;white-space:nowrap" class="ft05">The following sections describe owners and groups in more detail.</p>
+<p style="position:absolute;top:286px;left:185px;white-space:nowrap" class="ft07">Beware of owners</p>
+<p style="position:absolute;top:311px;left:185px;white-space:nowrap" class="ft08">You may have noticed by now that we talk a great deal about owners (users)&#160;<br/>and groups in Linux. Every file and directory has both of these components:&#160;<br/>a user from the&#160;</p>
+<p style="position:absolute;top:345px;left:287px;white-space:nowrap" class="ft04">/etc/passwd</p>
+<p style="position:absolute;top:344px;left:381px;white-space:nowrap" class="ft05">&#160;file that’s assigned as its owner and a group&#160;</p>
+<p style="position:absolute;top:361px;left:185px;white-space:nowrap" class="ft05">from the&#160;</p>
+<p style="position:absolute;top:362px;left:244px;white-space:nowrap" class="ft04">/etc/group</p>
+<p style="position:absolute;top:361px;left:329px;white-space:nowrap" class="ft05">&#160;that’s assigned as the group.</p>
+<p style="position:absolute;top:394px;left:185px;white-space:nowrap" class="ft08">Although an everyday user probably doesn’t need to change file owner-<br/>ships often, the root user does so regularly. If you add the file&#160;</p>
+<p style="position:absolute;top:411px;left:587px;white-space:nowrap" class="ft04">comments</p>
+<p style="position:absolute;top:410px;left:656px;white-space:nowrap" class="ft05">,&#160;</p>
+<p style="position:absolute;top:427px;left:185px;white-space:nowrap" class="ft05">for example, to&#160;</p>
+<p style="position:absolute;top:428px;left:286px;white-space:nowrap" class="ft04">/home/tom</p>
+<p style="position:absolute;top:427px;left:363px;white-space:nowrap" class="ft05">&#160;while you’re logged on as the&#160;</p>
+<p style="position:absolute;top:427px;left:560px;white-space:nowrap" class="ft06"><i>superuser</i></p>
+<p style="position:absolute;top:427px;left:620px;white-space:nowrap" class="ft05">&#160;(another&#160;</p>
+<p style="position:absolute;top:443px;left:185px;white-space:nowrap" class="ft08">term for the Administrator, who is the person who owns the root account),&#160;<br/>the root user owns that file. The user&#160;</p>
+<p style="position:absolute;top:461px;left:429px;white-space:nowrap" class="ft04">tom</p>
+<p style="position:absolute;top:460px;left:454px;white-space:nowrap" class="ft05">&#160;can’t do anything with it unless the&#160;</p>
+<p style="position:absolute;top:476px;left:185px;white-space:nowrap" class="ft05">file’s owner (</p>
+<p style="position:absolute;top:477px;left:269px;white-space:nowrap" class="ft04">root</p>
+<p style="position:absolute;top:476px;left:303px;white-space:nowrap" class="ft05">) sets the last triplet’s permissions to allow the&#160;</p>
+<p style="position:absolute;top:476px;left:611px;white-space:nowrap" class="ft06"><i>other</i></p>
+<p style="position:absolute;top:476px;left:644px;white-space:nowrap" class="ft05">&#160;folks&#160;</p>
+<p style="position:absolute;top:493px;left:185px;white-space:nowrap" class="ft08">(those who aren’t the file’s owner or in the specified group) to read and write&#160;<br/>to the file. But this method is a pretty sloppy way of doing things because the&#160;<br/>whole idea of permissions is to&#160;</p>
+<p style="position:absolute;top:526px;left:389px;white-space:nowrap" class="ft06"><i>reduce</i></p>
+<p style="position:absolute;top:526px;left:431px;white-space:nowrap" class="ft05">&#160;access, not to give everyone access.&#160;</p>
+<p style="position:absolute;top:542px;left:185px;white-space:nowrap" class="ft05">Instead, remember to change the file’s owner to the user&#160;</p>
+<p style="position:absolute;top:543px;left:555px;white-space:nowrap" class="ft04">tom</p>
+<p style="position:absolute;top:542px;left:581px;white-space:nowrap" class="ft05">. You do this&#160;</p>
+<p style="position:absolute;top:559px;left:185px;white-space:nowrap" class="ft05">with the&#160;</p>
+<p style="position:absolute;top:560px;left:242px;white-space:nowrap" class="ft04">chown</p>
+<p style="position:absolute;top:559px;left:284px;white-space:nowrap" class="ft05">&#160;(</p>
+<p style="position:absolute;top:559px;left:294px;white-space:nowrap" class="ft06"><i>ch</i></p>
+<p style="position:absolute;top:559px;left:308px;white-space:nowrap" class="ft05">ange&#160;</p>
+<p style="position:absolute;top:559px;left:342px;white-space:nowrap" class="ft06"><i>own</i></p>
+<p style="position:absolute;top:559px;left:369px;white-space:nowrap" class="ft05">er) command. For example, by typing&#160;</p>
+<p style="position:absolute;top:560px;left:615px;white-space:nowrap" class="ft04">chown&#160;</p>
+<p style="position:absolute;top:576px;left:185px;white-space:nowrap" class="ft04">mike comments</p>
+<p style="position:absolute;top:575px;left:296px;white-space:nowrap" class="ft05">,&#160;</p>
+<p style="position:absolute;top:576px;left:303px;white-space:nowrap" class="ft04">rich</p>
+<p style="position:absolute;top:575px;left:337px;white-space:nowrap" class="ft05">&#160;changes the ownership over to&#160;</p>
+<p style="position:absolute;top:576px;left:545px;white-space:nowrap" class="ft04">mike</p>
+<p style="position:absolute;top:575px;left:580px;white-space:nowrap" class="ft05">. Then&#160;</p>
+<p style="position:absolute;top:576px;left:624px;white-space:nowrap" class="ft04">mike</p>
+<p style="position:absolute;top:575px;left:658px;white-space:nowrap" class="ft05">&#160;can&#160;</p>
+<p style="position:absolute;top:592px;left:185px;white-space:nowrap" class="ft05">work with this file and even change its permissions to something he prefers:</p>
+<p style="position:absolute;top:625px;left:194px;white-space:nowrap" class="ft09">rich@testbox:~$ ls -al comments<br/>-rw-r--r-- 1 rich rich 5 2009-05-16 14:25 comments<br/>rich@testbox:~$ sudo chown mike comments<br/>[sudo] password for rich:<br/>rich@testbox:~$ ls -al comments<br/>-rw-r--r-- 1 mike rich 5 2009-05-16 14:25 comments<br/>rich@testbox:~$</p>
+<p style="position:absolute;top:748px;left:185px;white-space:nowrap" class="ft07">Hanging out in groups</p>
+<p style="position:absolute;top:773px;left:185px;white-space:nowrap" class="ft08">Groups are more interesting to work with than owners. You use groups to&#160;<br/>allow the root user to assign multiple users the ability to share certain file-<br/>system areas. For example, in many versions of Linux, all users are added to&#160;<br/>a group named&#160;</p>
+<p style="position:absolute;top:823px;left:285px;white-space:nowrap" class="ft06"><i>users</i></p>
+<p style="position:absolute;top:823px;left:318px;white-space:nowrap" class="ft05">&#160;(openSuSE does this, for example)</p>
+<p style="position:absolute;top:823px;left:544px;white-space:nowrap" class="ft06"><i>.</i></p>
+<p style="position:absolute;top:823px;left:547px;white-space:nowrap" class="ft05">&#160;Then rather than a&#160;</p>
+<p style="position:absolute;top:839px;left:185px;white-space:nowrap" class="ft08">long-format file listing such as the one shown earlier in this chapter, you may&#160;<br/>see the following:</p>
+</div>
+</body>
+</html>

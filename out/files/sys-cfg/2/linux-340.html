@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="" xml:lang="">
+<head>
+<title>Page 340</title>
+
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+<style type="text/css">
+<!--
+	p {margin: 0; padding: 0;}	.ft00{font-size:36px;font-family:IScriptSTD;color:#000000;}
+	.ft01{font-size:18px;font-family:UniversLTStd;color:#000000;}
+	.ft02{font-size:14px;font-family:CheltenhamStd-Book;color:#000000;}
+	.ft03{font-size:14px;font-family:CheltenhamStd-BookItalic;color:#000000;}
+	.ft04{font-size:14px;font-family:WileyCodeSTD;color:#000000;}
+	.ft05{font-size:30px;font-family:IScriptSTD;color:#000000;}
+	.ft06{font-size:14px;line-height:16px;font-family:CheltenhamStd-Book;color:#000000;}
+	.ft07{font-size:14px;line-height:15px;font-family:WileyCodeSTD;color:#000000;}
+-->
+</style>
+</head>
+<body bgcolor="#A0A0A0" vlink="blue" link="blue">
+<div id="page340-div" style="position:relative;width:796px;height:999px;">
+<img width="796" height="999" src="linux340.png" alt="background image"/>
+<p style="position:absolute;top:72px;left:710px;white-space:nowrap" class="ft00">327</p>
+<p style="position:absolute;top:84px;left:420px;white-space:nowrap" class="ft01"><b>&#160;Chapter 17: Working without the GUI</b></p>
+<p style="position:absolute;top:135px;left:108px;white-space:nowrap" class="ft00">Using Redirection and Pipes</p>
+<p style="position:absolute;top:185px;left:185px;white-space:nowrap" class="ft02">Redirection and pipes facilitate the flow of information. A&#160;</p>
+<p style="position:absolute;top:185px;left:559px;white-space:nowrap" class="ft03"><i>pipe</i></p>
+<p style="position:absolute;top:185px;left:587px;white-space:nowrap" class="ft02">&#160;is exactly what&#160;</p>
+<p style="position:absolute;top:202px;left:185px;white-space:nowrap" class="ft06">it sounds like: It directs the output of one program to the input of another&#160;<br/>program. A pipeline may consist of several utilities plumbed together by&#160;<br/>pipes. At either end of this pipeline is, optionally, a redirection.</p>
+<p style="position:absolute;top:268px;left:185px;white-space:nowrap" class="ft06">Almost all Linux utilities that require input and output have been plumbed&#160;<br/>with the following common interfaces:&#160;</p>
+<p style="position:absolute;top:285px;left:436px;white-space:nowrap" class="ft04">stdin</p>
+<p style="position:absolute;top:284px;left:479px;white-space:nowrap" class="ft02">&#160;(standard input),&#160;</p>
+<p style="position:absolute;top:285px;left:598px;white-space:nowrap" class="ft04">stdout</p>
+<p style="position:absolute;top:284px;left:649px;white-space:nowrap" class="ft02">&#160;</p>
+<p style="position:absolute;top:301px;left:185px;white-space:nowrap" class="ft02">(standard output), and&#160;</p>
+<p style="position:absolute;top:302px;left:337px;white-space:nowrap" class="ft04">stderr</p>
+<p style="position:absolute;top:301px;left:388px;white-space:nowrap" class="ft02">&#160;(standard error). By having a common&#160;</p>
+<p style="position:absolute;top:317px;left:185px;white-space:nowrap" class="ft06">method to feed input to a program or read data from the output of a pro-<br/>gram, you can glue utilities together into sophisticated solutions.</p>
+<p style="position:absolute;top:385px;left:185px;white-space:nowrap" class="ft05">Redirecting command output</p>
+<p style="position:absolute;top:429px;left:185px;white-space:nowrap" class="ft06">We discuss redirecting command output here because it’s by far the most&#160;<br/>common form of information detouring. One example of&#160;</p>
+<p style="position:absolute;top:445px;left:550px;white-space:nowrap" class="ft03"><i>output redirection&#160;</i></p>
+<p style="position:absolute;top:462px;left:185px;white-space:nowrap" class="ft06">involves telling a command to send its results to a file rather than to the&#160;<br/>screen, as you’ve probably been used to seeing. Start in some familiar terri-<br/>tory by typing&#160;</p>
+<p style="position:absolute;top:496px;left:280px;white-space:nowrap" class="ft04">ls -l</p>
+<p style="position:absolute;top:495px;left:323px;white-space:nowrap" class="ft02">&#160;and then pressing Enter, to produce something like the&#160;</p>
+<p style="position:absolute;top:511px;left:185px;white-space:nowrap" class="ft02">following:</p>
+<p style="position:absolute;top:544px;left:194px;white-space:nowrap" class="ft07">rich@testbox:~$ ls -l<br/>total 36<br/>drwxr-xr-x 2 rich rich 4096 2009-05-20 18:56 Desktop<br/>drwxr-xr-x 2 rich rich 4096 2009-05-17 14:09 Documents<br/>drwxr-xr-x 4 rich rich 4096 2009-05-17 17:42 GNUstep<br/>drwxr-xr-x 2 rich rich 4096 2009-05-17 14:09 Music<br/>drwxr-xr-x 2 rich rich 4096 2009-05-17 14:09 Pictures<br/>drwxr-xr-x 2 rich rich 4096 2009-05-17 14:09 Public<br/>drwxr-xr-x 2 rich rich 4096 2009-05-17 14:09 Templates<br/>drwxr-xr-x 2 rich rich 4096 2009-05-17 14:09 Videos<br/>rich@testbox:~$</p>
+<p style="position:absolute;top:726px;left:185px;white-space:nowrap" class="ft02">Want to send this information to a file instead? You can use the&#160;</p>
+<p style="position:absolute;top:727px;left:589px;white-space:nowrap" class="ft04">&gt;</p>
+<p style="position:absolute;top:726px;left:598px;white-space:nowrap" class="ft02">&#160;redirection&#160;</p>
+<p style="position:absolute;top:743px;left:185px;white-space:nowrap" class="ft02">operator to tell&#160;</p>
+<p style="position:absolute;top:744px;left:284px;white-space:nowrap" class="ft04">bash</p>
+<p style="position:absolute;top:743px;left:318px;white-space:nowrap" class="ft02">&#160;to send the data into a file rather than onto your screen.&#160;</p>
+<p style="position:absolute;top:759px;left:185px;white-space:nowrap" class="ft02">Enter the following command to send the information to a file named&#160;</p>
+<p style="position:absolute;top:760px;left:625px;white-space:nowrap" class="ft04">listing</p>
+<p style="position:absolute;top:759px;left:684px;white-space:nowrap" class="ft02">:</p>
+<p style="position:absolute;top:792px;left:193px;white-space:nowrap" class="ft04">ls -l &gt; listing</p>
+<p style="position:absolute;top:824px;left:184px;white-space:nowrap" class="ft06">Notice that nothing shows up on-screen, where normally you’d expect to see&#160;<br/>the output from the&#160;</p>
+<p style="position:absolute;top:842px;left:316px;white-space:nowrap" class="ft04">ls</p>
+<p style="position:absolute;top:840px;left:333px;white-space:nowrap" class="ft02">&#160;command. That’s because the shell has rerouted the&#160;</p>
+<p style="position:absolute;top:857px;left:184px;white-space:nowrap" class="ft02">output to a file named&#160;</p>
+<p style="position:absolute;top:858px;left:331px;white-space:nowrap" class="ft04">listing</p>
+<p style="position:absolute;top:857px;left:391px;white-space:nowrap" class="ft02">. To verify that the directory listing is there,&#160;</p>
+<p style="position:absolute;top:873px;left:184px;white-space:nowrap" class="ft02">enter the following command:</p>
+<p style="position:absolute;top:906px;left:193px;white-space:nowrap" class="ft04">cat listing</p>
+</div>
+</body>
+</html>

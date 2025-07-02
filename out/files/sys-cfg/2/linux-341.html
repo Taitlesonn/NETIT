@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="" xml:lang="">
+<head>
+<title>Page 341</title>
+
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+<style type="text/css">
+<!--
+	p {margin: 0; padding: 0;}	.ft00{font-size:36px;font-family:IScriptSTD;color:#000000;}
+	.ft01{font-size:18px;font-family:UniversLTStd;color:#000000;}
+	.ft02{font-size:14px;font-family:CheltenhamStd-Book;color:#000000;}
+	.ft03{font-size:14px;font-family:WileyCodeSTD;color:#000000;}
+	.ft04{font-size:30px;font-family:IScriptSTD;color:#000000;}
+	.ft05{font-size:14px;font-family:CheltenhamStd-BookItalic;color:#000000;}
+	.ft06{font-size:14px;font-family:UniversalStd-NewswithCommPi;color:#000000;}
+	.ft07{font-size:14px;line-height:16px;font-family:CheltenhamStd-Book;color:#000000;}
+	.ft08{font-size:14px;line-height:15px;font-family:WileyCodeSTD;color:#000000;}
+-->
+</style>
+</head>
+<body bgcolor="#A0A0A0" vlink="blue" link="blue">
+<div id="page341-div" style="position:relative;width:796px;height:999px;">
+<img width="796" height="999" src="linux341.png" alt="background image"/>
+<p style="position:absolute;top:72px;left:27px;white-space:nowrap" class="ft00">328</p>
+<p style="position:absolute;top:82px;left:108px;white-space:nowrap" class="ft01"><b>Part IV: Junior Administrator Boot Camp&#160;</b></p>
+<p style="position:absolute;top:135px;left:185px;white-space:nowrap" class="ft02">The&#160;</p>
+<p style="position:absolute;top:136px;left:213px;white-space:nowrap" class="ft03">cat</p>
+<p style="position:absolute;top:135px;left:239px;white-space:nowrap" class="ft02">&#160;command (and more) is explained in Appendix A.</p>
+<p style="position:absolute;top:168px;left:185px;white-space:nowrap" class="ft02">Note that if you type&#160;</p>
+<p style="position:absolute;top:169px;left:321px;white-space:nowrap" class="ft03">ls -l &gt; listing</p>
+<p style="position:absolute;top:168px;left:450px;white-space:nowrap" class="ft02">&#160;again, the data is overwritten,&#160;</p>
+<p style="position:absolute;top:184px;left:185px;white-space:nowrap" class="ft07">meaning that the file’s contents are wiped out and replaced with the new&#160;<br/>output. You can avoid this situation by using&#160;</p>
+<p style="position:absolute;top:202px;left:479px;white-space:nowrap" class="ft03">&gt;&gt;</p>
+<p style="position:absolute;top:201px;left:496px;white-space:nowrap" class="ft02">&#160;as your redirection opera-</p>
+<p style="position:absolute;top:217px;left:185px;white-space:nowrap" class="ft02">tor, which tells&#160;</p>
+<p style="position:absolute;top:219px;left:285px;white-space:nowrap" class="ft03">bash</p>
+<p style="position:absolute;top:217px;left:320px;white-space:nowrap" class="ft02">&#160;to add the command’s output to the end of the specified&#160;</p>
+<p style="position:absolute;top:234px;left:185px;white-space:nowrap" class="ft02">file. If you type&#160;</p>
+<p style="position:absolute;top:235px;left:284px;white-space:nowrap" class="ft03">ls -l &gt;&gt; listing</p>
+<p style="position:absolute;top:234px;left:421px;white-space:nowrap" class="ft02">&#160;in the same directory after making no&#160;</p>
+<p style="position:absolute;top:250px;left:185px;white-space:nowrap" class="ft02">changes, the contents of&#160;</p>
+<p style="position:absolute;top:252px;left:347px;white-space:nowrap" class="ft03">listing</p>
+<p style="position:absolute;top:250px;left:407px;white-space:nowrap" class="ft02">&#160;are as follows:</p>
+<p style="position:absolute;top:283px;left:194px;white-space:nowrap" class="ft08">rich@testbox:~$ ls -l<br/>total 36<br/>drwxr-xr-x 2 rich rich 4096 2009-05-20 18:56 Desktop<br/>drwxr-xr-x 2 rich rich 4096 2009-05-17 14:09 Documents<br/>drwxr-xr-x 4 rich rich 4096 2009-05-17 17:42 GNUstep<br/>drwxr-xr-x 2 rich rich 4096 2009-05-17 14:09 Music<br/>drwxr-xr-x 2 rich rich 4096 2009-05-17 14:09 Pictures<br/>drwxr-xr-x 2 rich rich 4096 2009-05-17 14:09 Public<br/>drwxr-xr-x 2 rich rich 4096 2009-05-17 14:09 Templates<br/>drwxr-xr-x 2 rich rich 4096 2009-05-17 14:09 Videos<br/>rich@testbox:~$<br/>rich@testbox:~$ ls -l<br/>total 36<br/>drwxr-xr-x 2 rich rich 4096 2009-05-20 18:56 Desktop<br/>drwxr-xr-x 2 rich rich 4096 2009-05-17 14:09 Documents<br/>drwxr-xr-x 4 rich rich 4096 2009-05-17 17:42 GNUstep<br/>drwxr-xr-x 2 rich rich 4096 2009-05-17 14:09 Music<br/>drwxr-xr-x 2 rich rich 4096 2009-05-17 14:09 Pictures<br/>drwxr-xr-x 2 rich rich 4096 2009-05-17 14:09 Public<br/>drwxr-xr-x 2 rich rich 4096 2009-05-17 14:09 Templates<br/>drwxr-xr-x 2 rich rich 4096 2009-05-17 14:09 Videos<br/>rich@testbox:~$</p>
+<p style="position:absolute;top:648px;left:185px;white-space:nowrap" class="ft04">Laying pipes</p>
+<p style="position:absolute;top:692px;left:185px;white-space:nowrap" class="ft02">Another&#160;</p>
+<p style="position:absolute;top:694px;left:241px;white-space:nowrap" class="ft03">bash</p>
+<p style="position:absolute;top:692px;left:275px;white-space:nowrap" class="ft02">&#160;shell feature enables you to connect commands so that the&#160;</p>
+<p style="position:absolute;top:709px;left:185px;white-space:nowrap" class="ft07">output of one becomes the input for the next one. This feature is referred to&#160;<br/>as a&#160;</p>
+<p style="position:absolute;top:725px;left:214px;white-space:nowrap" class="ft05"><i>pipe.</i></p>
+<p style="position:absolute;top:725px;left:245px;white-space:nowrap" class="ft02">&#160;Suppose you want to look over the details of all the files in the&#160;</p>
+<p style="position:absolute;top:727px;left:656px;white-space:nowrap" class="ft03">/</p>
+<p style="position:absolute;top:743px;left:185px;white-space:nowrap" class="ft03">etc</p>
+<p style="position:absolute;top:742px;left:210px;white-space:nowrap" class="ft02">&#160;directory in long-listing format. If you type&#160;</p>
+<p style="position:absolute;top:743px;left:492px;white-space:nowrap" class="ft03">ls -la /etc</p>
+<p style="position:absolute;top:742px;left:586px;white-space:nowrap" class="ft02">&#160;to do so, a&#160;</p>
+<p style="position:absolute;top:758px;left:185px;white-space:nowrap" class="ft07">massive listing appears, and much of the information scrolls right past you.&#160;<br/>Although you can back up a bit by pressing Shift+PageUp, you may not be&#160;<br/>able to see everything you want to see.</p>
+<p style="position:absolute;top:824px;left:185px;white-space:nowrap" class="ft02">To see all the information, you can do one of two things:</p>
+<p style="position:absolute;top:854px;left:94px;white-space:nowrap" class="ft06">&#160;✓&#160;</p>
+<p style="position:absolute;top:857px;left:216px;white-space:nowrap" class="ft02">Send the data to a file with redirection by typing something like&#160;</p>
+<p style="position:absolute;top:875px;left:216px;white-space:nowrap" class="ft03">ls -l /etc &gt; ~/etclisting</p>
+<p style="position:absolute;top:874px;left:430px;white-space:nowrap" class="ft02">&#160;— and then review the contents of&#160;</p>
+<p style="position:absolute;top:892px;left:216px;white-space:nowrap" class="ft03">~/etclisting</p>
+<p style="position:absolute;top:890px;left:319px;white-space:nowrap" class="ft02">&#160;with your favorite editor.</p>
+</div>
+</body>
+</html>

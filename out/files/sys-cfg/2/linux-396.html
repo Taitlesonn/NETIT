@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="" xml:lang="">
+<head>
+<title>Page 396</title>
+
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+<style type="text/css">
+<!--
+	p {margin: 0; padding: 0;}	.ft00{font-size:36px;font-family:IScriptSTD;color:#000000;}
+	.ft01{font-size:18px;font-family:UniversLTStd;color:#000000;}
+	.ft02{font-size:14px;font-family:CheltenhamStd-Book;color:#000000;}
+	.ft03{font-size:14px;font-family:UniversLTStd;color:#000000;}
+	.ft04{font-size:14px;font-family:WileyCodeSTD;color:#000000;}
+	.ft05{font-size:14px;font-family:UniversLTStd-Cn;color:#000000;}
+	.ft06{font-size:14px;font-family:CheltenhamStd;color:#000000;}
+	.ft07{font-size:14px;font-family:ZapfDingbatsStd;color:#000000;}
+	.ft08{font-size:14px;line-height:16px;font-family:CheltenhamStd-Book;color:#000000;}
+	.ft09{font-size:14px;line-height:16px;font-family:CheltenhamStd;color:#000000;}
+-->
+</style>
+</head>
+<body bgcolor="#A0A0A0" vlink="blue" link="blue">
+<div id="page396-div" style="position:relative;width:796px;height:999px;">
+<img width="796" height="999" src="linux396.png" alt="background image"/>
+<p style="position:absolute;top:72px;left:710px;white-space:nowrap" class="ft00">383</p>
+<p style="position:absolute;top:84px;left:312px;white-space:nowrap" class="ft01"><b>&#160;Chapter 21: Ten Steps to Setting Up a Samba Server</b></p>
+<p style="position:absolute;top:135px;left:185px;white-space:nowrap" class="ft08">With all this information to keep straight, it’s usually best to create a simple&#160;<br/>table, mapping out which users should have access to what data. When you&#160;<br/>can see the complete layout in front of you, it’s easier to create the proper&#160;<br/>configuration. Table 21-1 demonstrates a simple shared-folder policy table.</p>
+<p style="position:absolute;top:242px;left:203px;white-space:nowrap" class="ft01"><b>Table 21-1&#160;</b></p>
+<p style="position:absolute;top:242px;left:354px;white-space:nowrap" class="ft01"><b>Mapping Out a Shared-Folder Policy</b></p>
+<p style="position:absolute;top:270px;left:200px;white-space:nowrap" class="ft03"><i><b>Group</b></i></p>
+<p style="position:absolute;top:270px;left:314px;white-space:nowrap" class="ft03"><i><b>Folder</b></i></p>
+<p style="position:absolute;top:270px;left:443px;white-space:nowrap" class="ft03"><i><b>Share Name</b></i></p>
+<p style="position:absolute;top:270px;left:565px;white-space:nowrap" class="ft03"><i><b>Members</b></i></p>
+<p style="position:absolute;top:295px;left:200px;white-space:nowrap" class="ft04">bowling</p>
+<p style="position:absolute;top:295px;left:314px;white-space:nowrap" class="ft04">/bowling</p>
+<p style="position:absolute;top:293px;left:443px;white-space:nowrap" class="ft05">bowling</p>
+<p style="position:absolute;top:293px;left:565px;white-space:nowrap" class="ft05">fred, barney</p>
+<p style="position:absolute;top:317px;left:200px;white-space:nowrap" class="ft04">shopping</p>
+<p style="position:absolute;top:317px;left:314px;white-space:nowrap" class="ft04">/shopping</p>
+<p style="position:absolute;top:315px;left:443px;white-space:nowrap" class="ft05">shopping</p>
+<p style="position:absolute;top:315px;left:565px;white-space:nowrap" class="ft05">wilma, betty</p>
+<p style="position:absolute;top:369px;left:185px;white-space:nowrap" class="ft08">Table 21-1 shows that each group is assigned a unique folder on the Linux&#160;<br/>system. To keep things simple, this example uses the same group, folder, and&#160;<br/>share names, but on a real system, this may not be possible. Making a table&#160;<br/>that maps out what’s what can save you from lots of headaches later on in&#160;<br/>the project.</p>
+<p style="position:absolute;top:491px;left:108px;white-space:nowrap" class="ft00">Step 2: Create Linux Groups</p>
+<p style="position:absolute;top:541px;left:185px;white-space:nowrap" class="ft08">The next step in creating your file server is to create the necessary groups in&#160;<br/>Linux. The file server uses the Linux groups to control access to the individ-<br/>ual shared folders that you’ll create. For this step, you need to use the Fedora&#160;<br/>User and Group Manager:</p>
+<p style="position:absolute;top:624px;left:94px;white-space:nowrap" class="ft06"><b>&#160;1.&#160;</b></p>
+<p style="position:absolute;top:624px;left:216px;white-space:nowrap" class="ft06"><b>Choose&#160;</b></p>
+<p style="position:absolute;top:624px;left:269px;white-space:nowrap" class="ft06"><b>System</b></p>
+<p style="position:absolute;top:620px;left:316px;white-space:nowrap" class="ft07">➪</p>
+<p style="position:absolute;top:624px;left:328px;white-space:nowrap" class="ft06"><b>Administration</b></p>
+<p style="position:absolute;top:620px;left:429px;white-space:nowrap" class="ft07">➪</p>
+<p style="position:absolute;top:624px;left:441px;white-space:nowrap" class="ft06"><b>Users and Groups from the panel&#160;</b></p>
+<p style="position:absolute;top:640px;left:216px;white-space:nowrap" class="ft06"><b>menu.</b></p>
+<p style="position:absolute;top:665px;left:94px;white-space:nowrap" class="ft02">&#160;</p>
+<p style="position:absolute;top:665px;left:210px;white-space:nowrap" class="ft02">&#160;&#160;Fedora asks you for the root password; then the User Manager window&#160;</p>
+<p style="position:absolute;top:681px;left:216px;white-space:nowrap" class="ft08">appears. This tool provides a graphical interface for creating and manag-<br/>ing user and group accounts on the system.</p>
+<p style="position:absolute;top:723px;left:94px;white-space:nowrap" class="ft06"><b>&#160;</b></p>
+<p style="position:absolute;top:723px;left:198px;white-space:nowrap" class="ft06"><b>2.&#160;&#160;Click the Add Group icon to add a new Linux group.</b></p>
+<p style="position:absolute;top:747px;left:94px;white-space:nowrap" class="ft02">&#160;</p>
+<p style="position:absolute;top:747px;left:210px;white-space:nowrap" class="ft02">&#160;&#160;The Create New Group window, shown in Figure 21-1 appears.</p>
+<p style="position:absolute;top:772px;left:94px;white-space:nowrap" class="ft06"><b>&#160;</b></p>
+<p style="position:absolute;top:772px;left:198px;white-space:nowrap" class="ft06"><b>3.&#160;&#160;In the text box, enter the name of the group you want to use to control&#160;</b></p>
+<p style="position:absolute;top:789px;left:216px;white-space:nowrap" class="ft09"><b>the shared folder. Leave the Specify Group ID manually check box&#160;<br/>blank.</b></p>
+<p style="position:absolute;top:830px;left:94px;white-space:nowrap" class="ft02">&#160;</p>
+<p style="position:absolute;top:830px;left:210px;white-space:nowrap" class="ft02">&#160;&#160;Fedora automatically assigns a unique group number to the group.</p>
+<p style="position:absolute;top:863px;left:184px;white-space:nowrap" class="ft08">For example, create two groups — bowling and shopping. The new groups&#160;<br/>appear in the group listing under the Groups tab.</p>
+</div>
+</body>
+</html>

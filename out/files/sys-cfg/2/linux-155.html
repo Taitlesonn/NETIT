@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="" xml:lang="">
+<head>
+<title>Page 155</title>
+
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+<style type="text/css">
+<!--
+	p {margin: 0; padding: 0;}	.ft00{font-size:36px;font-family:IScriptSTD;color:#000000;}
+	.ft01{font-size:18px;font-family:UniversLTStd;color:#000000;}
+	.ft02{font-size:14px;font-family:UniversalStd-NewswithCommPi;color:#000000;}
+	.ft03{font-size:14px;font-family:CheltenhamStd-Book;color:#000000;}
+	.ft04{font-size:14px;font-family:CheltenhamStd-BookItalic;color:#000000;}
+	.ft05{font-size:14px;line-height:16px;font-family:CheltenhamStd-Book;color:#000000;}
+-->
+</style>
+</head>
+<body bgcolor="#A0A0A0" vlink="blue" link="blue">
+<div id="page155-div" style="position:relative;width:796px;height:999px;">
+<img width="796" height="999" src="linux155.png" alt="background image"/>
+<p style="position:absolute;top:72px;left:27px;white-space:nowrap" class="ft00">142</p>
+<p style="position:absolute;top:82px;left:108px;white-space:nowrap" class="ft01"><b>Part II: Getting Up to Speed with Linux&#160;</b></p>
+<p style="position:absolute;top:132px;left:95px;white-space:nowrap" class="ft02">&#160;✓&#160;</p>
+<p style="position:absolute;top:136px;left:216px;white-space:nowrap" class="ft05">E-mail outbound host or Simple Mail Transport Protocol (SMTP) server&#160;<br/>for routing outbound e-mail messages</p>
+<p style="position:absolute;top:174px;left:95px;white-space:nowrap" class="ft02">&#160;✓&#160;</p>
+<p style="position:absolute;top:177px;left:216px;white-space:nowrap" class="ft05">E-mail inbound host or Post Office Protocol (POP) server for receiving&#160;<br/>incoming e-mail messages</p>
+<p style="position:absolute;top:215px;left:95px;white-space:nowrap" class="ft02">&#160;✓&#160;</p>
+<p style="position:absolute;top:218px;left:216px;white-space:nowrap" class="ft03">News host</p>
+<p style="position:absolute;top:240px;left:95px;white-space:nowrap" class="ft02">&#160;✓&#160;</p>
+<p style="position:absolute;top:243px;left:216px;white-space:nowrap" class="ft03">Whether your computer address will be one of these two types:</p>
+<p style="position:absolute;top:268px;left:95px;white-space:nowrap" class="ft03">&#160;•&#160;</p>
+<p style="position:absolute;top:268px;left:252px;white-space:nowrap" class="ft04"><i>Static:</i></p>
+<p style="position:absolute;top:268px;left:290px;white-space:nowrap" class="ft03">&#160;You always have the same IP address. Static addresses are&#160;</p>
+<p style="position:absolute;top:284px;left:252px;white-space:nowrap" class="ft05">more common for servers than for desktops. If you’re using static,&#160;<br/>your ISP needs to give you a few more pieces of information. You&#160;<br/>must define a&#160;</p>
+<p style="position:absolute;top:317px;left:343px;white-space:nowrap" class="ft04"><i>nameserver</i></p>
+<p style="position:absolute;top:317px;left:417px;white-space:nowrap" class="ft03">&#160;IP address (which resolves hostnames&#160;</p>
+<p style="position:absolute;top:334px;left:252px;white-space:nowrap" class="ft03">into IP addresses), a&#160;</p>
+<p style="position:absolute;top:334px;left:388px;white-space:nowrap" class="ft04"><i>gateway</i></p>
+<p style="position:absolute;top:334px;left:439px;white-space:nowrap" class="ft03">&#160;address (which routes your connec-</p>
+<p style="position:absolute;top:350px;left:252px;white-space:nowrap" class="ft03">tion through the ISP to the Internet), and a&#160;</p>
+<p style="position:absolute;top:350px;left:531px;white-space:nowrap" class="ft04"><i>network</i></p>
+<p style="position:absolute;top:350px;left:582px;white-space:nowrap" class="ft03">&#160;address and&#160;</p>
+<p style="position:absolute;top:367px;left:252px;white-space:nowrap" class="ft04"><i>netmask</i></p>
+<p style="position:absolute;top:367px;left:305px;white-space:nowrap" class="ft03">&#160;combination (which define what addresses are local to&#160;</p>
+<p style="position:absolute;top:383px;left:252px;white-space:nowrap" class="ft05">your workstation). All this information should be on the customer&#160;<br/>information sheet.</p>
+<p style="position:absolute;top:424px;left:95px;white-space:nowrap" class="ft03">&#160;•&#160;</p>
+<p style="position:absolute;top:424px;left:252px;white-space:nowrap" class="ft04"><i>Dynamic:</i></p>
+<p style="position:absolute;top:424px;left:311px;white-space:nowrap" class="ft03">&#160;Your IP address changes each time you connect, or at&#160;</p>
+<p style="position:absolute;top:441px;left:252px;white-space:nowrap" class="ft05">regular intervals. On most desktops, you just don’t always need&#160;<br/>to have the same address, and it makes life easier on ISPs. It also&#160;<br/>makes life easier for computers like laptops, which get moved&#160;<br/>around often from network to network. If you’re using dynamic&#160;<br/>addressing, you’re told that you need to connect using DHCP.</p>
+<p style="position:absolute;top:540px;left:185px;white-space:nowrap" class="ft05">With this information, you can establish an Internet connection using your&#160;<br/>Linux system.</p>
+<p style="position:absolute;top:612px;left:108px;white-space:nowrap" class="ft00">Configuring Your Connection</p>
+<p style="position:absolute;top:662px;left:185px;white-space:nowrap" class="ft05">Okay, so you have your network hardware and your ISP information — now&#160;<br/>what? The answer is to configure your Fedora system to jump on the Internet!</p>
+<p style="position:absolute;top:712px;left:185px;white-space:nowrap" class="ft05">The configuration process varies slightly, depending on the hardware you’re&#160;<br/>using. This section covers the big three methods for accessing the Internet:</p>
+<p style="position:absolute;top:758px;left:94px;white-space:nowrap" class="ft02">&#160;✓&#160;</p>
+<p style="position:absolute;top:761px;left:216px;white-space:nowrap" class="ft03">Using a modem to dial your ISP</p>
+<p style="position:absolute;top:783px;left:94px;white-space:nowrap" class="ft02">&#160;✓&#160;</p>
+<p style="position:absolute;top:786px;left:216px;white-space:nowrap" class="ft03">Using an Ethernet card to connect to a DSL or cable modem</p>
+<p style="position:absolute;top:807px;left:94px;white-space:nowrap" class="ft02">&#160;✓&#160;</p>
+<p style="position:absolute;top:811px;left:216px;white-space:nowrap" class="ft03">Using a wireless card to connect to a wireless access point</p>
+<p style="position:absolute;top:844px;left:184px;white-space:nowrap" class="ft05">Each situation requires a few slightly different items to configure, but you can&#160;<br/>perform all of them by using the Fedora Network Configuration tool.</p>
+</div>
+</body>
+</html>
