@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Routing: statyczny, RIP, OSPF, BGP - MikroTik</title>
+  <style>
+    body { font-family: Arial, sans-serif; margin:20px; line-height:1.6; background:#fff; color:#000 }
+    h1, h2 { border-bottom:1px solid #000; padding-bottom:4px }
+    pre { background:#eee; padding:10px; overflow-x:auto }
+    ul { margin-left:20px }
+    footer { margin-top:20px; font-size:0.9em; text-align:center }
+  </style>
+</head>
+<body>
+  <h1>Routing w MikroTik RouterOS</h1>
+
+  <h2>1. Routing statyczny</h2>
+  <p>Ręczne definiowanie tras:</p>
+  <pre>
+/ip route add dst-address=0.0.0.0/0 gateway=192.168.1.1
+/ip route add dst-address=10.0.0.0/24 gateway=172.16.1.2 distance=5
+  </pre>
+  <p>Routy statyczne mają domyślnie najniższy priorytet (distance=1), co sprawia, że są preferowane ostrzej niż trasy dynamiczne :contentReference[oaicite:1]{index=1}.</p>
+
+  <h2>2. RIP (Routing Information Protocol)</h2>
+  <p>Dynamiczny protokół wektorowy dla IPv4 — maks. 15 skoków :contentReference[oaicite:2]{index=2}.</p>
+  <pre>
+/routing rip instance add name=rip1
+/routing rip interface-template add instance=rip1 interfaces=ether1 split-horizon=no
+/routing rip instance set rip1 redistribute-connected=yes redistribute-static=yes
+  </pre>
+  <p>Update co 30 s, timeout 3 min, garbage collection 2 min → ograniczenia w większych sieciach :contentReference[oaicite:3]{index=3}.</p>
+
+  <h2>3. OSPF (Open Shortest Path First)</h2>
+  <p>Link-state IGP, podział na obszary, ECMP (equal-cost multipath) :contentReference[oaicite:4]{index=4}.</p>
+  <pre>
+/routing ospf instance set default router-id=1.1.1.1
+/routing ospf area add name=backbone area-id=0.0.0.0
+/routing ospf network add network=192.168.0.0/24 area=backbone
+  </pre>
+  <p>Obsługuje forwarding-address (np. dla tras zewnętrznych/redistributed) :contentReference[oaicite:5]{index=5}.</p>
+
+  <h2>4. BGP (Border Gateway Protocol)</h2>
+  <p>Protokół wektorowy dla routingu między systemami autonomicznymi (AS), używany w Internecie :contentReference[oaicite:6]{index=6}.</p>
+  <pre>
+/routing bgp instance add name=bgp1 as=65001 router-id=1.1.1.1
+/routing bgp peer add name=peer1 remote-as=65002 address=203.0.113.1
+/routing bgp network add network=10.0.0.0/24
+  </pre>
+  <p>Obsługuje polityki routingu, communities, MD5 itp. Idealny do połączeń z ISP :contentReference[oaicite:7]{index=7}.</p>
+
+  <h2>5. Priorytety tras i wybór ścieżki</h2>
+  <ul>
+    <li>Statyczne: distance 1 (najwyższy priorytet).</li>
+    <li>OSPF: domyślnie distance 110.</li>
+    <li>RIP: domyślnie distance 120.</li>
+    <li>BGP eBGP: distance 20; iBGP: 200 (zgodnie z ogólnymi zasadami, choć w RouterOS można modyfikować) :contentReference[oaicite:8]{index=8}.</li>
+  </ul>
+
+  <h2>6. FIB/RIB i policy routing</h2>
+  <p>Routing decyduje na podstawie RIB → FIB. Można tworzyć dodatkowe tabele i routing rules lub markować trasy w mangle dla zaawansowanej kontroli :contentReference[oaicite:9]{index=9}.</p>
+  <pre>
+/routing table add name=wymuszony fib
+/ip route add dst-address=8.8.8.8 gateway=172.16.2.1 routing-table=wymuszony
+/routing rule add dst-address=8.8.8.8 table=wymuszony
+  </pre>
+
+  <h2>7. Wydajność</h2>
+  <p>RouterOS v7 wspiera wielowątkowość: OSPF, RIP, statyczne trasy, BGP działają jako oddzielne zadania — zoptymalizowane wielordzeniowo :contentReference[oaicite:10]{index=10}.</p>
+
+  <footer>&copy; 2025 MikroTik Documentation</footer>
+</body>
+</html>
+

@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Konfiguracja Wi‑Fi w RouterOS</title>
+  <style>
+    body { font-family: Arial, sans-serif; margin:20px; line-height:1.6; background:#fff; color:#000 }
+    h1, h2 { border-bottom:1px solid #000; padding-bottom:4px }
+    pre { background:#eee; padding:10px; overflow-x:auto }
+    ul { margin-left:20px }
+    footer { margin-top:20px; font-size:0.9em; text-align:center }
+  </style>
+</head>
+<body>
+  <h1>Konfiguracja Wi‑Fi w RouterOS (MikroTik)</h1>
+  <p>Menu <code>/interface wifi</code> dostępne od RouterOS 7.13 służy do zarządzania interfejsami Wi-Fi (802.11ac/ax) – poprzednio nazywane „wifiwave2”. Wymaga aktywnych paczek: <code>wifi‑qcom‑ac</code> (dla ac) lub <code>wifi‑qcom</code> (dla ax+) :contentReference[oaicite:2]{index=2}.</p>
+
+  <h2>1. Terminologia i profile</h2>
+  <ul>
+    <li><strong>Profile</strong>: aaa, channel, security, datapath, interworking.</li>
+    <li><strong>Konfiguracja</strong>: przypisanie profili do interfejsu Wi‑Fi.</li>
+    <li>Priorytet wartości: interfejs → profile → konfiguracja → profile w konfiguracji :contentReference[oaicite:3]{index=3}.</li>
+  </ul>
+
+  <h2>2. Podstawowa konfiguracja AP</h2>
+  <pre>
+/interface wifi
+set wifi1 disabled=no configuration.country=PL ssid=MojeAP \
+  security.authentication-types=wpa2-psk passphrase="bezpiecznehasło"
+  </pre>
+  <p>Open AP z OWE (Opportunistic Wireless Encryption):</p>
+  <pre>
+/interface wifi
+add master-interface=wifi1 name=wifi1_owe ssid=MojeAP_OWE \
+  security.authentication-types=owe \
+  security.owe-transition-interface=wifi1 hide-ssid=yes
+set wifi1 configuration.country=PL ssid=MojeAP \
+  security.authentication-types="" \
+  security.owe-transition-interface=wifi1_owe
+enable wifi1,wifi1_owe
+  </pre>
+  <p>OWE zapewnia szyfrowanie bez hasła, z opcją przejściową dla urządzeń starszych :contentReference[oaicite:4]{index=4}.</p>
+
+  <h2>3. Profile bezpieczeństwa i kanały</h2>
+  <pre>
+/interface wifi security
+add name=sec-common authentication-types=wpa2-psk,wpa3-psk \
+  passphrase="duzeBezpieczneHaslo" wps=disable
+
+/interface wifi configuration
+add name=conf-common ssid=MojeAP country=PL security=sec-common
+
+/interface wifi channel
+add name=ch-2ghz frequency=2412,2437,2462 width=20mhz
+add name=ch-5ghz frequency=5180 width=20/40/80mhz
+
+/interface wifi
+set wifi1 channel=ch-5ghz configuration=conf-common disabled=no
+set wifi2 channel=ch-2ghz configuration=conf-common disabled=no
+  </pre>
+
+  <h2>4. Lista dostępu (access‑list)</h2>
+  <p>Filtrowanie klientów po sygnale, MAC, czasie itd. Przykład:</p>
+  <pre>
+/interface wifi access-list
+add signal-range=-60..0 ssid-regexp="MojeAP" time=7h-19h action=accept
+add ssid-regexp="MojeAP" action=reject
+add mac-address=02:00:00:00:00:00 action=reject
+  </pre>
+  <p>Można też przypisać różne hasła dla konkretnych klientów :contentReference[oaicite:5]{index=5}.</p>
+
+  <h2>5. Diagnoza i skanowanie</h2>
+  <ul>
+    <li><code>/interface wifi frequency-scan wifi1</code> – statystyki obciążenia kanałów.</li>
+    <li><code>/interface wifi scan</code> – lista AP z sygnałem.</li>
+    <li>Sniffer i spectral scan dostępne dla analizy sygnału i zakłóceń :contentReference[oaicite:6]{index=6}.</li>
+  </ul>
+
+  <h2>6. WPS</h2>
+  <pre>
+/interface wifi wps-client wifi1
+/interface wifi wps-push-button wifi1
+  </pre>
+
+  <h2>7. Informacje o radio i tabela klientów</h2>
+  <pre>
+/interface wifi radio print detail
+/interface wifi registration-table print
+/interface wifi registration-table remove [find where mac-address=XX:XX:XX]
+  </pre>
+  <p>Pozwala to analizować parametry radia, listę klientów oraz ręcznie deautoryzować urządzenia :contentReference[oaicite:7]{index=7}.</p>
+
+  <h2>8. CAPsMAN – centralne zarządzanie AP</h2>
+  <p>CAPsMAN umożliwia scentralizowane zarządzanie AP:</p>
+  <pre>
+/interface wifi capsman set enabled=yes ca-certificate=auto
+/interface wifi provisioning add action=create-dynamic-enabled ... supported-bands=...
+/interface wifi cap set enabled=yes
+/interface wifi set wifi1 configuration.manager=capsman-or-local
+  </pre>
+  <p>Szczegółowe opcje dla VLAN, pasm 2.4/5 GHz itd. dostępne w dokumentacji :contentReference[oaicite:8]{index=8}.</p>
+
+  <footer>&copy; 2025 MikroTik Documentation</footer>
+</body>
+</html>
+

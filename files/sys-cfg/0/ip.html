@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Konfiguracja IPv4 i IPv6 na MikroTik</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            line-height: 1.6;
+            margin: 20px;
+            background-color: #f4f4f4;
+            color: #333;
+        }
+        h1, h2 {
+            color: #0056b3;
+        }
+        pre {
+            background-color: #e9ecef;
+            padding: 10px;
+            border-radius: 5px;
+            overflow-x: auto;
+        }
+        ul {
+            margin-left: 20px;
+        }
+        footer {
+            text-align: center;
+            margin-top: 20px;
+            font-size: 0.9em;
+            color: #666;
+        }
+    </style>
+</head>
+<body>
+    <h1>Konfiguracja IPv4 i IPv6 na MikroTik</h1>
+    <p>W tej notatce przedstawiamy podstawowe informacje oraz praktyczne przykłady konfiguracji protokołów IPv4 i IPv6 na urządzeniach MikroTik z systemem RouterOS.</p>
+
+    <h2>1. Wstęp do IPv4 i IPv6</h2>
+    <p><strong>IPv4</strong> to czwórkowy protokół internetowy, który używa adresów 32-bitowych, co pozwala na około 4 miliardy unikalnych adresów. Ze względu na wyczerpywanie się dostępnych adresów, wprowadzono <strong>IPv6</strong>, który używa adresów 128-bitowych, oferując niemal nieograniczoną liczbę unikalnych adresów.</p>
+
+    <h2>2. Wymagania wstępne</h2>
+    <ul>
+        <li>Urządzenie MikroTik z zainstalowanym RouterOS.</li>
+        <li>Aktywne połączenie internetowe (IPv4 lub IPv6).</li>
+        <li>Wersja RouterOS 7.x lub nowsza.</li>
+    </ul>
+
+    <h2>3. Konfiguracja IPv4</h2>
+    <p>Przykład konfiguracji adresu IPv4 na interfejsie Ethernet:</p>
+    <pre>
+/ip address add address=192.168.1.1/24 interface=ether1
+    </pre>
+    <p>Dodanie domyślnej trasy routingu:</p>
+    <pre>
+/ip route add gateway=192.168.1.254
+    </pre>
+    <p>Sprawdzenie tabeli routingu:</p>
+    <pre>
+/ip route print
+    </pre>
+    <p>Ustawienie serwera DHCP dla sieci LAN:</p>
+    <pre>
+/ip dhcp-server setup
+    </pre>
+    <p>Weryfikacja konfiguracji DHCP:</p>
+    <pre>
+/ip dhcp-server print
+    </pre>
+    <p>Ustawienie NAT dla udostępnienia internetu:</p>
+    <pre>
+/ip firewall nat add chain=srcnat out-interface=ether1 action=masquerade
+    </pre>
+    <p>Sprawdzenie reguł NAT:</p>
+    <pre>
+/ip firewall nat print
+    </pre>
+    <p>Więcej informacji na temat konfiguracji IPv4 można znaleźć w dokumentacji MikroTik: <a href="https://help.mikrotik.com/docs/spaces/ROS/pages/119144661/IPv4%2Band%2BIPv6%2BFundamentals" target="_blank">IPv4 and IPv6 Fundamentals</a>.</p>
+
+    <h2>4. Konfiguracja IPv6</h2>
+    <p>Wersja RouterOS 7.x domyślnie obsługuje IPv6. Aby rozpocząć konfigurację:</p>
+    <pre>
+/system package enable ipv6
+/reboot
+    </pre>
+    <p>Po ponownym uruchomieniu urządzenia, konfiguracja IPv6 jest aktywna.</p>
+
+    <h3>4.1. Konfiguracja klienta DHCPv6</h3>
+    <p>Jeśli dostawca internetu (ISP) udostępnia adresację IPv6 za pomocą DHCPv6:</p>
+    <pre>
+/ipv6 dhcp-client add interface=ether1 pool-name=dhcpv6-pool request=prefix
+    </pre>
+    <p>Ustawienie adresu IPv6 na interfejsie LAN:</p>
+    <pre>
+/ipv6 address add address=::1/64 from-pool=dhcpv6-pool interface=bridge-local
+    </pre>
+    <p>Włączenie reklamowania adresu IPv6:</p>
+    <pre>
+/ipv6 nd set [ find default=yes ] advertise-dns=yes
+    </pre>
+    <p>Więcej informacji na temat konfiguracji IPv6 można znaleźć w dokumentacji MikroTik: <a href="https://help.mikrotik.com/docs/spaces/ROS/pages/119144661/IPv4%2Band%2BIPv6%2BFundamentals" target="_blank">IPv4 and IPv6 Fundamentals</a>.</p>
+
+    <h2>5. Diagnostyka i testowanie</h2>
+    <p>Sprawdzenie adresów IP na interfejsach:</p>
+    <pre>
+/ip address print
+/ipv6 address print
+    </pre>
+    <p>Wykonanie testu ping dla IPv4:</p>
+    <pre>
+/ping 8.8.8.8
+    </pre>
+    <p>Wykonanie testu ping dla IPv6:</p>
+    <pre>
+/ping 2001:4860:4860::8888
+    </pre>
+    <p>Sprawdzenie tabeli ARP dla IPv4:</p>
+    <pre>
+/ip arp print
+    </pre>
+    <p>Sprawdzenie tabeli sąsiadów dla IPv6:</p>
+    <pre>
+/ipv6 neighbor print
+    </pre>
+    <p>Więcej informacji na temat diagnostyki można znaleźć w dokumentacji MikroTik: <a href="https://help.mikrotik.com/docs/spaces/ROS/pages/119144661/IPv4%2Band%2BIPv6%2BFundamentals" target="_blank">IPv4 and IPv6 Fundamentals</a>.</p>
+
+    <h2>6. Uwagi końcowe</h2>
+    <p>Konfiguracja IPv6 na urządzeniach MikroTik jest stosunkowo prosta, jednak wymaga odpowiedniego wsparcia ze strony dostawcy internetu. Upewnij się, że Twój ISP udostępnia adresację IPv6 i że Twoje urządzenie MikroTik jest odpowiednio skonfigurowane.</p>
+
+    <footer>
+        <p>&copy; 2025 MikroTik Documentation</p>
+    </footer>
+</body>
+</html>
+

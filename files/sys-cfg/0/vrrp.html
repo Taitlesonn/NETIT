@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Konfiguracja VRRP w MikroTik RouterOS</title>
+  <style>
+    body { font-family: Arial, sans-serif; margin:20px; line-height:1.6; background:#fff; color:#000 }
+    h1, h2 { border-bottom:1px solid #000; padding-bottom:4px }
+    pre { background:#eee; padding:10px; overflow-x:auto }
+    ul { margin-left:20px }
+    footer { margin-top:20px; font-size:0.9em; text-align:center }
+  </style>
+</head>
+<body>
+  <h1>Konfiguracja VRRP w RouterOS</h1>
+  <p>VRRP pozwala na stworzenie grupy logicznych routerów (Virtual Router, VR) – jeden staje się <strong>Master</strong>, inni pozostają <strong>Backup</strong>. W razie awarii Mastera, przejście na Backup zajmuje ~3 sekundy :contentReference[oaicite:1]{index=1}.</p>
+
+  <h2>1. Teoria VRRP</h2>
+  <ul>
+    <li>Obsługa VRRPv2 (IPv4) i VRRPv3 (IPv6) :contentReference[oaicite:2]{index=2}.</li>
+    <li>Komunikacja poprzez multicast: IPv4 → 224.0.0.18, IPv6 → FF02::12, TTL=255 :contentReference[oaicite:3]{index=3}.</li>
+    <li>Master odpowiada na ARP (IPv4) lub wysyła ND Advertisement (IPv6) :contentReference[oaicite:4]{index=4}.</li>
+    <li>Backup czeka na ogłoszenia Mastera i aktywuje się tylko jeśli Master przestaje odpowiadać lub ma niższy priorytet/preemption włączone :contentReference[oaicite:5]{index=5}.</li>
+    <li>Virtual MAC zawsze w formacie `00:00:5E:00:01:<VRID>` :contentReference[oaicite:6]{index=6}.</li>
+  </ul>
+
+  <h2>2. Stany VRRP</h2>
+  <ul>
+    <li><strong>Init</strong>: startuje; jeśli priorytet = 255 → Master, inaczej Backup :contentReference[oaicite:7]{index=7}.</li>
+    <li><strong>Backup</strong>: czeka na ogłoszenia Mastera; jeśli priorytet ogłoszenia = 0 lub wyższy lokalny i preemption = tak → przejście do Mastera :contentReference[oaicite:8]{index=8}.</li>
+    <li><strong>Master</strong>: odpowiada na ARP/ND; jeśli odebrane ogłoszenie z wyższym priorytetem → powrót do Backup :contentReference[oaicite:9]{index=9}.</li>
+  </ul>
+
+  <h2>3. Synchronizacja połączeń (conn‑track)</h2>
+  <p>RouterOS v7 wspiera synchronizację stanu tabeli conn‑track między Masterem a Backupem, co pozwala na bezprzerwane utrzymanie przepływu po odejściu Mastera :contentReference[oaicite:10]{index=10}.</p>
+  <pre>
+/ip firewall connection tracking set enabled=yes
+/interface vrrp set <nazwa> sync-connection-tracking=yes
+  </pre>
+  <p>Tryb aktywny:</p>
+  <pre>
+/interface vrrp add name=vrrp1 interface=ether1 vrid=1 priority=100 sync-connection-tracking=yes connection-tracking-mode=active-active connection-tracking-port=8275
+  </pre>
+  <p>Backup z niższym priorytetem, ale synchronizacją:</p>
+  <pre>
+/interface vrrp add name=vrrp1b interface=ether1 vrid=1 priority=50 sync-connection-tracking=yes connection-tracking-mode=active-active connection-tracking-port=8275
+  </pre>
+
+  <h2>4. Przykłady konfiguracji</h2>
+  <h3>4.1 IPv4</h3>
+  <pre>
+/interface vrrp add name=vrrp1 interface=ether1 vrid=1
+/ip address add address=192.168.1.1/32 interface=vrrp1
+/ip address add address=192.168.1.2/24 interface=ether1
+  </pre>
+  <p>Domyślnie: vrid=1, priority=100, interval=1s, authentication=none :contentReference[oaicite:11]{index=11}.</p>
+
+  <h3>4.2 IPv6</h3>
+  <pre>
+/interface vrrp add name=vrrp6 interface=ether1 vrid=2 version=3 v3-protocol=ipv6
+/ipv6 address add address=FEC0:0:0:FFFF::1/64 advertise=yes interface=vrrp6
+  </pre>
+
+  <h2>5. Kluczowe parametry</h2>
+  <ul>
+    <li><strong>priority</strong> (1–254), 255 zarezerwowane :contentReference[oaicite:12]{index=12}.</li>
+    <li><strong>preemption-mode</strong> (tak/nie).</li>
+    <li><strong>interval</strong> (czas między ogłoszeniami, domyślnie 1 s).</li>
+    <li><strong>authentication</strong>: none, simple, ah (tylko v2) :contentReference[oaicite:13]{index=13}.</li>
+    <li><strong>arp</strong>: enabled/proxy-arp/reply-only/disabled.</li>
+    <li><strong>sync-connection-tracking</strong>: synchronizacja conn‑track.</li>
+    <li><strong>group-authority</strong>: dla wielu interfejsów – ustala który VRRP interface kontroluje grupę :contentReference[oaicite:14]{index=14}.</li>
+  </ul>
+
+  <h2>6. Uwagi końcowe</h2>
+  <p>VRRP w RouterOS zapewnia szybkie przejęcie rutingu (~3 s) bez zbędnego obciążenia sieci :contentReference[oaicite:15]{index=15}. Konfiguracja pozwala na redundancję adresów IPv4 i IPv6, w pełni kontrolowana przez priorytety, stan Master/Backup oraz (opcjonalnie) synchronizację sesji.</p>
+
+  <footer>&copy; 2025 MikroTik Documentation</footer>
+</body>
+</html>
+

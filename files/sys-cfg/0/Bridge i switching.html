@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Konfiguracja Bridging i Switching na MikroTik</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            line-height: 1.6;
+            margin: 20px;
+            background-color: #f4f4f4;
+            color: #333;
+        }
+        h1, h2 {
+            color: #0056b3;
+        }
+        pre {
+            background-color: #e9ecef;
+            padding: 10px;
+            border-radius: 5px;
+            overflow-x: auto;
+        }
+        ul {
+            margin-left: 20px;
+        }
+        footer {
+            text-align: center;
+            margin-top: 20px;
+            font-size: 0.9em;
+            color: #666;
+        }
+    </style>
+</head>
+<body>
+    <h1>Konfiguracja Bridging i Switching na MikroTik</h1>
+    <p>W tej notatce przedstawiamy szczegółowe informacje na temat mostkowania (bridging) i przełączania (switching) w systemie RouterOS na urządzeniach MikroTik, zgodnie z dokumentacją MikroTik.</p>
+
+    <h2>1. Wstęp do Bridging i Switching</h2>
+    <p>Mostkowanie (bridging) pozwala na połączenie różnych segmentów sieci w jeden logiczny segment. Dzięki temu urządzenia w różnych fizycznych sieciach mogą komunikować się ze sobą, jakby były podłączone do tej samej sieci. Przełączanie (switching) to proces przesyłania ramek Ethernet między portami przełącznika na podstawie adresów MAC.</p>
+
+    <h2>2. Konfiguracja Mostka (Bridge)</h2>
+    <p>Mostek w RouterOS pozwala na połączenie wielu interfejsów w jeden logiczny interfejs. Aby skonfigurować mostek:</p>
+    <pre>
+/interface bridge add name=bridge1
+/interface bridge port add bridge=bridge1 interface=ether2
+/interface bridge port add bridge=bridge1 interface=ether3
+    </pre>
+    <p>W powyższym przykładzie tworzymy mostek o nazwie "bridge1" i dodajemy do niego interfejsy <code>ether2</code> i <code>ether3</code>.</p>
+
+    <h2>3. Konfiguracja VLAN w Mostku</h2>
+    <p>Aby skonfigurować VLAN w mostku, należy włączyć filtrację VLAN i dodać odpowiednie wpisy do tabeli VLAN mostka:</p>
+    <pre>
+/interface bridge vlan add bridge=bridge1 tagged=ether2,ether3 vlan-ids=10
+/interface bridge vlan add bridge=bridge1 tagged=ether2,ether3 vlan-ids=20
+/interface bridge vlan add bridge=bridge1 untagged=ether2,ether3 vlan-ids=30
+/interface bridge port set ether2 pvid=10
+/interface bridge port set ether3 pvid=20
+    </pre>
+    <p>W powyższym przykładzie konfigurujemy trzy VLANy: 10, 20 i 30, przypisując odpowiednie porty do tych VLANów.</p>
+
+    <h2>4. Konfiguracja Spanning Tree Protocol (STP)</h2>
+    <p>Spanning Tree Protocol (STP) jest używany do zapobiegania pętlom w sieci mostkowanej. Aby włączyć STP w RouterOS:</p>
+    <pre>
+/interface bridge set bridge1 protocol-mode=rstp
+    </pre>
+    <p>W powyższym przykładzie włączamy Rapid Spanning Tree Protocol (RSTP) dla mostka "bridge1".</p>
+
+    <h2>5. Konfiguracja Przełączania z Użyciem Chipu Switch</h2>
+    <p>Niektóre urządzenia MikroTik posiadają wbudowany chip przełącznika, który pozwala na przełączanie ramek na poziomie sprzętowym, co zwiększa wydajność. Aby skonfigurować przełączanie z użyciem chipu switch:</p>
+    <pre>
+/interface ethernet switch port set ether2 vlan-mode=secure vlan-header=always-strip default-vlan-id=10
+/interface ethernet switch port set ether3 vlan-mode=secure vlan-header=always-strip default-vlan-id=20
+    </pre>
+    <p>W powyższym przykładzie konfigurujemy porty <code>ether2</code> i <code>ether3</code> do pracy z VLANami 10 i 20, odpowiednio.</p>
+
+    <h2>6. Diagnostyka i Monitorowanie</h2>
+    <p>Aby monitorować stan mostka i portów:</p>
+    <pre>
+/interface bridge print
+/interface bridge port print
+/interface bridge vlan print
+/interface ethernet switch port print
+    </pre>
+    <p>Te polecenia wyświetlą informacje o stanie mostka, portów mostka, tabeli VLAN mostka oraz portów przełącznika.</p>
+
+    <h2>7. Uwagi Końcowe</h2>
+    <p>Konfiguracja mostkowania i przełączania w RouterOS pozwala na elastyczne zarządzanie siecią i dostosowanie jej do indywidualnych potrzeb. Ważne jest, aby przed przystąpieniem do konfiguracji zapoznać się z dokumentacją MikroTik i zrozumieć działanie poszczególnych komponentów sieciowych.</p>
+
+    <footer>
+        <p>&copy; 2025 MikroTik Documentation</p>
+    </footer>
+</body>
+</html>
+

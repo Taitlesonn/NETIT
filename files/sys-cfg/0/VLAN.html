@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Konfiguracja VLAN w MikroTik RouterOS</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            line-height: 1.6;
+            margin: 20px;
+            background-color: #f4f4f4;
+            color: #333;
+        }
+        h1, h2 {
+            color: #0056b3;
+        }
+        pre {
+            background-color: #e9ecef;
+            padding: 10px;
+            border-radius: 5px;
+            overflow-x: auto;
+        }
+        ul {
+            margin-left: 20px;
+        }
+        footer {
+            text-align: center;
+            margin-top: 20px;
+            font-size: 0.9em;
+            color: #666;
+        }
+    </style>
+</head>
+<body>
+    <h1>Konfiguracja VLAN w MikroTik RouterOS</h1>
+    <p>W tej notatce przedstawiamy szczegółowe informacje na temat konfiguracji VLAN (Virtual Local Area Network) w systemie MikroTik RouterOS, zgodnie z oficjalną dokumentacją MikroTik.</p>
+
+    <h2>1. Wstęp do VLAN</h2>
+    <p>VLAN to technika warstwy 2 modelu OSI, która pozwala na podział jednej fizycznej sieci na wiele logicznych segmentów. Dzięki VLAN możliwe jest izolowanie ruchu pomiędzy różnymi grupami urządzeń, co zwiększa bezpieczeństwo i wydajność sieci.</p>
+    <p>W RouterOS VLAN jest realizowany za pomocą standardu IEEE 802.1Q, który umożliwia dodanie identyfikatora VLAN (VLAN ID) do nagłówka ramki Ethernetowej.</p>
+
+    <h2>2. Tworzenie interfejsu VLAN</h2>
+    <p>Aby utworzyć interfejs VLAN w RouterOS, należy użyć następującego polecenia:</p>
+    <pre>
+/interface vlan add name=vlan10 vlan-id=10 interface=ether1
+    </pre>
+    <p>W powyższym przykładzie tworzymy interfejs VLAN o nazwie <code>vlan10</code>, przypisany do interfejsu fizycznego <code>ether1</code> z identyfikatorem VLAN 10.</p>
+
+    <h2>3. Przypisywanie adresu IP do interfejsu VLAN</h2>
+    <p>Po utworzeniu interfejsu VLAN, należy przypisać mu adres IP:</p>
+    <pre>
+/ip address add address=192.168.10.1/24 interface=vlan10
+    </pre>
+    <p>W tym przykładzie przypisujemy adres IP <code>192.168.10.1/24</code> do interfejsu <code>vlan10</code>.</p>
+
+    <h2>4. Konfiguracja serwera DHCP dla VLAN</h2>
+    <p>Aby urządzenia w VLANie automatycznie otrzymywały adresy IP, należy skonfigurować serwer DHCP:</p>
+    <pre>
+/ip dhcp-server add name=dhcp1 interface=vlan10 address-pool=dhcp_pool disabled=no
+/ip dhcp-server network add address=192.168.10.0/24 gateway=192.168.10.1
+    </pre>
+    <p>W powyższym przykładzie tworzymy serwer DHCP o nazwie <code>dhcp1</code> przypisany do interfejsu <code>vlan10</code>, z pulą adresów <code>dhcp_pool</code> i bramą <code>192.168.10.1</code>.</p>
+
+    <h2>5. Konfiguracja trunkingu między przełącznikami</h2>
+    <p>Aby umożliwić przesyłanie ruchu VLAN pomiędzy przełącznikami, należy skonfigurować porty trunkowe:</p>
+    <pre>
+/interface ethernet switch port set ether2 vlan-mode=secure vlan-header=always-strip default-vlan-id=10
+/interface ethernet switch port set ether3 vlan-mode=secure vlan-header=always-strip default-vlan-id=10
+    </pre>
+    <p>W tym przykładzie porty <code>ether2</code> i <code>ether3</code> są skonfigurowane jako trunki z domyślnym identyfikatorem VLAN 10.</p>
+
+    <h2>6. Konfiguracja tagowania w VLAN (Q-in-Q)</h2>
+    <p>Q-in-Q (802.1ad) pozwala na dodanie dwóch lub więcej nagłówków VLAN do ramki Ethernetowej. W RouterOS można to skonfigurować, tworząc interfejs VLAN na innym interfejsie VLAN:</p>
+    <pre>
+/interface vlan add name=vlan11 vlan-id=11 interface=ether1
+/interface vlan add name=vlan12 vlan-id=12 interface=vlan11
+    </pre>
+    <p>W tym przykładzie tworzymy interfejs VLAN 11 na interfejsie fizycznym <code>ether1</code>, a następnie interfejs VLAN 12 na interfejsie <code>vlan11</code>. W rezultacie, ramki przesyłane przez interfejs <code>vlan12</code> będą miały dwa tagi VLAN: 11 i 12.</p>
+
+    <h2>7. Diagnostyka VLAN</h2>
+    <p>W celu monitorowania konfiguracji VLAN, można użyć następujących poleceń:</p>
+    <pre>
+/interface vlan print
+/ip address print
+/ip dhcp-server print
+/interface ethernet switch port print
+    </pre>
+    <p>Te polecenia wyświetlą informacje o interfejsach VLAN, przypisanych adresach IP, konfiguracji serwera DHCP oraz stanie portów przełącznika.</p>
+
+    <h2>8. Uwagi końcowe</h2>
+    <p>Konfiguracja VLAN w RouterOS pozwala na efektywne zarządzanie ruchem sieciowym i zwiększenie bezpieczeństwa poprzez segmentację sieci. Ważne jest, aby przed przystąpieniem do konfiguracji zaplanować strukturę VLAN oraz odpowiednio skonfigurować urządzenia sieciowe.</p>
+
+    <footer>
+        <p>&copy; 2025 MikroTik Documentation</p>
+    </footer>
+</body>
+</html>
+
