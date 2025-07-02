@@ -11,6 +11,7 @@ public class Topology {
     private static Pane workPanel;
     private static List<Point> points = new ArrayList<>();
     private static List<Button> sys = new ArrayList<>();
+    private static final Random RNG = new Random();
 
     public static final Integer ruter_t = 0;
     public static final Integer switch_t = 1;
@@ -18,12 +19,15 @@ public class Topology {
     public static final Integer windows_t = 3;
     public static final Integer linux_server_t = 4;
     public static final Integer windos_server_t = 5;
+    private static Integer app_stet = 0;
 
-
-
-
+    public static void setApp_stet(Integer x){ Topology.app_stet = x;}
+    public static boolean App_new_window_q(){return Topology.app_stet == 0;};
     public static void setPanelToTopology(Pane workPanel){
         Topology.workPanel = workPanel;
+    }
+    public static int getSystemCount() {
+        return points.size();
     }
 
     public static void addsystem(int x, int y, int type, ImageView img){
@@ -56,11 +60,6 @@ public class Topology {
         }
     }
 
-    public static int getSystemCount() {
-        return points.size();
-    }
-
-    private static final Random RNG = new Random();
 
     public static List<Integer> findFreeCoordinates() {
         final int SYSTEM_SIZE = 200; // rozmiar kwadratu w pikselach
