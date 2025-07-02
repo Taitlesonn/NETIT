@@ -6,9 +6,8 @@
 <?import javafx.scene.web.WebView?>
 <VBox xmlns="http://javafx.com/javafx"
       xmlns:fx="http://javafx.com/fxml"
-      fx:controller="com.netit.SecendaryUi"
-      prefHeight="400.0" prefWidth="600.0"
-      spacing="10" alignment="CENTER" style="-fx-padding: 20;"
+      spacing="10" alignment="CENTER"
+      style="-fx-padding: 20;"
       styleClass="dark-panel">
 
     <HBox fx:id="button_list" />

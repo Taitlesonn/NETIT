@@ -1,9 +1,10 @@
 package com.netit;
 
 import javafx.fxml.FXML;
+import javafx.scene.Parent;
 import javafx.scene.control.Button;
 import javafx.scene.layout.HBox;
-import javafx.scene.layout.VBox;
+import javafx.scene.layout.Pane;
 import javafx.scene.web.WebView;
 
 import java.io.Console;
@@ -14,6 +15,7 @@ import java.util.List;
 public class SecendaryUi {
     private String baseDir;
     private List<String> files = new ArrayList<>();
+    private Button but;
 
     @FXML
     private WebView idex_info;
@@ -36,12 +38,22 @@ public class SecendaryUi {
 
         if (path != null) {
             showHtmlFromPath(path + "index.html");
-            Button defult = new Button();
 
+            Button defult = new Button();
+            Button delete = new Button();
+
+
+            delete.setText("del");
             defult.setText("info");
+            delete.setOnAction(e ->{
+                Topology.workPanel.getChildren().remove(this.but);
+                Topology.del_system(this.but);
+                this.but = null;
+            });
             defult.setOnAction(e -> {
                 showHtmlFromPath(path + "index.html");
             });
+            this.button_list.getChildren().add(delete);
             this.button_list.getChildren().add(defult);
 
             this.files.clear();
@@ -63,6 +75,9 @@ public class SecendaryUi {
 
     }
 
+    public void point_to_button(Button b){
+        this.but = b;
+    }
     public void showHtmlFromPath(String relativePath) {
         File f = new File(this.baseDir, relativePath); // Połączenie ścieżek
 

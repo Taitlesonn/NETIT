@@ -13,7 +13,7 @@ import java.util.List;
 import java.util.Random;
 
 public class Topology {
-    private static Pane workPanel;
+    public static Pane workPanel;
     private static List<Point> points = new ArrayList<>();
     private static List<Button> sys = new ArrayList<>();
     private static final Random RNG = new Random();
@@ -25,6 +25,7 @@ public class Topology {
     public static final Integer linux_server_t = 4;
     public static final Integer windos_server_t = 5;
     private static Integer app_stet = -1;
+    private static Integer index_b = -1;
 
     public static void setApp_stet(Integer x){ Topology.app_stet = x;}
     public static boolean App_new_window_q(){return Topology.app_stet == -1;};
@@ -35,6 +36,7 @@ public class Topology {
     public static int getSystemCount() {
         return points.size();
     }
+    public static int getindex_b(){ return  Topology.index_b; }
 
     public static void addsystem(int x, int y, int type, ImageView img){
         Topology.points.add(new Point(x, y, type));
@@ -47,9 +49,14 @@ public class Topology {
         button.setOnAction(e -> {
             if (Topology.App_new_window_q()){
                 Topology.setApp_stet(type);
+                Topology.index_b = Topology.getSystemCount();
                 try {
                     FXMLLoader loader = new FXMLLoader(Topology.class.getResource("/secendary_ui.fxml"));
+                    SecendaryUi secendaryUi = new SecendaryUi();
+                    loader.setController(secendaryUi);
+                    secendaryUi.point_to_button(button);
                     Parent root = loader.load();
+
 
                     Stage stage = new Stage();
                     switch(type){
@@ -61,11 +68,18 @@ public class Topology {
                         case 5 -> { stage.setTitle("windows server");}
                         default -> { stage.setTitle("Error type init"); }
                     }
-                    stage.setScene(new Scene(root));
+
+                    Scene scene = new Scene(root);
+                    scene.getStylesheets().add(Topology.class.getResource("/style.css").toExternalForm());
+                    scene.setRoot(root);
+                    stage.setResizable(true);
+                    stage.setScene(scene);
                     stage.setOnCloseRequest(event -> {
                         Topology.setApp_stet(-1);
                     });
                     stage.show();
+                    stage.setWidth(500);
+                    stage.setHeight(500);
                 } catch (Exception ex) {
                     throw new RuntimeException(ex);
                 }
@@ -73,10 +87,46 @@ public class Topology {
         }
         );
 
+
+        // Dodajemy obsługę przeciągania
+        final double[] dragOffsetX = new double[1];
+        final double[] dragOffsetY = new double[1];
+        final boolean[] dragged = {false};
+
+        button.setOnMousePressed(event -> {
+            dragOffsetX[0] = event.getSceneX() - button.getLayoutX();
+            dragOffsetY[0] = event.getSceneY() - button.getLayoutY();
+            dragged[0] = false;
+        });
+
+        button.setOnMouseDragged(event -> {
+            double newX = event.getSceneX() - dragOffsetX[0];
+            double newY = event.getSceneY() - dragOffsetY[0];
+
+            button.setLayoutX(newX);
+            button.setLayoutY(newY);
+            dragged[0] = true;
+        });
+
+        button.setOnMouseReleased(event -> {
+            if (!dragged[0]) {
+                button.fire(); // tylko klik, bez przeciągania
+            } else {
+                // jeśli przeciągnięto, zaktualizuj pozycję logiczną (Point)
+                int index = Topology.sys.indexOf(button);
+                if (index != -1) {
+                    Topology.setSystem((int) button.getLayoutX(), (int) button.getLayoutY(), index);
+                }
+            }
+        });
         Topology.workPanel.getChildren().add(button);
         Topology.sys.add(button);
     }
 
+    public static void del_system(Button b){
+        Topology.sys.remove(b);
+        Topology.workPanel.layout();
+    }
     public static Point getPoint(int index){
         if (index >= 0 && index < points.size()){
             return points.get(index);
