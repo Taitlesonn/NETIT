@@ -1,5 +1,5 @@
 # NETIT
-
+Network Emulation and Topology Implementation Tool
 ## Project Overview
 
 This software allows users to quickly and intuitively design their own computer networks using a drag-and-drop interface, similar to tools like GNS3 or Cisco Packet Tracer. Unlike typical simulators, it generates a complete, practical deployment guide after the network topology is finalized, enabling users to move directly from design to real-world configuration.
