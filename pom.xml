@@ -76,24 +76,30 @@
             </executions>
             </plugin>
 
-            <!-- exec-maven-plugin (do uruchamiania) -->
-            <plugin>
-            <groupId>org.codehaus.mojo</groupId>
-            <artifactId>exec-maven-plugin</artifactId>
-            <version>3.1.0</version>
-            <configuration>
-                <mainClass>com.netit.Main</mainClass>
-                <vmArgs>
-                <vmArg>--module-path /opt/javafx-sdk-21/javafx-sdk-21.0.7/lib:target/classes</vmArg>
-                <vmArg>--add-modules javafx.controls,javafx.fxml</vmArg>
-                <vmArg>-m</vmArg>
-                <vmArg>com.netit/com.netit.Main</vmArg>
-                </vmArgs>
-            </configuration>
-            </plugin>
+          <plugin>
+              <groupId>org.codehaus.mojo</groupId>
+              <artifactId>exec-maven-plugin</artifactId>
+              <version>3.1.0</version>
+              <configuration>
+                  <mainClass>com.netit.Main</mainClass>
+                  <vmArgs>
+                      <!-- ścieżka do wszystkich JAR-ów JavaFX -->
+                      <vmArg>
+                          --module-path
+                          /opt/javafx-sdk-21/javafx-sdk-21.0.7/lib:target/classes
+                      </vmArg>
+                      <!-- dodaj javafx.web obok controls i fxml -->
+                      <vmArg>--add-modules javafx.controls,javafx.fxml,javafx.web</vmArg>
+                      <!-- moduł aplikacji -->
+                      <vmArg>-m</vmArg>
+                      <vmArg>com.netit/com.netit.Main</vmArg>
+                  </vmArgs>
+              </configuration>
+          </plugin>
 
 
-        </plugins>
+
+      </plugins>
     </build>
 
     <!-- Brak zależności w Maven; JavaFX pobierane z lokalnego SDK -->

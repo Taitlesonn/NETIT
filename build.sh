@@ -76,6 +76,6 @@ cp "$TARGET_JAR" "$OUTPUT_JAR"
 log "Uruchamiam aplikację JavaFX…"
 java \
   --module-path "$JAVA_FX_SDK" \
-  --add-modules javafx.controls,javafx.fxml \
+  --add-modules javafx.controls,javafx.fxml,javafx.web \
   $JAVA_ARGS \
   -jar "$OUTPUT_JAR"
