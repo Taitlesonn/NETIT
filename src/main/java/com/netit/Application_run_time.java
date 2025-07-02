@@ -84,9 +84,29 @@ public class Application_run_time {
     @FXML
     private Pane workspace;
 
-    public Application_run_time(){
-        //init fun
-        this.os_gues();
+    public Application_run_time(){ this.os_gues(); }
+    public static boolean isLibvirtSocketAvailable() { return Files.exists(Path.of("/var/run/libvirt/libvirt-sock")); }
+    public int getX_run() { return this.x_run; }
+    public int getY_run() { return this.y_run; }
+    public String getAutor(){ return this.autor; }
+    public String getFull_name(){ return this.full_name; }
+    public ImageView getRuter_img(){
+        return this.ruter_img;
+    }
+    public ImageView getLinux_img(){
+        return this.linux_img;
+    }
+    public ImageView getSwitch_img(){
+        return this.switch_img;
+    }
+    public ImageView getWindows_img(){
+        return this.windows_img;
+    }
+    public ImageView getWindows_server_img(){
+        return this.windows_server_img;
+    }
+    public ImageView getLinux_server_img(){
+        return this.linux_server_img;
     }
 
     public boolean isLibvirtRunning() {
@@ -100,10 +120,7 @@ public class Application_run_time {
         }
     }
 
-    public static boolean isLibvirtSocketAvailable() {
-        Path socketPath = Path.of("/var/run/libvirt/libvirt-sock");
-        return Files.exists(socketPath);
-    }
+
 
     private void os_gues(){
         String os = System.getProperty("os.name").toLowerCase();
@@ -126,21 +143,6 @@ public class Application_run_time {
         }
     }
 
-    public int getX_run() {
-        return this.x_run;
-    }
-
-    public int getY_run() {
-        return this.y_run;
-    }
-
-    public String getAutor(){
-        return this.autor;
-    }
-
-    public String getFull_name(){
-        return this.full_name;
-    }
 
     private void setTooltipRight(Button button, String text) {
         Tooltip tooltip = new Tooltip(text);
@@ -219,24 +221,7 @@ public class Application_run_time {
 
     }
 
-    public ImageView getRuter_img(){
-        return this.ruter_img;
-    }
-    public ImageView getLinux_img(){
-        return this.linux_img;
-    }
-    public ImageView getSwitch_img(){
-        return this.switch_img;
-    }
-    public ImageView getWindows_img(){
-        return this.windows_img;
-    }
-    public ImageView getWindows_server_img(){
-        return this.windows_server_img;
-    }
-    public ImageView getLinux_server_img(){
-        return this.linux_server_img;
-    }
+
 
     @FXML
     private void initialize() throws IOException {
