@@ -5,7 +5,10 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.image.ImageView;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.Pane;
+import javafx.scene.paint.Color;
+import javafx.scene.shape.Line;
 import javafx.stage.Stage;
 
 import java.util.ArrayList;
@@ -16,6 +19,7 @@ public class Topology {
     public static Pane workPanel;
     private static List<Point> points = new ArrayList<>();
     private static List<Button> sys = new ArrayList<>();
+    private static final List<Connection> connections = new ArrayList<>();
     private static final Random RNG = new Random();
 
     public static final Integer ruter_t = 0;
@@ -184,5 +188,106 @@ public class Topology {
         // wybieramy losowo jeden z dostępnych
         return freeSpots.get(RNG.nextInt(freeSpots.size()));
     }
+
+
+
+
+    // lista wszystkich połączeń
+    private static class Connection {
+        Button b1, b2;
+        Line link;
+        Connection(Button b1, Button b2, Line link) {
+            this.b1 = b1; this.b2 = b2; this.link = link;
+        }
+    }
+
+
+    public static void connectTwoButtons() {
+        setApp_stet(999);
+        List<Button> selection = new ArrayList<>();
+
+        javafx.event.EventHandler<MouseEvent> pickHandler = new javafx.event.EventHandler<>() {
+            @Override
+            public void handle(MouseEvent event) {
+                Button btn = (Button) event.getSource();
+                if (!selection.contains(btn)) {
+                    selection.add(btn);
+                    btn.setStyle("-fx-border-color: blue; -fx-border-width: 2px;");
+                }
+                if (selection.size() == 2) {
+                    Button b1 = selection.get(0), b2 = selection.get(1);
+                    Line link = new Line();
+                    link.startXProperty().bind(b1.layoutXProperty().add(b1.widthProperty().divide(2)));
+                    link.startYProperty().bind(b1.layoutYProperty().add(b1.heightProperty().divide(2)));
+                    link.endXProperty().bind(b2.layoutXProperty().add(b2.widthProperty().divide(2)));
+                    link.endYProperty().bind(b2.layoutYProperty().add(b2.heightProperty().divide(2)));
+                    workPanel.getChildren().add(0, link);
+                    connections.add(new Connection(b1, b2, link));
+
+                    cleanup();
+                }
+            }
+            private void cleanup() {
+                for (Button b : sys) {
+                    b.removeEventHandler(MouseEvent.MOUSE_PRESSED, this);
+                    b.setStyle("");
+                }
+                setApp_stet(-1);
+            }
+        };
+
+        for (Button b : sys) {
+            b.addEventHandler(MouseEvent.MOUSE_PRESSED, pickHandler);
+        }
+    }
+
+
+    public static void removeConnectionBetweenButtons() {
+        setApp_stet(998);
+        List<Button> selection = new ArrayList<>();
+
+        javafx.event.EventHandler<MouseEvent> pickHandler = new javafx.event.EventHandler<>() {
+            @Override
+            public void handle(MouseEvent event) {
+                Button btn = (Button) event.getSource();
+                if (!selection.contains(btn)) {
+                    selection.add(btn);
+                    btn.setStyle("-fx-border-color: red; -fx-border-width: 2px;");
+                }
+                if (selection.size() == 2) {
+                    Button b1 = selection.get(0), b2 = selection.get(1);
+
+                    // znajdź połączenie (kolejność nieistotna)
+                    Connection toRemove = null;
+                    for (Connection c : connections) {
+                        if ((c.b1 == b1 && c.b2 == b2) || (c.b1 == b2 && c.b2 == b1)) {
+                            toRemove = c;
+                            break;
+                        }
+                    }
+
+                    if (toRemove != null) {
+                        workPanel.getChildren().remove(toRemove.link);
+                        connections.remove(toRemove);
+                    }
+
+                    cleanup();
+                }
+            }
+            private void cleanup() {
+                for (Button b : sys) {
+                    b.removeEventHandler(MouseEvent.MOUSE_PRESSED, this);
+                    b.setStyle("");
+                }
+                setApp_stet(-1);
+            }
+        };
+
+        for (Button b : sys) {
+            b.addEventHandler(MouseEvent.MOUSE_PRESSED, pickHandler);
+        }
+    }
+
+
 
 }

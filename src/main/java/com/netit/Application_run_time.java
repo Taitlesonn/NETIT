@@ -40,10 +40,16 @@ public class Application_run_time {
     private ImageView windows_server_img;
     private ImageView linux_server_img;
 
-    private final Integer x_box = 150;
-    private final Integer y_box = 150;
+    private final Integer x_box = 75;
+    private final Integer y_box = 75;
 
 
+
+    @FXML
+    private Button connecter;
+
+    @FXML
+    private Button disconecter;
 
     @FXML
     private HBox HBox_heder;
@@ -161,6 +167,12 @@ public class Application_run_time {
             tooltip.setY(y);
         });
     }
+
+    @FXML
+    private void connecter_f(){ Topology.connectTwoButtons();}
+
+    @FXML
+    private void connecter_d() { Topology.removeConnectionBetweenButtons();}
 
     @FXML
     private void add_router(){

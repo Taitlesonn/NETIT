@@ -33,6 +33,8 @@
             <Button fx:id="ruter_b" styleClass="image-button" onAction="#add_router"/>
             <Button fx:id="linux_server_b" styleClass="image-button" onAction="#add_linux_server"/>
             <Button fx:id="windows_server_b" styleClass="image-button" onAction="#add_windows_server"/>
+            <Button fx:id="connecter" onAction="#connecter_f" text="Connect"/>
+            <Button fx:id="disconecter" onAction="#connecter_d" text="disconect"/>
         </VBox>
     </left>
 

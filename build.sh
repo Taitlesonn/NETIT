@@ -18,7 +18,7 @@ JAVA_ARGS="${JAVA_ARGS:-}"
 # Nazwy plików i katalogów
 PROJECT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 OUT_DIR="$PROJECT_DIR/out"
-TARGET_JAR="$PROJECT_DIR/target/original-netit-0.3.jar"
+TARGET_JAR="$PROJECT_DIR/target/original-netit-1.0.jar"
 OUTPUT_JAR="$OUT_DIR/netit.jar"
 
 # Proste funkcje pomocnicze:

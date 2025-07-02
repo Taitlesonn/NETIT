@@ -8,6 +8,15 @@ Users can add routers, switches, servers, and workstations, select manufacturers
 
 
 ## Requirements and Building the Project
+### Simple install
+
+Just go to rpm folder and then:
+```bash
+ sudo dnf install ./netit-1.0-1.fc42.x86_64.rpm
+ sudo yum install ./netit-1.0-1.fc42.x86_64.rpm
+ sudo zypper install ./netit-1.0-1.fc42.x86_64.rpm
+ sudo rpm -Uvh  netit-1.0-1.fc42.x86_64.rpm
+```
 
 ### Requirements
 
