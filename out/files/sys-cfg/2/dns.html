@@ -1,0 +1,253 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Konfiguracja BIND9 na openSUSE</title>
+  <style>
+    body {
+      font-family: sans-serif;
+      max-width: 800px;
+      margin: 40px auto;
+      background: #f4f4f4;
+      color: #333;
+      line-height: 1.6;
+      padding: 20px;
+      box-sizing: border-box;
+    }
+    h1, h2, h3 {
+      color: #2c3e50;
+      text-align: center;
+    }
+    p, ul, ol, table {
+      margin: 1em 0;
+    }
+    pre {
+      background: #eee;
+      padding: 10px;
+      border-left: 4px solid #2980b9;
+      overflow-x: auto;
+    }
+    code {
+      color: #c0392b;
+      background: #f0f0f0;
+      padding: 2px 4px;
+      border-radius: 3px;
+    }
+    ul {
+      margin-left: 20px;
+    }
+    table {
+      margin: 0 auto;
+      border-collapse: collapse;
+      width: 100%;
+      max-width: 600px;
+    }
+    table th, table td {
+      border: 1px solid #999;
+      padding: 8px;
+      text-align: left;
+    }
+    table th {
+      background: #2980b9;
+      color: white;
+    }
+    hr {
+      margin: 40px 0;
+    }
+    small {
+      display: block;
+      text-align: center;
+      color: #666;
+    }
+  </style>
+</head>
+<body>
+
+<h1>Konfiguracja BIND9 na openSUSE</h1>
+
+<p>W tym obszernym przewodniku przeanalizujemy dokładnie wszystkie aspekty konfiguracji serwera DNS <strong>BIND9</strong> na systemie openSUSE. Omówimy:</p>
+<ul>
+  <li><strong>Cache (caching‑only DNS)</strong> – jak działa cache, dlaczego jest ważne, i jak go zabezpieczyć,</li>
+  <li><strong>Forwarding DNS</strong> – kiedy warto użyć i jak dobrać upstream serwery,</li>
+  <li><strong>Strefy wyszukiwania do przodu (forward zones)</strong> – szczegóły pliku strefy, parametry SOA, rekordy A, AAAA, MX,</li>
+  <li><strong>Strefy odwrotne (reverse zones)</strong> – konstruowanie stref PTR, dobór TTL i serialu.</li>
+</ul>
+
+<h2>1. Instalacja i uruchomienie</h2>
+
+<p>Pierwszym krokiem jest zainstalowanie pakietu <code>bind</code> i uruchomienie demona <code>named</code>:</p>
+<pre><code>sudo zypper install bind
+sudo systemctl enable --now named</code></pre>
+
+<ul>
+  <li><strong>Instalacja:</strong> Pobranie wszystkich niezbędnych plików BIND9. Zawiera demon <code>named</code>, narzędzia diagnostyczne oraz dokumentację.</li>
+  <li><strong>Autostart:</strong> Dzięki <code>enable</code> demon będzie startował automatycznie po restarcie systemu.</li>
+  <li><strong>Natychmiastowe uruchomienie:</strong> <code>--now</code> powoduje włączenie usługi od razu, bez potrzeby dodatkowego restartu.</li>
+  <li><strong>Sprawdzenie statusu:</strong> <code>systemctl status named</code> – upewnij się, że nie ma błędów w logach (<code>journalctl -xe</code>).</li>
+</ul>
+
+<h2>2. Caching-only DNS</h2>
+
+<p>Tryb <em>caching-only</em> sprawia, że BIND działa jako wyłącznie rekursywny resolver z pamięcią podręczną. Nie hostuje żadnych stref, a jedynie odpowiada na zapytania klientów oraz przechowuje wyniki.</p>
+
+<h3>2.1 Konfiguracja sekcji <code>options</code></h3>
+<pre><code>options {
+  directory "/var/lib/named";             
+  listen-on { 127.0.0.1; };               
+  listen-on-v6 { ::1; };                  
+  recursion yes;                          
+  dnssec-validation auto;                 
+  forwarders {};                          
+  allow-query { localhost; localnets; };  
+  allow-recursion { localhost; localnets; };
+};</code></pre>
+
+<ul>
+  <li><strong><code>directory</code>:</strong> katalog roboczy, w którym BIND przechowuje strefy i pliki cache.</li>
+  <li><strong>Nasłuch:</strong> domyślnie na interfejsie loopback – izoluje usługi od publicznych interfejsów.</li>
+  <li><strong><code>recursion yes</code>:</strong> kluczowe dla trybu caching; bez rekursji serwer nie wyszuka odpowiedzi samodzielnie.</li>
+  <li><strong><code>dnssec-validation auto</code>:</strong> włącza weryfikację podpisów DNSSEC, zabezpieczając przed atakami typu cache poisoning.</li>
+  <li><strong><code>forwarders {}</code>:</strong> pusta lista – BIND będzie bezpośrednio pytał serwery root i dalej po kolei.</li>
+  <li><strong>Ograniczenia dostępu:</strong> <code>allow-query</code> i <code>allow-recursion</code> chronią przed nieautoryzowanym użyciem serwera.</li>
+</ul>
+
+<h3>2.2 Testowanie cache</h3>
+<ol>
+  <li>Wykonaj zapytanie: <code>dig @127.0.0.1 www.opensuse.org</code>.</li>
+  <li>Ponów po kilku sekundach: odpowiedź powinna zostać pobrana z cache (<code>SERVER: 127.0.0.1#53(127.0.0.1)</code>).</li>
+  <li>Sprawdź statystyki cache: <code>rndc stats</code> zapisze plik <code>named.stats</code> z liczbą hitów/missów.</li>
+</ol>
+
+<h2>3. Konfiguracja Forwarding DNS</h2>
+
+<p>Forwarding kieruje zapytania do upstream serwerów DNS (np. Google, Cloudflare), co może przyspieszyć rozwiązywanie i odciążyć system rekursji.</p>
+
+<h3>3.1 Ustawienia forwarders</h3>
+<pre><code>options {
+  directory "/var/lib/named";
+  listen-on { 127.0.0.1; 192.168.1.1; };
+  recursion yes;
+  dnssec-validation auto;
+  forwarders { 8.8.8.8; 1.1.1.1; };
+  allow-query { localhost; 192.168.0.0/24; };
+  allow-recursion { localhost; 192.168.0.0/24; };
+};</code></pre>
+
+<ul>
+  <li><strong>Wybór serwerów:</strong> 8.8.8.8 (Google), 1.1.1.1 (Cloudflare) – niskie opóźnienie i wysoka dostępność.</li>
+  <li><strong>Interfejsy:</strong> dodanie lokalnego interfejsu LAN, by serwer obsługiwał zapytania klientów.</li>
+  <li><strong>Rekursja + cache:</strong> BIND najpierw sprawdzi cache, potem przekaże zapytanie upstream.</li>
+</ul>
+
+<h3>3.2 Analiza korzyści i wad</h3>
+<table>
+  <thead>
+    <tr><th>Korzyści</th><th>Wady</th></tr>
+  </thead>
+  <tbody>
+    <tr><td>Szybsze wyniki z popularnych domen</td><td>Uzależnienie od zewnętrznych serwerów</td></tr>
+    <tr><td>Mniejsze obciążenie łącza na surową rekursję</td><td>Brak kontroli nad ich konfiguracją</td></tr>
+    <tr><td>Prostsza konfiguracja bezpieczeństwa</td><td>Potencjalne blokady geolokalizacyjne</td></tr>
+  </tbody>
+</table>
+
+<h2>4. Konfiguracja własnych stref DNS</h2>
+
+<p>Aby hostować własne nazwy w sieci LAN, definiujemy strefy typu <code>master</code> w głównym pliku <code>named.conf</code>.</p>
+
+<h3>4.1 Forward zone – example.lan</h3>
+<pre><code>zone "example.lan" {
+  type master;
+  file "/var/lib/named/example.lan.zone";
+  allow-query { any; };
+  allow-transfer { none; };
+};</code></pre>
+
+<p>Przykładowy plik strefy forward:</p>
+<pre><code>$TTL 8h
+@   IN SOA ns.example.lan. hostmaster.example.lan. (
+      2025070201 ; serial – YYYYMMDDnn format
+      1d         ; refresh – co ile sekund slave odświeża
+      3h         ; retry – po nieudanym odświeżeniu
+      1w         ; expire – kiedy strefa uzna slave za nieaktualny
+      3h )       ; minimum TTL dla negatywnych odpowiedzi
+    IN NS ns.example.lan.
+ns  IN A  192.168.1.10
+www IN A  192.168.1.20
+mail IN MX 10 mail.example.lan.
+</code></pre>
+
+<ul>
+  <li><strong>SOA:</strong> parametry synchronizacji między masterem a ewentualnymi slave’ami,</li>
+  <li><strong>NS:</strong> wskazuje autorytatywny serwer DNS,</li>
+  <li><strong>A/AAAA:</strong> rekordy adresowe IPv4/IPv6,</li>
+  <li><strong>MX:</strong> rekord pocztowy z priorytetem.</li>
+</ul>
+
+<h3>4.2 Reverse zone – 192.168.1.0/24</h3>
+<pre><code>zone "1.168.192.in-addr.arpa" {
+  type master;
+  file "/var/lib/named/192.168.1.rev.zone";
+  allow-query { any; };
+  allow-transfer { none; };
+};</code></pre>
+
+<p>Plik strefy PTR:</p>
+<pre><code>$TTL 8h
+@ IN SOA ns.example.lan. hostmaster.example.lan. (
+     2025070201 ; serial
+     1d
+     3h
+     1w
+     3h )
+  IN NS ns.example.lan.
+10 IN PTR ns.example.lan.
+20 IN PTR www.example.lan.
+</code></pre>
+
+<ul>
+  <li><strong>PTR:</strong> każdy wpis mapuje ostatni oktet adresu na nazwę,</li>
+  <li><strong>Test:</strong> <code>dig -x 192.168.1.20 @127.0.0.1</code>.</li>
+</ul>
+
+<h2>5. Walidacja i restart</h2>
+
+<p>Zawsze sprawdzaj poprawność przed przeładowaniem:</p>
+<pre><code>named-checkconf                             # syntaktyka main config
+named-checkzone example.lan /var/lib/named/example.lan.zone
+named-checkzone 1.168.192.in-addr.arpa /var/lib/named/192.168.1.rev.zone
+sudo systemctl reload named                  # przeładuj konfigurację</code></pre>
+
+<ul>
+  <li><strong>named-checkconf:</strong> zwraca błędy składniowe w <code>named.conf</code>.</li>
+  <li><strong>named-checkzone:</strong> testuje poprawność pliku strefy (SOA, rekordy).</li>
+  <li><strong>reload vs restart:</strong> <code>reload</code> ładuje nową konfigurację bez odrywania istniejących połączeń.</li>
+</ul>
+
+<h3>5.1 Monitorowanie i logi</h3>
+<ul>
+  <li>Plik logów BIND: <code>/var/log/messages</code> lub dedykowany <code>journalctl -u named</code>.</li>
+  <li>Włączenie debugowania: w <code>options</code> <code>logging { category "queries" { "/var/log/named_queries.log"; }; };</li>
+  <li>Statystyki: <code>rndc stats</code> i <code>rndc dumpdb -zones</code>.</li>
+</ul>
+
+<h2>6. Podsumowanie</h2>
+<table>
+  <thead>
+    <tr>
+      <th>Tryb</th><th>Forwarders</th><th>Recursion</th><th>Obsługa stref</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr><td>Caching-only</td><td>–</td><td>yes</td><td>nie</td></tr>
+    <tr><td>Forwarding</td><td>8.8.8.8, 1.1.1.1</td><td>yes</td><td>nie</td></tr>
+    <tr><td>Autorytatywny (LAN)</td><td>opcjonalne</td><td>tak</td><td>forward + reverse</td></tr>
+  </tbody>
+</table>
+
+<hr />
+<small>Dokument opracowany na podstawie oficjalnej dokumentacji openSUSE (Leap) i Bind9 Administrator Reference Manual. Data: lipiec 2025.</small>
+
+</body>
+</html>

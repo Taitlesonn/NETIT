@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Konfiguracja vsftpd na openSUSE</title>
+  <style>
+    body {
+      font-family: sans-serif;
+      margin: 40px;
+      background: #f4f4f4;
+      color: #333;
+      line-height: 1.6;
+      text-align: center; /* wypośrodkowanie tekstu w całym body */
+    }
+    h1, h2, h3 {
+      color: #2c3e50;
+    }
+    pre {
+      background: #eee;
+      padding: 10px;
+      border-left: 4px solid #2980b9;
+      overflow-x: auto;
+      text-align: left; /* dla czytelności kodu pre zostaje do lewej */
+      display: inline-block; /* by pre nie zajmowało całej szerokości */
+      max-width: 90vw; /* max szerokość na ekranie */
+    }
+    code {
+      color: #c0392b;
+    }
+    ul {
+      margin-left: 20px;
+      display: inline-block; /* aby lista była centrowana jako blok */
+      text-align: left; /* tekst listy wyrównany do lewej */
+      max-width: 700px;
+    }
+    table {
+      border-collapse: collapse;
+      margin: 20px auto; /* automatyczne marginesy by centrować */
+      text-align: left; /* tekst w tabeli wyrównany do lewej */
+    }
+    table th, table td {
+      border: 1px solid #ccc;
+      padding: 5px 10px;
+    }
+    table th {
+      background: #e0e0e0;
+    }
+    p {
+      max-width: 700px;
+      margin: 0 auto 1em auto; /* centrowanie paragrafów i margines dolny */
+      text-align: center;
+    }
+    hr {
+      margin: 40px auto;
+      max-width: 700px;
+    }
+    small {
+      display: block;
+      max-width: 700px;
+      margin: 0 auto;
+      text-align: center;
+      color: #666;
+    }
+  </style>
+</head>
+<body>
+
+<h1>Konfiguracja podstawowego serwera FTP na vsftpd</h1>
+
+<p>Na openSUSE najlepszym sposobem na konfigurację vsftpd jest użycie YaST – co opisuje oficjalna dokumentacja
+(„Setting up an FTP server with YaST” w Reference Guide). Zawiera ona interfejsy do konfiguracji:</p>
+<ul>
+  <li>start-up,</li>
+  <li>parametry ogólne (anonimowy/użytkownicy lokalni, katalogi, umask, logging),</li>
+  <li>wydajność (limity klientów, pasywny tryb),</li>
+  <li>uwierzytelnianie (anonymous/local),</li>
+  <li>ustawienia eksperckie (SSL/TLS, tryb pasywny/aktywny, firewall) :contentReference[oaicite:1]{index=1}.</li>
+</ul>
+
+<h2>1. Instalacja i uruchomienie via YaST</h2>
+<pre><code>sudo zypper install yast2-ftp-server vsftpd
+sudo yast2 ftp-server</code></pre>
+<p>W YaST wybierz vsftpd i skonfiguruj start przy uruchamianiu lub przez socket :contentReference[oaicite:2]{index=2}.</p>
+
+<h2>2. Przykładowa ręczna konfiguracja w <code>/etc/vsftpd.conf</code></h2>
+<pre><code>listen=YES
+listen_ipv6=NO
+
+anonymous_enable=NO
+local_enable=YES
+write_enable=YES
+chroot_local_user=YES
+
+pasv_enable=YES
+pasv_min_port=40000
+pasv_max_port=40100
+
+xferlog_enable=YES
+log_ftp_protocol=YES
+xferlog_file=/var/log/vsftpd.log
+</code></pre>
+<p>Nawiązuje ona do ustawień dostępnych w YaST, takich jak katalogi, chroot, logging itp. :contentReference[oaicite:3]{index=3}.</p>
+
+<h2>3. Katalogi i konta użytkowników</h2>
+<pre><code>sudo mkdir -p /srv/ftp/upload
+sudo chown ftp:ftp /srv/ftp/upload
+</code></pre>
+<ul>
+  <li>Domyślny katalog FTP to <code>/srv/ftp</code>, z katalogiem <code>upload</code> dla zapisu anonimowego :contentReference[oaicite:4]{index=4}.</li>
+</ul>
+
+<h2>4. Konta lokalne</h2>
+<pre><code>sudo useradd -m ftpuser
+sudo passwd ftpuser
+sudo mkdir -p /home/ftpuser/ftp
+sudo chown ftpuser:ftpuser /home/ftpuser/ftp</code></pre>
+<p>Umożliwia lokalnemu użytkownikowi logowanie i zapis do własnego katalogu, w którym jest chrootowany.</p>
+
+<h2>5. Tryb pasywny i limity</h2>
+<ul>
+  <li>Aktywuj tryb pasywny i zakres portów (`pasv_min/max_port`) – ustawiane ręcznie lub przez YaST :contentReference[oaicite:5]{index=5}.</li>
+  <li>Limity: liczba klientów, limity na IP itp. – można ustawić w YaST → Performance :contentReference[oaicite:6]{index=6}.</li>
+</ul>
+
+<h2>6. SSL/TLS (Expert settings)</h2>
+<p>W YaST opcje SSL/TLS dostępne w sekcji Expert Settings pozwalają na secure FTP. Dokumentacja zawiera pola do wyboru certyfikatu, wersji TLS itp. :contentReference[oaicite:7]{index=7}.</p>
+
+<h2>7. Restart i testy</h2>
+<pre><code>sudo systemctl restart vsftpd</code></pre>
+<p>Po uruchomieniu możesz przetestować logowanie lokalnym użytkownikiem oraz dostęp anonimowy (jeśli włączony):</p>
+<pre><code>ftp localhost</code></pre>
+
+<h2>8. Podsumowanie konfiguracji</h2>
+<table>
+  <thead>
+    <tr>
+      <th>Ustawienie</th>
+      <th>Wartość / Loc.</th>
+      <th>Opis</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr><td>listen</td><td>YES</td><td>nasłuch na IPv4 (standalone mode) :contentReference[oaicite:8]{index=8}</td></tr>
+    <tr><td>local_enable</td><td>YES</td><td>logowanie kont lokalnych</td></tr>
+    <tr><td>write_enable</td><td>YES</td><td>uploady przez użytkowników</td></tr>
+    <tr><td>chroot_local_user</td><td>YES</td><td>ograniczenie do katalogu domowego</td></tr>
+    <tr><td>pasv_enable</td><td>YES</td><td>tryb pasywny + zakres portów</td></tr>
+    <tr><td>xferlog_enable</td><td>YES</td><td>logi transferów</td></tr>
+  </tbody>
+</table>
+
+<hr>
+<p><small>Opracowano na podstawie: “Setting up an FTP server with YaST” w Reference Guide openSUSE :contentReference[oaicite:9]{index=9}, strony manuala vsftpd :contentReference[oaicite:10]{index=10}. Data: lipiec 2025.</small></p>
+
+</body>
+</html>

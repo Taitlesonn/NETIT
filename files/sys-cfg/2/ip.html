@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Konfiguracja IPv4 i IPv6 w NetworkManager na openSUSE</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      line-height: 1.6;
+      margin: 40px auto;
+      max-width: 800px;
+      background-color: #f4f4f4;
+      color: #333;
+      padding: 20px;
+      box-sizing: border-box;
+    }
+    h1, h2 {
+      color: #2c3e50;
+      text-align: center;
+    }
+    pre {
+      background-color: #eee;
+      padding: 10px;
+      border-left: 3px solid #2980b9;
+      overflow-x: auto;
+    }
+    code {
+      font-family: monospace;
+      color: #c0392b;
+    }
+    ol, ul {
+      padding-left: 20px;
+    }
+  </style>
+</head>
+<body>
+
+  <h1>Konfiguracja IPv4 i IPv6 w NetworkManager na openSUSE</h1>
+
+  <h2>1. Konfiguracja graficzna (GUI - przez YaST lub GNOME/KDE)</h2>
+
+  <p>Aby skonfigurować IPv4 lub IPv6 dla interfejsu sieciowego przez interfejs graficzny:</p>
+
+  <ol>
+    <li>Otwórz <strong>Ustawienia sieciowe</strong> (np. przez YaST lub aplikację „Ustawienia” w GNOME/KDE).</li>
+    <li>Przejdź do zakładki <strong>Sieć</strong>.</li>
+    <li>Wybierz interfejs (np. <code>eth0</code>, <code>wlan0</code>) i kliknij <strong>Edytuj</strong>.</li>
+    <li>W zakładce <strong>IPv4</strong> wybierz metodę konfiguracji:
+      <ul>
+        <li><strong>Automatyczna (DHCP)</strong></li>
+        <li><strong>Ręczna</strong> – podaj adres IP, maskę i bramę</li>
+      </ul>
+    </li>
+    <li>Analogicznie, w zakładce <strong>IPv6</strong> ustaw:
+      <ul>
+        <li><strong>Automatyczna</strong> (SLAAC lub DHCPv6)</li>
+        <li><strong>Ręczna</strong> – wpisz adres IPv6, prefix i bramę</li>
+      </ul>
+    </li>
+    <li>Zatwierdź zmiany i uruchom ponownie połączenie lub komputer.</li>
+  </ol>
+
+  <h2>2. Konfiguracja z linii poleceń (nmcli)</h2>
+
+  <p>Użyj polecenia <code>nmcli</code>, aby skonfigurować interfejsy sieciowe:</p>
+
+  <h3>Sprawdzenie dostępnych połączeń:</h3>
+  <pre><code>nmcli connection show</code></pre>
+
+  <h3>Przykład konfiguracji IPv4 statycznie:</h3>
+  <pre><code>nmcli connection modify eth0 ipv4.method manual ipv4.addresses 192.168.1.100/24 ipv4.gateway 192.168.1.1 ipv4.dns "8.8.8.8 1.1.1.1"</code></pre>
+
+  <h3>Przykład konfiguracji IPv6 statycznie:</h3>
+  <pre><code>nmcli connection modify eth0 ipv6.method manual ipv6.addresses 2001:db8::1/64 ipv6.gateway 2001:db8::fffe ipv6.dns "2001:4860:4860::8888"</code></pre>
+
+  <h3>Włączenie DHCP dla IPv4 i IPv6:</h3>
+  <pre><code>nmcli connection modify eth0 ipv4.method auto
+nmcli connection modify eth0 ipv6.method auto</code></pre>
+
+  <h3>Restart połączenia:</h3>
+  <pre><code>nmcli connection down eth0 && nmcli connection up eth0</code></pre>
+
+  <h2>3. Weryfikacja konfiguracji</h2>
+
+  <p>Aby sprawdzić aktualną konfigurację IP:</p>
+  <pre><code>ip addr show</code></pre>
+
+  <p>Sprawdzenie działania połączenia IPv4 i IPv6:</p>
+  <pre><code>ping 8.8.8.8     # IPv4
+ping6 2001:4860:4860::8888   # IPv6</code></pre>
+
+  <hr>
+  <p><small>Dokument stworzony dla openSUSE z użyciem NetworkManager (nmcli/GUI). Data: lipiec 2025.</small></p>
+
+</body>
+</html>

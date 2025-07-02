@@ -1,0 +1,376 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Teoria i konfiguracja serwera plików Samba oraz Samba AD na openSUSE</title>
+  <style>
+    body {
+      font-family: sans-serif;
+      max-width: 800px;
+      margin: 40px auto;
+      background: #f4f4f4;
+      color: #333;
+      line-height: 1.6;
+      padding: 20px;
+      box-sizing: border-box;
+    }
+    h1, h2, h3 {
+      color: #2c3e50;
+      text-align: center;
+    }
+    p, ul, ol, table {
+      margin: 1em 0;
+    }
+    pre {
+      background: #eee;
+      padding: 10px;
+      border-left: 4px solid #2980b9;
+      overflow-x: auto;
+    }
+    code {
+      color: #c0392b;
+      background: #f0f0f0;
+      padding: 2px 4px;
+      border-radius: 3px;
+    }
+    ul {
+      margin-left: 20px;
+    }
+    table {
+      margin: 0 auto;
+      border-collapse: collapse;
+      width: 100%;
+      max-width: 600px;
+    }
+    table th, table td {
+      border: 1px solid #999;
+      padding: 8px;
+      text-align: left;
+    }
+    table th {
+      background: #2980b9;
+      color: white;
+    }
+    hr {
+      margin: 40px 0;
+    }
+    small {
+      display: block;
+      text-align: center;
+      color: #666;
+    }
+  </style>
+</head>
+<body>
+
+<h1>Teoria i konfiguracja Samby na openSUSE</h1>
+
+<p>Serwer plików Samba oraz rola kontrolera domeny Active Directory (AD DC) to fundamenty współczesnych sieci heterogenicznych. Poniżej najpierw zagłębimy się w <strong>teorię</strong>, aby zrozumieć, jak działa protokół SMB/CIFS, jakie są możliwości Samby i dlaczego warto korzystać z integracji z AD. Następnie przedstawimy praktyczną konfigurację.</p>
+
+<h2>1. Wprowadzenie do protokołu SMB/CIFS</h2>
+
+<ul>
+  <li><strong>SMB</strong> (Server Message Block) to sieciowy protokół udostępniania plików, drukarek i innych zasobów.</li>
+  <li><strong>CIFS</strong> (Common Internet File System) to implementacja SMB w wersji TCP/IP, używana szeroko w systemach Windows.</li>
+  <li>Opracowany pierwotnie przez IBM, następnie udoskonalany przez Microsoft, protokół umożliwia:<br>
+    <ul>
+      <li>dostęp zdalny do udziałów plikowych,</li>
+      <li>blokowe operacje I/O z zachowaniem spójności,</li>
+      <li>uwierzytelnianie użytkowników i kontroli dostępu.</li>
+    </ul>
+  </li>
+</ul>
+
+<h3>1.1 Ewolucja SMB</h3>
+<ol>
+  <li><strong>SMB 1.0:</strong> protokół monolityczny, niskie bezpieczeństwo, słaba wydajność, podatny na ataki typu “pass-the-hash”.</li>
+  <li><strong>SMB 2.0 / 2.1:</strong> wprowadzony w Windows Vista/Server 2008 – zoptymalizowane pakiety, pipelining, większe bufory.</li>
+  <li><strong>SMB 3.x:</strong> od Windows 8 / Server 2012 – szyfrowanie end‑to‑end, transparentne failover, multichannel, RDMA.</li>
+</ol>
+
+<h2>2. Architektura Samby</h2>
+
+<p>Samba implementuje SMB w przestrzeni użytkownika Linuksa, udostępniając demony:</p>
+<ul>
+  <li><code>smbd</code> – obsługa protokołu SMB, plików i drukarek,</li>
+  <li><code>nmbd</code> – usługa NetBIOS Name Service (przeszukiwanie nazwy serwisów),</li>
+  <li><code>winbindd</code> – integracja z katalogami (LDAP/AD) i mapowanie użytkowników Windows na UNIX.</li>
+</ul>
+
+<h3>2.1 Plik konfiguracyjny <code>smb.conf</code></h3>
+<p>Główne ustawienia globalne i definicje udziałów zapisane w <code>/etc/samba/smb.conf</code>. Struktura:</p>
+<pre><code>[global]
+  opcje_globalne
+
+[share1]
+  opcje_udzialu</code></pre>
+
+<h2>3. Tryb standalone vs rola AD DC</h2>
+
+<table>
+  <thead>
+    <tr><th>Standalone Server</th><th>AD Domain Controller</th></tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>Bez integracji z katalogiem, lokalni użytkownicy</td>
+      <td>Pełna rola DC, konta i grupy w AD</td>
+    </tr>
+    <tr>
+      <td>Prosta konfiguracja, mniejsze wymagania</td>
+      <td>Złożona provision, DNS SRV, Kerberos</td>
+    </tr>
+    <tr>
+      <td>Brak replikacji</td>
+      <td>Możliwość replikacji między wieloma DC</td>
+    </tr>
+    <tr>
+      <td>Ograniczone polityki dostępu</td>
+      <td>GPO, ACL na poziomie pliku (NTFS ACL)</td>
+    </tr>
+  </tbody>
+</table>
+
+<h2>4. Bezpieczeństwo i standardy</h2>
+
+<ul>
+  <li><strong>Uwierzytelnianie Kerberos:</strong> stosowane w AD, zapewnia silne uwierzytelnianie bez przesyłania haseł przez sieć.</li>
+  <li><strong>NTLMv2:</strong> starszy mechanizm Microsoft, wciąż obsługiwany w trybie standalone.</li>
+  <li><strong>ACL:</strong> NTFS Access Control Lists pozwalają precyzyjnie kontrolować prawa dostępu do plików i folderów.</li>
+  <li><strong>Szyfrowanie SMB:</strong> w Samba ≥4 można wymusić SMB3 encryption, co chroni dane w tranzycie.</li>
+  <li><strong>SELinux/AppArmor:</strong> profile zabezpieczające procesy Samby przed nieautoryzowanymi operacjami plikowymi.</li>
+</ul>
+
+<h2>5. Tryb plików – CIFS vs NFS</h2>
+
+<p>SMB/CIFS vs NFS:</p>
+<ul>
+  <li><strong>SMB/CIFS:</strong> bogate ACL, integracja z Windows, dynamiczne wyszukiwanie udziałów;</li>
+  <li><strong>NFS:</strong> prostszy, wydajniejszy w sieciach Unix‑to‑Unix, ale słabsze ACL i uwierzytelnianie.</li>
+</ul>
+
+<h2>6. Konfiguracja podstawowego serwera plików</h2>
+
+<h3>6.1 Instalacja</h3>
+<pre><code>sudo zypper install samba samba-client
+sudo systemctl enable --now smb nmb</code></pre>
+
+<h3>6.2 Przykładowy <code>smb.conf</code></h3>
+<pre><code>[global]
+   workgroup = WORKGROUP
+   server string = Samba File Server
+   security = user
+   map to guest = Bad User
+   log level = 1
+
+[public]
+   path = /srv/samba/public
+   browsable = yes
+   read only = no
+   guest ok = yes
+</code></pre>
+
+<h3>6.3 Uprawnienia i użytkownicy</h3>
+<pre><code>sudo mkdir -p /srv/samba/public
+sudo chown root:users /srv/samba/public
+sudo chmod 2770 /srv/samba/public
+
+sudo smbpasswd -a guestuser
+sudo smbpasswd -e guestuser
+</code></pre>
+
+<h2>7. Provisioning Samba AD DC</h2>
+
+<h3>7.1 Tworzenie domeny</h3>
+<pre><code>sudo samba-tool domain provision \
+  --realm=EXAMPLE.LOCAL \
+  --domain=EXAMPLE \
+  --adminpass=TwojeHaslo \
+  --server-role=dc \
+  --dns-backend=SAMBA_INTERNAL</code></pre>
+
+<h3>7.2 Ustawienia DNS i Kerberos</h3>
+<pre><code>[global]
+   realm = EXAMPLE.LOCAL
+   netbios name = DC1
+   idmap_ldb:use rfc2307 = yes
+   server services = rpc, nbt, wrepl, ldap, kdc, drepl, winbind, ntp_signd, dnsupdate
+   dns forwarder = 8.8.8.8</code></pre>
+
+<h3>7.3 Zarządzanie AD</h3>
+<pre><code>sudo samba-tool user add jankowalski
+sudo samba-tool group add IT
+sudo samba-tool group addmembers IT jankowalski</code></pre>
+
+<h2>8. Monitoring i backup</h2>
+
+<ul>
+  <li><code>smbstatus</code> – aktywne sesje i blokady plików,</li>
+  <li><code>testparm</code> – sprawdza poprawność <code>smb.conf</code>,</li>
+  <li>Backup: kopiowanie <code>/var/lib/samba</code> i bazy LDAP z użyciem <code>samba-tool domain backup</code>.</li>
+</ul>
+
+<hr />
+<small>Dokumentacja Samba, Microsoft Docs i openSUSE Wiki. Data: lipiec 2025.</small>
+
+</body>
+</html>
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Teoria i konfiguracja Samby na openSUSE (zaawansowane)</title>
+  <style>
+    body {
+      font-family: sans-serif;
+      max-width: 800px;
+      margin: 40px auto;
+      background: #f4f4f4;
+      color: #333;
+      line-height: 1.6;
+      padding: 20px;
+      box-sizing: border-box;
+    }
+    h1, h2, h3 {
+      color: #2c3e50;
+      text-align: center;
+    }
+    p, ul, ol, table {
+      margin: 1em 0;
+    }
+    pre {
+      background: #eee;
+      padding: 10px;
+      border-left: 4px solid #2980b9;
+      overflow-x: auto;
+    }
+    code {
+      color: #c0392b;
+      background: #f0f0f0;
+      padding: 2px 4px;
+      border-radius: 3px;
+    }
+    ul {
+      margin-left: 20px;
+    }
+    table {
+      margin: 0 auto;
+      border-collapse: collapse;
+      width: 100%;
+      max-width: 600px;
+    }
+    table th, table td {
+      border: 1px solid #999;
+      padding: 8px;
+      text-align: left;
+    }
+    table th {
+      background: #2980b9;
+      color: white;
+    }
+    hr {
+      margin: 40px 0;
+    }
+    small {
+      display: block;
+      text-align: center;
+      color: #666;
+    }
+  </style>
+</head>
+<body>
+
+<h1>Teoria i konfiguracja Samby na openSUSE (zaawansowane)</h1>
+
+<p>Rozszerzamy wcześniejszy opis o dodatkowe aspekty konfiguracji: zaawansowane parametry <code>smb.conf</code>, integrację Winbind/SSSD, ustawienia VFS, tunele zabezpieczeń i wysoką dostępność.</p>
+
+<h2>9. Zaawansowane parametry smb.conf</h2>
+<ul>
+  <li><code>vfs objects = acl_xattr recycle</code> – włączenie rozszerzeń VFS do wsparcia Windows ACL i kosza recyklingu,</li>
+  <li><code>map acl inherit = yes</code> – dziedziczenie ACL z katalogu nadrzędnego,</li>
+  <li><code>store dos attributes = yes</code> – przechowywanie atrybutów DOS (np. ukryte/tylko do odczytu),</li>
+  <li><code>ea support = yes</code> – włączenie Extended Attributes,</li>
+  <li><code>strict locking = no</code> – poprawia współdzielenie plików między klientami.</li>
+</ul>
+
+<pre><code>[global]
+   server signing = mandatory       ; wymusza podpisywanie SMB
+   client signing = auto            ; klient podpisuje gdy serwer wymaga
+   smb encrypt = required           ; wymusza szyfrowanie SMB3
+   aio read size = 1                ; asynchroniczne I/O dla czytania
+   aio write size = 1               ; asynchroniczne I/O dla zapisu
+   max xmit = 65535                 ; maksymalny rozmiar pakietu SMB
+   kernel oplocks = yes             ; włącz oplocks w kernellu
+   oplock break wait time = 3       ; timeout na zwolnienie blokady
+</code></pre>
+
+<h2>10. Winbind i SSSD</h2>
+<p>Integracja z katalogiem AD w środowisku UNIX realizowana jest przez <code>winbind</code> lub <code>sssd</code>. Dzięki nim:</p>
+<ul>
+  <li>mapowane są konta AD na UID/GID Linuksa,</li>
+  <li>uwierzytelnianie Kerberos umożliwia bezhasłowe SSO,</li>
+  <li>możliwe są zapytania LDAP o grupy i atrybuty.</li>
+</ul>
+
+<h3>10.1 Konfiguracja winbind</h3>
+<pre><code>[global]
+   idmap config *:backend = tdb
+   idmap config *:range = 10000-20000
+   idmap config EXAMPLE:backend = rid
+   idmap config EXAMPLE:range = 100000-200000
+   winbind nss info = rfc2307
+   winbind use default domain = yes
+   template shell = /bin/bash
+</code></pre>
+
+<h3>10.2 Konfiguracja SSSD</h3>
+<pre><code>[sssd]
+domains = example.local
+services = nss, pam
+config_file_version = 2
+
+[domain/example.local]
+id_provider = ad
+auth_provider = krb5
+chpass_provider = ad
+ldap_id_mapping = true
+# Automount home directory z AD
+override_homedir = /home/%u
+# Synchronizacja grup UNIX
+ad_gpo_access_control = permissive
+</code></pre>
+
+<h2>11. Synchronizacja czasu i Kerberos</h2>
+<p>Poprawne działanie Kerberos wymaga precyzyjnego czasu:</p>
+<ul>
+  <li>W AD: <code>ntp.conf</code> wskazuje serwery czasu DC,</li>
+  <li>Klienci: <code>chrony/leap.conf</code> lub <code>ntp</code> skonfigurowany na ten sam serwer.</li>
+</ul>
+
+<pre><code># chrony.conf na DC
+server time.example.local iburst
+allow 192.168.0.0/24
+local stratum 10
+</code></pre>
+
+<h2>12. Wysoka dostępność i replikacja DC</h2>
+<p>Aby zapewnić ciągłość działania AD, zaleca się co najmniej 2 kontrolery domeny:</p>
+<ul>
+  <li>każdy z nich provision z <code>samba-tool domain join</code>,</li>
+  <li>automatyczna replikacja dzięki DRS,</li>
+  <li>monitorowanie zdrowia za pomocą <code>samba-tool drs showrepl</code>.</li>
+</ul>
+
+<pre><code># dołączenie do istniejącej domeny
+sudo samba-tool domain join example.local DC -U"EXAMPLE\\Administrator"
+# sprawdzenie replikacji
+samba-tool drs showrepl
+</code></pre>
+
+<hr/>
+<small>Rozszerzona konfiguracja oparta na dokumentacji Samba, SSSD i Kerberos. Data: lipiec 2025.</small>
+
+</body>
+</html>

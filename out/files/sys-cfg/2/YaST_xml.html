@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Konfiguracja YaST i XML na openSUSE</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      max-width: 900px;
+      margin: 40px auto;
+      background: #f9f9f9;
+      color: #222;
+      line-height: 1.5;
+      padding: 0 20px;
+    }
+    h1, h2, h3 {
+      color: #004080;
+      margin-top: 1.5em;
+    }
+    pre {
+      background: #e7f0fd;
+      padding: 15px;
+      border-left: 5px solid #007acc;
+      overflow-x: auto;
+      white-space: pre-wrap;
+      word-wrap: break-word;
+    }
+    code {
+      font-family: Consolas, monospace;
+      color: #c7254e;
+      background: #f9f2f4;
+      padding: 2px 4px;
+      border-radius: 3px;
+    }
+    p {
+      margin: 1em 0;
+    }
+    ul {
+      margin-left: 20px;
+    }
+    a {
+      color: #007acc;
+      text-decoration: none;
+    }
+    a:hover {
+      text-decoration: underline;
+    }
+  </style>
+</head>
+<body>
+
+  <h1>Konfiguracja YaST i plików XML na openSUSE</h1>
+
+  <p><strong>YaST</strong> (Yet another Setup Tool) to potężne i wszechstronne narzędzie do instalacji oraz konfiguracji systemu <em>openSUSE</em>. Umożliwia zarządzanie partycjami, usługami, siecią, użytkownikami oraz wiele innych funkcji administracyjnych.</p>
+
+  <h2>AutoYaST – automatyczna instalacja systemu</h2>
+  <p>AutoYaST pozwala na automatyczną instalację systemu na podstawie wcześniej przygotowanego pliku XML, który zawiera wszystkie niezbędne ustawienia systemowe.</p>
+
+  <h3>Tworzenie pliku konfiguracyjnego</h3>
+  <p>Na działającym systemie openSUSE można utworzyć plik profilu AutoYaST za pomocą:</p>
+  <pre><code>sudo yast2 autoinstallation</code></pre>
+  <p>Następnie wybierz opcję <code>Create Reference Profile</code>, wskaż komponenty do uwzględnienia i zapisz plik, np. jako <code>autoinst.xml</code>.</p>
+
+  <h3>Przykładowa struktura pliku AutoYaST (XML)</h3>
+  <pre><code>&lt;?xml version="1.0"?&gt;
+&lt;!DOCTYPE profile&gt;
+&lt;profile xmlns="http://www.suse.com/1.0/yast2ns" xmlns:config="http://www.suse.com/1.0/configns"&gt;
+  &lt;partitioning config:type="list"&gt;
+    &lt;drive&gt;
+      &lt;device&gt;/dev/sda&lt;/device&gt;
+      &lt;partitions config:type="list"&gt;
+        &lt;partition&gt;
+          &lt;filesystem config:type="symbol"&gt;btrfs&lt;/filesystem&gt;
+          &lt;size&gt;20G&lt;/size&gt;
+          &lt;mount&gt;/&lt;/mount&gt;
+        &lt;/partition&gt;
+        &lt;partition&gt;
+          &lt;filesystem config:type="symbol"&gt;xfs&lt;/filesystem&gt;
+          &lt;size&gt;100G&lt;/size&gt;
+          &lt;mount&gt;/data&lt;/mount&gt;
+        &lt;/partition&gt;
+      &lt;/partitions&gt;
+    &lt;/drive&gt;
+  &lt;/partitioning&gt;
+  &lt;scripts&gt;
+    &lt;pre-scripts&gt;
+      &lt;script&gt;
+        &lt;interpreter&gt;shell&lt;/interpreter&gt;
+        &lt;filename&gt;setup.sh&lt;/filename&gt;
+        &lt;source&gt;&lt;![CDATA[
+#!/bin/sh
+echo "Wykonywanie skryptu pre-instalacyjnego"
+exit 0
+]]&gt;&lt;/source&gt;
+      &lt;/script&gt;
+    &lt;/pre-scripts&gt;
+  &lt;/scripts&gt;
+&lt;/profile&gt;
+</code></pre>
+
+  <h2>YaST Firstboot – konfiguracja systemu po instalacji</h2>
+  <p>YaST Firstboot pozwala na podstawową konfigurację systemu przy pierwszym uruchomieniu po instalacji, np. ustawienie hasła root, konfigurację sieci, strefy czasowej itp.</p>
+
+  <h3>Włączenie Firstboot</h3>
+  <pre><code>sudo zypper install yast2-firstboot
+sudo touch /var/lib/YaST2/reconfig_system
+sudo reboot</code></pre>
+  <p>Po restarcie system automatycznie uruchomi YaST Firstboot.</p>
+
+  <h3>Konfiguracja Firstboot w pliku XML</h3>
+  <p>W pliku profilu AutoYaST można wymusić włączenie Firstboot poprzez:</p>
+  <pre><code>&lt;firstboot&gt;
+  &lt;firstboot_enabled config:type="boolean"&gt;true&lt;/firstboot_enabled&gt;
+&lt;/firstboot&gt;
+</code></pre>
+
+  <h2>Podsumowanie</h2>
+  <ul>
+    <li>YaST jest centralnym narzędziem do konfiguracji openSUSE.</li>
+    <li>AutoYaST umożliwia automatyczną instalację na podstawie pliku XML.</li>
+    <li>Firstboot pozwala na podstawową konfigurację systemu przy pierwszym uruchomieniu.</li>
+    <li>Pliki XML są czytelne, modularne i pozwalają na pełną automatyzację procesów.</li>
+  </ul>
+
+  <p>Więcej informacji znajdziesz w oficjalnej dokumentacji: 
+    <a href="https://doc.opensuse.org/documentation/leap/autoyast/html/book-autoyast/" target="_blank" rel="noopener">AutoYaST documentation</a>
+  </p>
+
+</body>
+</html>

@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Konfiguracja firewalld na openSUSE</title>
+  <style>
+    body {
+      font-family: sans-serif;
+      margin: 40px;
+      background: #f4f4f4;
+      color: #333;
+      line-height: 1.6;
+    }
+    h1, h2, h3 {
+      color: #2c3e50;
+    }
+    pre {
+      background: #eee;
+      padding: 10px;
+      border-left: 4px solid #2980b9;
+      overflow-x: auto;
+    }
+    code {
+      color: #c0392b;
+    }
+    ul {
+      margin-left: 20px;
+    }
+    table {
+      border-collapse: collapse;
+      margin-top: 20px;
+    }
+    table th, table td {
+      border: 1px solid #ccc;
+      padding: 5px 10px;
+    }
+    table th {
+      background: #e0e0e0;
+    }
+  </style>
+</head>
+<body>
+
+<h1>Konfiguracja firewalld na openSUSE</h1>
+
+<p>Na openSUSE (od Leap 15.0) domyślnym firewallem jest <strong>firewalld</strong> — zastępuje on wcześniejszy SuSEfirewall2 i używa nowoczesnego backendu nftables/iptables :contentReference[oaicite:1]{index=1}.</p>
+
+<h2>1. Instalacja i uruchomienie</h2>
+<pre><code>sudo zypper install firewalld
+sudo systemctl enable --now firewalld</code></pre>
+<p>Po instalacji i uruchomieniu usługi, firewalld działa w tle. YaST automatycznie przypisuje interfejsy do strefy domyślnej (`public`) :contentReference[oaicite:2]{index=2}.</p>
+
+<h2>2. Zasady pracy (zon i konfiguracja)</h2>
+<ul>
+  <li>Strefy definiują poziomy zaufania (np. `public`, `internal`, `dmz`) :contentReference[oaicite:3]{index=3}.</li>
+  <li>Interfejsy przyłączane są do jednej strefy – domyślnie `public` :contentReference[oaicite:4]{index=4}.</li>
+  <li>Dwie konfiguracje: <em>runtime</em> (dynamiczna, tymczasowa) i <em>permanent</em> (zapisywana na stałe) :contentReference[oaicite:5]{index=5}.</li>
+</ul>
+
+<h2>3. Podstawowe polecenia – firewall‑cmd</h2>
+<pre><code># Sprawdź status
+sudo firewall-cmd --state
+
+# Zobacz domyślną strefę
+sudo firewall-cmd --get-default-zone
+
+# Listuj aktywną konfigurację
+sudo firewall-cmd --list-all
+
+# Dodaj regułę runtime (przykładowo port HTTP)
+sudo firewall-cmd --zone=public --add-service=http
+
+# Dodaj permanentnie i przeładuj
+sudo firewall-cmd --zone=public --add-service=http --permanent
+sudo firewall-cmd --reload
+
+# Przypisz interfejs do strefy
+sudo firewall-cmd --zone=internal --change-interface=enp3s0 --permanent
+sudo firewall-cmd --reload
+</code></pre>
+
+<h2>4. Przykłady konfiguracji</h2>
+
+<h3>a) Otwieranie portów</h3>
+<pre><code>sudo firewall-cmd --zone=public --add-port=2121/tcp --permanent
+sudo firewall-cmd --reload</code></pre>
+<p>Umożliwia dostęp do usługi FTP (port 2121) na zewnątrz :contentReference[oaicite:6]{index=6}.</p>
+
+<h3>b) Tryb PASV dla serwera FTP</h3>
+<pre><code># zakres portów pasywnych
+sudo firewall-cmd --zone=public --add-port=40000-40100/tcp --permanent
+sudo firewall-cmd --reload</code></pre>
+
+<h3>c) Masquerading (NAT)</h3>
+<pre><code># Włączamy przekierowanie dla strefy 'external'
+sudo firewall-cmd --zone=external --add-masquerade --permanent
+sudo firewall-cmd --reload</code></pre>
+<p>W wersjach Leap 15.6 domyślnie NAT należy ustawić ręcznie – migracja z SuSEfirewall2 tego nie robi automatycznie :contentReference[oaicite:7]{index=7}.</p>
+
+<h3>d) Polityki przekazywania ruchu między strefami</h3>
+<pre><code># Blokuj domyślne przekazywanie między strefami
+# (firewalld domyślnie blokuje forwarding nowymi politykami)
+# Można stworzyć politykę, np. allow-internal-to-external</code></pre>
+<p>Zaawansowane: od firewalld 0.9+ dodano polityki forward/output/strefy :contentReference[oaicite:8]{index=8}.</p>
+
+<h2>5. Narzędzia GUI</h2>
+<p>openSUSE dostarcza dwie graficzne nakładki:</p>
+<ul>
+  <li><code>firewall-config</code> – pełne GUI do zarządzania regułami :contentReference[oaicite:9]{index=9};</li>
+  <li>YaST – prostsze GUI z możliwością dostępu do usług i portów w domyślnej strefie :contentReference[oaicite:10]{index=10}.</li>
+</ul>
+
+<h2>6. Diagnostyka i migracja</h2>
+<ul>
+  <li>Konsola: `firewall-cmd --list-all-zones`, `--get-active-zones`, `--get-zones`;</li>
+  <li>Migracja: po upgrade z SuSEfirewall2, interfejsy mogą nie mieć przypisanej strefy lub NAT może być wyłączony – sprawdź i skonfiguruj ponownie :contentReference[oaicite:11]{index=11};</li>
+  <li>Backend: domyślnie nftables, lecz wciąż wspiera iptables-kompatybilność :contentReference[oaicite:12]{index=12}.</li>
+</ul>
+
+<h2>7. Podsumowanie</h2>
+<table>
+  <thead>
+    <tr>
+      <th>Funkcja</th>
+      <th>Polecenia przykładowe</th>
+      <th>Opis</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr><td>Zainstaluj i uruchom</td><td>zypper install firewalld; systemctl enable --now firewalld</td><td>Instalacja i aktywacja usługi</td></tr>
+    <tr><td>Otwórz port lub usługę</td><td>firewall-cmd --zone=public --add-service=http --permanent</td><td>Umożliwia ruch HTTP</td></tr>
+    <tr><td>Przypisz interfejs do strefy</td><td>firewall-cmd --zone=internal --change-interface=enp3s0 --permanent</td><td>Interfejs jako „wewnętrzny”</td></tr>
+    <tr><td>Włącz masquerade</td><td>firewall-cmd --zone=external --add-masquerade</td><td>NAT dla ruchu wychodzącego</td></tr>
+    <tr><td>Podgląd stref i reguł</td><td>firewall-cmd --list-all-zones</td><td>Weryfikacja konfiguracji</td></tr>
+  </tbody>
+</table>
+
+<hr>
+<p><small>Źródła: OpenSUSE Wiki “Firewalld” :contentReference[oaicite:13]{index=13}, Security Guide Leap 15.6 „Masquerading and firewalls” :contentReference[oaicite:14]{index=14}, Firewalld manual & docs :contentReference[oaicite:15]{index=15}, przykłady reddit i forum SUSE :contentReference[oaicite:16]{index=16}. Data: lipiec 2025.</small></p>
+
+</body>
+</html>
