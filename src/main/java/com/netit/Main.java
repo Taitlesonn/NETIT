@@ -6,6 +6,7 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
 
+import java.util.Objects;
 
 
 public class Main  extends Application{
@@ -17,10 +18,11 @@ public class Main  extends Application{
 
 
         // Załaduj plik FXML z folderu resources
-        Parent root = FXMLLoader.load(getClass().getResource("/first_ui.fxml"));
+        Parent root = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("/first_ui.fxml")));
 
         Scene scene = new Scene(root, user.getY_run(), user.getX_run());
-        scene.getStylesheets().add(getClass().getResource("/style.css").toExternalForm());
+        scene.getStylesheets().add(Objects.requireNonNull(getClass().getResource("/style.css")).toExternalForm());
+        primaryStage.setOnCloseRequest(e -> Topology.stop());
 
 
         primaryStage.setTitle("NETIT");

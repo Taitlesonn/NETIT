@@ -5,14 +5,14 @@ import javafx.scene.control.Button;
 import javafx.scene.layout.HBox;
 import javafx.scene.web.WebView;
 
-import java.io.Console;
+
 import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 
 public class SecendaryUi {
     private String baseDir;
-    private List<String> files = new ArrayList<>();
+    private final List<String> files = new ArrayList<>();
     private Button but;
 
     @FXML
@@ -48,9 +48,7 @@ public class SecendaryUi {
                 Topology.del_system(this.but);
                 this.but = null;
             });
-            defult.setOnAction(e -> {
-                showHtmlFromPath(path + "index.html");
-            });
+            defult.setOnAction(e -> showHtmlFromPath(path + "index.html"));
             this.button_list.getChildren().add(delete);
             this.button_list.getChildren().add(defult);
 
@@ -63,9 +61,7 @@ public class SecendaryUi {
                 }
                 Button button = new Button();
                 button.setText(buttonName);
-                button.setOnAction(e -> {
-                    showHtmlFromPath(path + file);
-                });
+                button.setOnAction(e -> showHtmlFromPath(path + file));
                 this.button_list.getChildren().add(button);
             }
 

@@ -1,0 +1,304 @@
+<!DOCTYPE html>
+<html lang="pl">
+    <head>
+        <meta charset="utf-8"/>
+        <style>
+            body {
+                background-color: #2e3b2e;
+                color: #f5f5f5;
+                font-family: "Segoe UI", sans-serif;
+                line-height: 1.6;
+                margin: 40px;
+            }
+
+            h1, h3 {
+                color: #a8ff60;
+            }
+
+            a {
+                color: #99ccff;
+                text-decoration: none;
+            }
+
+            a:hover {
+                text-decoration: underline;
+            }
+
+            article {
+                max-width: 900px;
+                margin: auto;
+                padding: 20px;
+                background-color: #3e4d3e;
+                border-radius: 10px;
+                box-shadow: 0 0 20px #00000033;
+            }
+
+            hr {
+                border: 0;
+                border-top: 1px solid #99cc99;
+                margin: 20px 0;
+            }
+
+            b {
+            color: #fbd38d;
+            }
+
+            code, kbd, pre {
+                background-color: #222822;
+                color: #aaffaa;
+                font-family: "Courier New", Courier, monospace;
+                padding: 2px 6px;
+                border-radius: 4px;
+            }
+
+            pre {
+                padding: 12px;
+                overflow-x: auto;
+                margin: 16px 0;
+                border-left: 4px solid #a8ff60;
+            }
+
+            ul, ol {
+                margin: 10px 0 10px 20px;
+                line-height: 1.4;
+            }
+
+            ul ul, ol ol, ul ol, ol ul {
+                margin-left: 20px;
+                list-style-type: disc; 
+            }
+
+        </style>
+    </head>
+
+    <body>
+        <article>
+            <header>
+                <h1>IPv4 i IPv6 - <a href="https://www.opensuse.org/">OpenSUSE</a></h1>
+            </header>
+            <hr>
+            <p>
+                <h3>Wprowadzenie</h3>
+                <p>
+                    <b>IPv4</b> , czyli Internet Protocol version 4, został opracowany na początku lat 80. jako część standardu komunikacyjnego TCP/IP dla sieci ARPANET, przekształcanej w globalny Internet. 
+                    Oficjalnie został opisany w 1981 roku w dokumencie RFC 791. IPv4 wprowadził 32-bitowy system adresowania, co dawało około 4,3 miliarda unikalnych adresów IP. 
+                    Początkowo uważano to za wystarczające, jednak szybki rozwój Internetu, urządzeń sieciowych i usług online w latach 90. doprowadził do coraz większego zapotrzebowania na adresy. 
+                    Zaczęto stosować mechanizmy tymczasowe, takie jak NAT (translacja adresów), jednak nie rozwiązywały one problemu u podstaw. 
+                </p>
+                <p>
+                    Adresy IPv4 mają długość 32 bitów i są zapisywane w postaci czterech liczb dziesiętnych oddzielonych kropkami (np. 192.168.0.1).
+                     Każda liczba odpowiada jednemu bajtowi (8 bitom), co oznacza, że maksymalna wartość jednej liczby to 255. 
+                     Adresy IPv4 podzielono historycznie na klasy: klasa A (adresy zaczynające się od 0–127) przeznaczona była dla bardzo dużych sieci, klasa B (128–191) dla średnich sieci, 
+                     klasa C (192–223) dla małych sieci, klasa D (224–239) dla multicastu oraz klasa E (240–255) zarezerwowana do celów eksperymentalnych.
+                     Współcześnie klasy adresów mają głównie znaczenie historyczne, a sieci dzielone są według długości maski sieci, która określa, ile bitów adresu identyfikuje sieć. 
+                     Maska zapisywana jest w postaci czterech liczb dziesiętnych (np. 255.255.255.0) lub w notacji skróconej CIDR (np. /24, co oznacza, że 24 bity to część sieciowa). 
+                     Maska pozwala rozróżnić, która część adresu identyfikuje sieć, a która urządzenie (hosta) w tej sieci.
+                </p>
+                <p>
+                    <b>IPv6</b>, czyli Internet Protocol version 6, został opracowany jako następca IPv4 w odpowiedzi na rosnące zapotrzebowanie na adresy IP, które IPv4 nie był w stanie zaspokoić. 
+                    Prace nad nowym protokołem rozpoczęto w pierwszej połowie lat 90., a pierwsza wersja standardu została opisana w 1998 roku w dokumencie RFC 2460. 
+                    IPv6 wprowadza 128-bitowy system adresowania, co pozwala na wygenerowanie ogromnej liczby unikalnych adresów – wystarczającej na potrzeby Internetu przez wiele dziesięcioleci. 
+                    Oprócz większej przestrzeni adresowej IPv6 oferuje uproszczoną strukturę nagłówka, lepsze wsparcie dla mobilności, bezpieczeństwa oraz automatycznej konfiguracji. 
+                    Mimo wprowadzenia IPv6, jego wdrażanie przebiegało wolno, głównie z powodu szerokiego rozpowszechnienia IPv4 i konieczności zapewnienia kompatybilności w istniejących sieciach. 
+                    Dopiero od około 2010 roku adopcja IPv6 zaczęła przyspieszać, wspierana przez operatorów internetowych, duże firmy technologiczne i organizacje standaryzujące. 
+                    Obecnie IPv6 jest stopniowo wdrażany równolegle z IPv4, tworząc środowiska dwuprotokołowe (dual-stack), które mają na celu płynne przejście do nowej generacji komunikacji internetowej.
+
+                </p>
+                <p>
+                    Adresy IPv6 mają długość 128 bitów i zapisywane są w postaci ośmiu grup czterech znaków szesnastkowych oddzielonych dwukropkami (np. 2001:0db8:85a3:0000:0000:8a2e:0370:7334).
+                    Dla wygody pomija się wiodące zera w każdej grupie, a ciągi zer można skracać do dwóch dwukropków (::), ale tylko raz w jednym adresie. 
+                    W przeciwieństwie do IPv4, IPv6 nie używa klas adresów, lecz stosuje strukturę opartą na prefiksach. Najważniejszym elementem jest prefiks sieciowy, który – podobnie jak w CIDR – wskazuje liczbę bitów należących do części sieciowej. 
+                    Przykładowo zapis /64 oznacza, że pierwsze 64 bity identyfikują sieć, a pozostałe 64 bity identyfikują konkretne urządzenie (interfejs). 
+                    IPv6 posiada różne typy adresów, m.in. unicast (do jednego odbiorcy), multicast (do grupy odbiorców) oraz anycast (do najbliższego odbiorcy w grupie). 
+                    Nie występuje tu klasyczny broadcast, jak w IPv4. Dzięki ogromnej przestrzeni adresowej możliwe jest przydzielanie unikalnych adresów każdemu urządzeniu bez potrzeby stosowania NAT-u. 
+                    Adresy IPv6 są projektowane z myślą o automatycznej konfiguracji i łatwiejszym zarządzaniu siecią.
+                </p>
+
+                <h3><a href="https://networkmanager.dev/docs/">Network Menager - historia</a></h3>
+
+                <p>
+                    <b>NetworkManager</b> to narzędzie stworzone z myślą o ułatwieniu zarządzania połączeniami sieciowymi w systemach Linux i innych uniksopodobnych. 
+                    Jego rozwój był odpowiedzią na rosnącą potrzebę automatycznego, wygodnego łączenia się z siecią — zwłaszcza na laptopach, gdzie użytkownicy często przełączają się między 
+                    różnymi sieciami przewodowymi i bezprzewodowymi. Projekt został zapoczątkowany przez firmę <b>Red Hat</b> w 2004 roku, a jego głównym twórcą był Dan Williams. 
+                    Celem było stworzenie warstwy, która zautomatyzuje nawiązywanie połączeń i przełączanie między nimi, eliminując konieczność ręcznej edycji plików konfiguracyjnych 
+                    (jak /etc/network/interfaces czy ifcfg-*) i restartowania usług sieciowych. Początkowo 
+                    NetworkManager był krytykowany za niestabilność i ograniczoną funkcjonalność, ale z czasem przeszedł intensywny rozwój. 
+                    W kolejnych latach zyskał wsparcie dla różnych typów połączeń: przewodowych, Wi-Fi, mobilnych (3G/4G), VPN, a także IPv6. 
+                    Powstały również graficzne interfejsy użytkownika, takie jak nm-applet (dla GNOME) i KNetworkManager (dla KDE), które znacznie ułatwiły jego obsługę. 
+                    Dodatkowo stworzono narzędzia wiersza poleceń, jak nmcli i nmtui, które umożliwiają konfigurację sieci także bez środowiska graficznego.
+                    Dziś NetworkManager jest standardowym komponentem większości nowoczesnych dystrybucji Linuksa (takich jak Fedora, Ubuntu, openSUSE) i zastąpił tradycyjne mechanizmy konfiguracji sieci w wielu z nich. 
+                    Obsługuje integrację z systemem systemd, a także dynamiczne zarządzanie interfejsami, co czyni go bardzo elastycznym narzędziem zarówno dla użytkowników domowych, jak i administratorów systemów.
+                </p>
+                
+                <h4><a href="https://doc.opensuse.org/documentation/leap/reference/html/book-reference/cha-nm.html">Implementacja</a></h4>
+                <p>
+                    Żeby rozpocząć konfigóracje Network Menagera należy go wpierw zainstalować:
+                    <pre>
+sudo zypper refresh
+sudo zypper install NetworkManager
+                    </pre>
+                    A następnie włączyć
+                    <pre>
+sudo systemctl enable NetworkManager
+sudo systemctl start NetworkManager
+                    </pre>
+                    Potem możemy sprawdzić czy wszystko się powiodło
+                    <pre>sudo systemctl status NetworkManager</pre>
+
+                    <li> Network Menager - YaST
+                        <ol>
+                            <li>Otwóż YaST</li>
+                            <li>System</li>
+                            <li>Ustawienia sieciowe</li>
+                            <li>Otworzy się okno dialogowe Ustawienia sieciowe. Przejdź do zakładki Opcje globalne.</li>
+                            <li>To configure and manage your network connections with NetworkManager: </li>
+                                <ol>
+                                    <li>W polu Metoda konfiguracji sieci wybierz opcję Kontrolowana przez użytkownika za pomocą NetworkManager.</li>
+                                    <li>Kliknij OK i zamknij YaST.</li>
+                                    <li>Gotowe</li>
+                                </ol>
+                        </ol>
+                    </li>
+
+                    <h3><a href="https://networkmanager.dev/docs/admins/">Działanie i funkcje NetworkManagera</a></h3>
+
+                    <p>
+                        NetworkManager jest zaprojektowany tak, aby domyślnie działał w pełni automatycznie. Zarządza podstawowym połączeniem sieciowym oraz innymi interfejsami, 
+                        takimi jak Ethernet, Wi-Fi i urządzenia Mobile Broadband. Aby korzystać z NetworkManagera, należy uruchomić jego usługę.  
+                        Sposób uruchomienia zależy od dystrybucji, jednak większość dystrybucji używa usług systemd, które ułatwiają ten proces.  
+                        NetworkManager automatycznie uruchamia także inne potrzebne usługi, np. wpa_supplicant (dla WPA i 802.1x) czy pppd (dla mobilnego szerokopasmowego połączenia).
+                    </p>
+
+                    <p>
+                        NetworkManager obsługuje większość metod i protokołów zabezpieczeń sieciowych: WPA/WPA2/WPA3 (Personal i Enterprise), przewodowe 802.1x, MACsec oraz VPN.  
+                        Przechowuje sekrety sieciowe (klucze szyfrujące, dane logowania) w bezpiecznym magazynie — w pęku kluczy użytkownika (dla połączeń użytkownika) lub chronione przez uprawnienia administratora (dla połączeń systemowych).  
+                        Za pomocą polkit można blokować różne operacje sieciowe, co pozwala na precyzyjną kontrolę dostępu do połączeń.
+                    </p>
+
+                    <p>
+                        NetworkManager oferuje wsparcie dla VPN poprzez wtyczki, w tym dla Cisco VPN (vpnc), OpenVPN oraz Point-to-Point Tunneling Protocol (PPTP).  
+                        Aby korzystać z konkretnego klienta VPN, wystarczy zainstalować odpowiednią wtyczkę NetworkManagera oraz wstępnie skonfigurować ustawienia VPN na komputerach użytkowników.  
+                        Przy pierwszym połączeniu użytkownik zostanie poproszony o podanie hasła.
+                    </p>
+
+                    <p>
+                        Plik <code>NetworkManager.conf</code> to główny plik konfiguracyjny NetworkManagera, w którym definiuje się różne aspekty jego działania.  
+                        Domyślny plik dostarczany przez dystrybucję nie powinien być modyfikowany bezpośrednio, gdyż aktualizacje mogą nadpisać zmiany.  
+                        Zamiast tego, można dodawać pliki konfiguracyjne z rozszerzeniem <code>.conf</code> do katalogu <code>/etc/NetworkManager/conf.d</code>.  
+                        Pliki w tym katalogu są wczytywane kolejno, a ustawienia z późniejszych plików nadpisują wcześniejsze.  
+                        Dodatkowo dystrybucje mogą instalować fragmenty konfiguracji w <code>/usr/lib/NetworkManager/conf.d</code> (wczytywane jako pierwsze),  
+                        a skrypty mogą dodawać konfigurację per-boot w <code>/run/NetworkManager/conf.d</code> (wczytywaną jako druga).
+                    </p>
+
+
+                    <p>
+                        Domyślnie NetworkManager automatycznie tworzy nowe tymczasowe połączenia w pamięci dla każdego urządzenia Ethernet, które nie ma skonfigurowanego połączenia na dysku.  
+                        Nowe połączenia otrzymują nazwy takie jak „Wired connection 1”, „Wired connection 2” itd. oraz mają włączone DHCPv4 i autokonfigurację IPv6.
+                    </p>
+
+                    <p>
+                        Takie zachowanie zwykle nie jest pożądane na serwerach, gdzie wszystkie interfejsy powinny być skonfigurowane ręcznie.  
+                        Aby wyłączyć automatyczne tworzenie takich połączeń, należy dodać w sekcji <code>[main]</code> opcję:
+                    </p>
+
+                    <pre><code>no-auto-default=*</code></pre>
+
+                    <p>
+                        NetworkManager wymaga też wykrycia nośnika (carrier) na interfejsie, aby aktywować połączenie. Jeśli usługi próbują wiązać się z adresem interfejsu podczas rozruchu, 
+                        a interfejs nie ma nośnika, mogą wystąpić błędy. Rozwiązaniem jest wyłączenie wykrywania nośnika przez dodanie opcji:
+                    </p>
+
+                    <pre><code>ignore-carrier=*</code></pre>
+
+                    <p>
+                        W systemach Fedora i RHEL dostępny jest pakiet <code>NetworkManager-config-server</code>, który instaluje konfigurację z powyższymi dwoma opcjami.
+                    </p>
+
+
+                    <p>
+                        Domyślnie NetworkManager zarządza wszystkimi urządzeniami sieciowymi znalezionymi w systemie.  
+                        Jeśli planujesz ręcznie konfigurować interfejs lub korzystać z innego narzędzia, powinieneś powiedzieć NetworkManagerowi, aby nie zarządzał tym urządzeniem.
+                    </p>
+
+                    <p>
+                        Aby wyłączyć zarządzanie urządzeniem tymczasowo (do następnego restartu), użyj polecenia:
+                    </p>
+
+                    <pre><code>nmcli device set enp1s0 managed no</code></pre>
+
+                    <p>
+                        Aby zmiana była trwała (po restarcie systemu), dodaj do konfiguracji następujący fragment:
+                    </p>
+
+                    <pre><code>
+[device-enp1s0-unmanage]
+match-device=interface-name:enp1s0
+managed=0</code></pre>
+
+                    <p>
+                        Po wprowadzeniu zmian należy przeładować konfigurację poleceniem:
+                    </p>
+
+                    <pre><code>systemctl reload NetworkManager</code></pre>
+
+                    <h3>Konfiguracja IPv4, IPv6, DHCP, VPN i DNS w NetworkManager (CLI)</h3>
+
+                    <h4>Statyczny adres IPv4</h4>
+                    <pre>
+nmcli connection modify &lt;nazwa-połączenia&gt; ipv4.addresses &lt;adres&gt;/&lt;mask&gt;
+nmcli connection modify &lt;nazwa-połączenia&gt; ipv4.gateway &lt;brama&gt;
+nmcli connection modify &lt;nazwa-połączenia&gt; ipv4.method manual
+nmcli connection up &lt;nazwa-połączenia&gt;
+                    </pre>
+
+                    <h4>Automatyczne pobieranie IPv4 (DHCP)</h4>
+                    <pre>
+nmcli connection modify &lt;nazwa-połączenia&gt; ipv4.method auto
+nmcli connection up &lt;nazwa-połączenia&gt;
+                    </pre>
+
+                    <h4>Statyczny adres IPv6</h4>
+                    <pre>
+nmcli connection modify &lt;nazwa-połączenia&gt; ipv6.addresses &lt;adres_ipv6&gt;/&lt;prefix&gt;
+nmcli connection modify &lt;nazwa-połączenia&gt; ipv6.gateway &lt;brama_ipv6&gt;
+nmcli connection modify &lt;nazwa-połączenia&gt; ipv6.method manual
+nmcli connection up &lt;nazwa-połączenia&gt;
+                    </pre>
+
+                    <h4>Automatyczne pobieranie IPv6 (DHCPv6 / SLAAC)</h4>
+                    <pre>
+nmcli connection modify &lt;nazwa-połączenia&gt; ipv6.method auto
+nmcli connection up &lt;nazwa-połączenia&gt;
+                    </pre>
+
+                    <h4>Konfiguracja DNS</h4>
+                    <pre>
+nmcli connection modify &lt;nazwa-połączenia&gt; ipv4.dns &lt;adres_dns1&gt; &lt;adres_dns2&gt;
+nmcli connection modify &lt;nazwa-połączenia&gt; ipv4.ignore-auto-dns yes
+nmcli connection up &lt;nazwa-połączenia&gt;
+                    </pre>
+
+                    <h4>Konfiguracja VPN (np. OpenVPN)</h4>
+                    <p>Do konfiguracji VPN najlepiej użyć wtyczek NetworkManager (np. NetworkManager-openvpn) i tworzyć połączenia z pliku konfiguracyjnego:</p>
+                    <pre>
+nmcli connection import type openvpn file /ścieżka/do/pliku.ovpn
+nmcli connection up &lt;nazwa_połączenia_VPN&gt;
+                    </pre>
+
+                    <hr>
+
+                    <footer>
+                    <p>
+                        Źródła i dokumentacja: 
+                        <a href="https://networkmanager.dev/docs/">https://networkmanager.dev/docs/</a>, 
+                        <a href="https://doc.opensuse.org/documentation/leap/reference/html/book-reference/cha-nm.html">openSUSE Leap NetworkManager</a>
+                    </p>
+                    </footer>
+
+
+
+                </p>
+            </p>
+        </article>
+    </body>
+</html>

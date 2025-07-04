@@ -10,6 +10,7 @@
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.layout.Pane?>
+<?import javafx.scene.control.ToggleButton?>
 <BorderPane xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.netit.Application_run_time"
             xmlns="http://javafx.com/javafx/21">
 
@@ -33,16 +34,12 @@
             <Button fx:id="ruter_b" styleClass="image-button" onAction="#add_router"/>
             <Button fx:id="linux_server_b" styleClass="image-button" onAction="#add_linux_server"/>
             <Button fx:id="windows_server_b" styleClass="image-button" onAction="#add_windows_server"/>
-            <Button fx:id="connecter" onAction="#connecter_f" text="Connect"/>
-            <Button fx:id="disconecter" onAction="#connecter_d" text="disconect"/>
+            <ToggleButton fx:id="connecter" onAction="#connecter_f" text="Connect" styleClass="flat-button"/>
+            <ToggleButton fx:id="disconecter" onAction="#connecter_d" text="disconect" styleClass="flat-button"/>
         </VBox>
     </left>
 
-    <right>
-        <VBox fx:id="VBox_right" styleClass="dark-panel">
-            <Label fx:id="right_inf" styleClass="right-info-label"/>
-        </VBox>
-    </right>
+
 
     <center>
         <Pane fx:id="workspace" styleClass="gray-background"/>

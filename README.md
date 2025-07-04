@@ -1,4 +1,4 @@
-# NETIT
+# NETIT (Verison: 1.1)
 Network Emulation and Topology Implementation Tool
 ## Project Overview
 
@@ -12,10 +12,10 @@ Users can add routers, switches, servers, and workstations, select manufacturers
 
 Just go to rpm folder and then:
 ```bash
- sudo dnf install ./netit-1.0-1.fc42.x86_64.rpm
- sudo yum install ./netit-1.0-1.fc42.x86_64.rpm
- sudo zypper install ./netit-1.0-1.fc42.x86_64.rpm
- sudo rpm -Uvh  netit-1.0-1.fc42.x86_64.rpm
+ sudo dnf install ./netit-1.1-1.fc42.x86_64.rpm
+ sudo yum install ./netit-1.1-1.fc42.x86_64.rpm
+ sudo zypper install ./netit-1.1-1.fc42.x86_64.rpm
+ sudo rpm -Uvh  netit-1.1-1.fc42.x86_64.rpm
 ```
 
 ### Requirements

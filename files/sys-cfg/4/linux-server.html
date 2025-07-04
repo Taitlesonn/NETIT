@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+    <meta charset="utf-8"/>
+    <style>
+        body {
+            background-color: #2e3b2e;
+            color: #f5f5f5;
+            font-family: "Segoe UI", sans-serif;
+            line-height: 1.6;
+            margin: 40px;
+        }
+
+        h1, h3 {
+            color: #a8ff60;
+        }
+
+        a {
+            color: #99ccff;
+            text-decoration: none;
+        }
+
+        a:hover {
+            text-decoration: underline;
+        }
+
+        article {
+            max-width: 900px;
+            margin: auto;
+            padding: 20px;
+            background-color: #3e4d3e;
+            border-radius: 10px;
+            box-shadow: 0 0 20px #00000033;
+        }
+
+        hr {
+            border: 0;
+            border-top: 1px solid #99cc99;
+            margin: 20px 0;
+        }
+
+        b {
+            color: #fbd38d;
+        }
+
+        code, kbd, pre {
+            background-color: #222822;
+            color: #aaffaa;
+            font-family: "Courier New", Courier, monospace;
+            padding: 2px 6px;
+            border-radius: 4px;
+        }
+
+        pre {
+            padding: 12px;
+            overflow-x: auto;
+            margin: 16px 0;
+            border-left: 4px solid #a8ff60;
+        }
+
+        ul, ol {
+            margin: 10px 0 10px 20px;
+            line-height: 1.4;
+        }
+
+        ul ul, ol ol, ul ol, ol ul {
+            margin-left: 20px;
+            list-style-type: disc; 
+        }
+
+    </style>
+</head>
+<body>
+    <article>
+        <h1>Linux Server</h1>
+
+        <h3>Co to jest serwer?</h3>
+        <p>Serwer to komputer lub oprogramowanie, które świadczy usługi innym komputerom, zwanym klientami, w sieci. Może to być np. serwer WWW, który udostępnia strony internetowe, serwer poczty elektronicznej obsługujący wiadomości e-mail, czy serwer baz danych przechowujący i udostępniający dane aplikacjom. Serwery charakteryzują się wysoką dostępnością, stabilnością oraz możliwością pracy 24/7, często w specjalistycznych pomieszczeniach zwanych serwerowniami.</p>
+
+        <h3>Co to jest serwer Linux?</h3>
+        <p>Serwer Linux to serwer działający na systemie operacyjnym Linux, który jest otwartoźródłową alternatywą dla komercyjnych systemów takich jak Windows Server. Linux jest ceniony za swoją stabilność, bezpieczeństwo oraz elastyczność. Dzięki otwartemu kodowi źródłowemu, użytkownicy mogą dostosować system do swoich potrzeb, co sprawia, że jest on popularnym wyborem w środowiskach serwerowych.</p>
+
+        <h3>Główne dystrybucje Linuxa dla serwerów</h3>
+        <p>Istnieje wiele dystrybucji Linuxa, które różnią się między sobą przeznaczeniem, stabilnością oraz wsparciem. Oto niektóre z najpopularniejszych:</p>
+        <ul>
+            <li><b>Ubuntu Server</b>: Jedna z najpopularniejszych dystrybucji, znana z łatwości obsługi i dużej społeczności. Oferuje długoterminowe wsparcie (LTS), co czyni ją stabilnym wyborem dla serwerów.</li>
+            <li><b>Debian</b>: Ceniona za swoją stabilność i bezpieczeństwo. Jest podstawą wielu innych dystrybucji, w tym Ubuntu.</li>
+            <li><b>CentOS</b>: Dawniej popularna dystrybucja oparta na Red Hat Enterprise Linux (RHEL), oferująca stabilność i długoterminowe wsparcie. Obecnie rozwijana jest jako CentOS Stream, który pełni rolę wersji testowej przed wydaniem RHEL.</li>
+            <li><b>Red Hat Enterprise Linux (RHEL)</b>: Komercyjna dystrybucja oferująca wsparcie techniczne i certyfikacje, dedykowana dla dużych przedsiębiorstw.<sup><a href="https://super-www.pl/tworzenie-stron/jak-wybrac-serwer-na-strone/?utm_source=chatgpt.com" target="_blank" rel="noopener noreferrer">[1]</a></sup></li>
+            <li><b>openSUSE</b>: Dystrybucja stworzona przez firmę SUSE, oferująca dwie główne wersje: Leap i Tumbleweed.</li>
+        </ul>
+
+        <h3>openSUSE – ogólna charakterystyka</h3>
+        <p>openSUSE to dystrybucja Linuxa rozwijana przez społeczność oraz firmę SUSE. Jest dostępna w dwóch głównych wersjach: Leap i Tumbleweed.</p>
+        <ul>
+            <li><b>openSUSE Leap</b>: Stabilna wersja, która korzysta z kodu źródłowego SUSE Linux Enterprise. Jest idealna dla użytkowników szukających sprawdzonego i stabilnego systemu operacyjnego.</li>
+            <li><b>openSUSE Tumbleweed</b>: Rolling release, co oznacza, że użytkownicy otrzymują najnowsze wersje oprogramowania zaraz po ich wydaniu. Jest to wersja przeznaczona dla entuzjastów i deweloperów, którzy potrzebują najnowszych funkcji.</li>
+        </ul>
+
+        <h3>Porównanie openSUSE Leap i Tumbleweed</h3>
+        <table style="width:100%; border-collapse: collapse; color: #f5f5f5;">
+            <thead>
+                <tr style="background-color:#4a5d4a;">
+                    <th style="border: 1px solid #99cc99; padding: 8px;">Cecha</th>
+                    <th style="border: 1px solid #99cc99; padding: 8px;">openSUSE Leap</th>
+                    <th style="border: 1px solid #99cc99; padding: 8px;">openSUSE Tumbleweed</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr style="background-color:#3e4d3e;">
+                    <td style="border: 1px solid #99cc99; padding: 8px;">Typ wydania</td>
+                    <td style="border: 1px solid #99cc99; padding: 8px;">Stabilne, z ustalonym harmonogramem</td>
+                    <td style="border: 1px solid #99cc99; padding: 8px;">Rolling release (ciągłe aktualizacje)</td>
+                </tr>
+                <tr style="background-color:#2e3b2e;">
+                    <td style="border: 1px solid #99cc99; padding: 8px;">Stabilność</td>
+                    <td style="border: 1px solid #99cc99; padding: 8px;">Wysoka, przeznaczona do zastosowań produkcyjnych</td>
+                    <td style="border: 1px solid #99cc99; padding: 8px;">Może być mniej stabilna, przeznaczona dla entuzjastów</td>
+                </tr>
+                <tr style="background-color:#3e4d3e;">
+                    <td style="border: 1px solid #99cc99; padding: 8px;">Wsparcie techniczne</td>
+                    <td style="border: 1px solid #99cc99; padding: 8px;">Tak, dostępne aktualizacje i poprawki</td>
+                    <td style="border: 1px solid #99cc99; padding: 8px;">Tak, ale może wymagać częstszych aktualizacji</td>
+                </tr>
+                <tr style="background-color:#2e3b2e;">
+                    <td style="border: 1px solid #99cc99; padding: 8px;">Zastosowanie</td>
+                    <td style="border: 1px solid #99cc99; padding: 8px;">Serwery, stacje robocze, środowiska produkcyjne</td>
+                    <td style="border: 1px solid #99cc99; padding: 8px;">Testowanie nowych technologii, środowiska deweloperskie</td>
+                </tr>
+                <tr style="background-color:#3e4d3e;">
+                    <td style="border: 1px solid #99cc99; padding: 8px;">Aktualność oprogramowania</td>
+                    <td style="border: 1px solid #99cc99; padding: 8px;">Oprogramowanie jest testowane i stabilne</td>
+                    <td style="border: 1px solid #99cc99; padding: 8px;">Najnowsze wersje oprogramowania dostępne od razu</td>
+                </tr>
+            </tbody>
+        </table>
+
+        <h3>Podsumowanie</h3>
+        <ul>
+            <li><b>openSUSE Leap</b>: Idealna dla użytkowników szukających stabilnego i sprawdzonego systemu operacyjnego, szczególnie w środowiskach produkcyjnych.</li>
+            <li><b>openSUSE Tumbleweed</b>: Przeznaczona dla entuzjastów i deweloperów, którzy potrzebują najnowszych wersji oprogramowania i są gotowi na częstsze aktualizacje.</li>
+        </ul>
+
+        <p>Wybór między openSUSE Leap a Tumbleweed zależy od indywidualnych potrzeb i oczekiwań użytkownika. Jeśli priorytetem jest stabilność i długoterminowe wsparcie, Leap będzie odpowiednim wyborem. Natomiast jeśli celem jest testowanie najnowszych technologii i dostęp do najnowszych wersji oprogramowania, Tumbleweed będzie bardziej odpowiedni.</p>
+    </article>
+</body>
+</html>
